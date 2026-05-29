@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Radar — Raul Chavez</title>
+  <link rel="icon" type="image/x-icon" href="./img/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --paper: #FFFFFF;
+      --paper-2: #FAFAF9;
+      --paper-3: #F3F2EF;
+      --ink: #141413;
+      --ink-2: #3F3D3A;
+      --ink-3: #84827D;
+      --ink-4: #B5B3AE;
+      --rule: rgba(20,20,19,0.10);
+      --rule-strong: #141413;
+      --handson: #E5FF60;
+      --focus: #4DD86F;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Instrument Sans', system-ui, sans-serif;
+      font-size: 1rem;
+      line-height: 1.55;
+    }
+    .page {
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 64px 120px;
+    }
+
+    /* NAV */
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 22px 0;
+      border-bottom: 1px solid var(--rule);
+      position: sticky;
+      top: 0;
+      background: var(--paper);
+      z-index: 100;
+    }
+    .nav-lockup { display: flex; align-items: center; gap: 8px; text-decoration: none; }
+    .nav-mark { width: 22px; height: 22px; background: var(--ink); display: flex; align-items: center; justify-content: center; }
+    .nav-mark-inner { width: 8px; height: 8px; border-radius: 50%; background: var(--paper); }
+    .nav-wordmark { display: flex; flex-direction: column; line-height: 1.1; }
+    .nav-l1 { font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); }
+    .nav-back { font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); text-decoration: none; }
+    .nav-back:hover { color: var(--ink); }
+
+    /* HERO */
+    .hero {
+      padding: 80px 0 72px;
+      border-bottom: 1px solid var(--rule);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: end;
+    }
+    .hero-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 20px; }
+    .hero-title {
+      font-size: clamp(4rem, 9vw, 7.5rem);
+      font-weight: 600;
+      line-height: 0.92;
+      letter-spacing: -0.04em;
+      color: var(--ink);
+      margin-bottom: 24px;
+    }
+    .hero-title em {
+      font-style: normal;
+      background: linear-gradient(to bottom, transparent 55%, var(--handson) 55%);
+    }
+    .hero-sub { font-size: 1.125rem; line-height: 1.6; color: var(--ink-2); max-width: 480px; }
+    .hero-meta { display: flex; flex-direction: column; gap: 28px; }
+    .meta-block { display: flex; flex-direction: column; gap: 6px; }
+    .meta-label { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-4); }
+    .meta-value { font-size: 1rem; font-weight: 500; color: var(--ink); }
+    .meta-value-mono { font-family: 'JetBrains Mono', monospace; font-size: 0.8125rem; color: var(--ink-3); line-height: 1.6; }
+    .status-chip { display: inline-flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--focus); }
+    .status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--focus); box-shadow: 0 0 0 3px color-mix(in oklab, #4DD86F 22%, transparent); animation: halo 3.2s ease-in-out infinite; }
+    @keyframes halo {
+      0%,100% { box-shadow: 0 0 0 3px color-mix(in oklab,#4DD86F 22%,transparent); }
+      50%      { box-shadow: 0 0 0 5px color-mix(in oklab,#4DD86F 10%,transparent); }
+    }
+
+    /* SECTIONS */
+    .section { padding: 72px 0; border-bottom: 1px solid var(--rule); }
+    .section:last-of-type { border-bottom: none; }
+    .section-grid { display: grid; grid-template-columns: 260px 1fr; gap: 80px; align-items: start; }
+    .section-label { font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); padding-top: 4px; position: sticky; top: 80px; }
+    .section-h2 { font-size: clamp(1.75rem, 3vw, 2.5rem); font-weight: 500; line-height: 1.1; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 20px; }
+    .body-text { font-size: 1.0625rem; line-height: 1.7; color: var(--ink-2); }
+    .body-text + .body-text { margin-top: 16px; }
+
+    /* IMPACT NUMBERS */
+    .impact-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--rule); border: 1px solid var(--rule); margin-top: 48px; }
+    .impact-cell { background: var(--paper); padding: 32px 28px; }
+    .impact-number { font-size: 3.5rem; font-weight: 600; line-height: 1; letter-spacing: -0.04em; color: var(--ink); margin-bottom: 8px; }
+    .impact-number span { font-size: 2rem; font-weight: 400; color: var(--ink-3); }
+    .impact-desc { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--ink-3); line-height: 1.5; letter-spacing: 0.03em; }
+
+    /* ARTIFACT GRID */
+    .artifact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 32px; }
+    .artifact-card { border: 1px solid var(--rule); background: var(--paper-2); padding: 28px; display: flex; flex-direction: column; gap: 12px; }
+    .artifact-icon { width: 32px; height: 32px; }
+    .artifact-title { font-size: 1rem; font-weight: 500; color: var(--ink); }
+    .artifact-desc { font-size: 0.875rem; line-height: 1.6; color: var(--ink-3); font-family: 'JetBrains Mono', monospace; }
+
+    /* PROCESS STEPS */
+    .process-list { display: flex; flex-direction: column; margin-top: 32px; }
+    .process-step { display: grid; grid-template-columns: 48px 1fr; gap: 24px; padding: 28px 0; border-bottom: 1px solid var(--rule); align-items: start; }
+    .process-step:last-child { border-bottom: none; }
+    .step-num { font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; font-weight: 500; color: var(--ink-4); letter-spacing: 0.06em; padding-top: 3px; }
+    .step-body { display: flex; flex-direction: column; gap: 6px; }
+    .step-title { font-size: 1rem; font-weight: 500; color: var(--ink); }
+    .step-detail { font-size: 0.9375rem; line-height: 1.6; color: var(--ink-2); }
+
+    /* HERO ILLUSTRATION */
+    .hero-visual { width: 100%; aspect-ratio: 4/3; background: var(--paper-3); border: 1px solid var(--rule); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+
+    /* TAGS */
+    .tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+    .tag { font-family: 'JetBrains Mono', monospace; font-size: 0.625rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); border: 1px solid var(--rule); padding: 5px 10px; }
+
+    /* QUOTE */
+    .callout { border-left: 2px solid var(--handson); padding: 20px 28px; background: var(--paper-2); margin-top: 32px; }
+    .callout p { font-size: 1.125rem; line-height: 1.6; color: var(--ink); font-weight: 500; letter-spacing: -0.01em; }
+
+    /* SCREENS */
+    .screens-section { padding: 72px 0; border-bottom: 1px solid var(--rule); }
+    .screens-label { font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 32px; display: block; }
+    .screens-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .screen-full { grid-column: 1 / -1; }
+    .screen-fig { display: flex; flex-direction: column; gap: 10px; }
+    .screen-fig img { width: 100%; border: 1px solid var(--rule); display: block; background: var(--paper-3); }
+    .screen-caption { font-family: 'JetBrains Mono', monospace; font-size: 0.625rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-4); }
+
+    /* FOOTER NAV */
+    .foot-nav { display: flex; justify-content: space-between; align-items: center; padding: 48px 0 0; border-top: 1px solid var(--rule); margin-top: 80px; }
+    .foot-nav a { font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); text-decoration: none; }
+    .foot-nav a:hover { color: var(--ink); }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .page { padding: 0 32px 80px; }
+      .hero { grid-template-columns: 1fr; gap: 40px; }
+      .section-grid { grid-template-columns: 1fr; gap: 24px; }
+      .section-label { position: static; }
+      .impact-row { grid-template-columns: 1fr; }
+      .artifact-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .page { padding: 0 20px 60px; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a class="nav-lockup" href="./index.html">
+      <div class="nav-mark"><div class="nav-mark-inner"></div></div>
+      <div class="nav-wordmark">
+        <span class="nav-l1">Product Design</span>
+      </div>
+    </a>
+    <a class="nav-back" href="./index.html#work">← Back to work</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div>
+      <p class="hero-eyebrow">02 · Internal Tool · B2B · Google</p>
+      <h1 class="hero-title">Ra<em>dar</em>.</h1>
+      <p class="hero-sub">Data center asset monitoring system processing 100M+ data points across Google's infrastructure — built to detect anomalies before they become outages.</p>
+      <div class="tag-row">
+        <span class="tag">Anomaly Detection</span>
+        <span class="tag">Alerting Platform</span>
+        <span class="tag">Internal Tool</span>
+        <span class="tag">Fine-grained Auth</span>
+        <span class="tag">Production Launch</span>
+      </div>
+    </div>
+    <div class="hero-meta">
+      <div class="meta-block">
+        <span class="meta-label">Status</span>
+        <span class="status-chip"><span class="status-dot"></span>Live in production</span>
+      </div>
+      <div class="meta-block">
+        <span class="meta-label">Client</span>
+        <span class="meta-value">Google</span>
+      </div>
+      <div class="meta-block">
+        <span class="meta-label">My Role</span>
+        <span class="meta-value">Lead Interaction Designer</span>
+      </div>
+      <div class="meta-block">
+        <span class="meta-label">Team</span>
+        <span class="meta-value-mono">1 Lead Designer (me) · 1 Product Owner<br>1 Lead Developer · 6 Engineering & UX contractors</span>
+      </div>
+      <div class="meta-block">
+        <span class="meta-label">Deliverables</span>
+        <span class="meta-value-mono">MVP flows · Production-ready screens<br>Auth design · Dev handoff</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SITUATION -->
+  <section class="section">
+    <div class="section-grid">
+      <p class="section-label">01 — Situation</p>
+      <div>
+        <h2 class="section-h2">Flying blind across 100M+ data points.</h2>
+        <p class="body-text">Google's data center operations were running without adequate real-time visibility into their own infrastructure. Hardware and software failures — server crashes, power outages, network interruptions — could go completely unnoticed until they caused serious service disruptions or data loss.</p>
+        <p class="body-text">Without a centralized monitoring platform, ops teams had no way to track critical metrics like CPU usage, memory load, disk space, or network throughput. There was no mechanism to detect performance degradation or bottlenecks before they reached users. The absence of a unified alerting system meant reactive firefighting instead of proactive prevention.</p>
+        <div class="callout">
+          <p>"You can't track what you can't see — and without visibility, degradation becomes disruption."</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROLE -->
+  <section class="section">
+    <div class="section-grid">
+      <p class="section-label">02 — My Role</p>
+      <div>
+        <h2 class="section-h2">Lead Interaction Designer, from requirements to production.</h2>
+        <p class="body-text">I worked directly with the lead developer and product owner to design and implement a new internal frontend for the anomaly detection and alerting platform. I was also responsible for leading the first implementation of fine-grained auth capabilities for the team — a technically complex constraint that shaped many of the design decisions.</p>
+        <p class="body-text">Beyond hands-on design, I managed work assignments for up to 6 engineering and UX contractors at a time — coordinating technical requirements across business users and engineering, and keeping the team aligned on priorities through the MVP and into production.</p>
+        <div class="artifact-grid">
+          <div class="artifact-card">
+            <svg class="artifact-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="4" y="4" width="24" height="24" rx="2" stroke="#141413" stroke-width="1.2" opacity="0.4"/>
+              <line x1="4" y1="12" x2="28" y2="12" stroke="#141413" stroke-width="1" opacity="0.2"/>
+              <line x1="12" y1="12" x2="12" y2="28" stroke="#141413" stroke-width="1" opacity="0.2"/>
+              <circle cx="20" cy="20" r="4" fill="#E5FF60"/>
+            </svg>
+            <span class="artifact-title">Design Leadership</span>
+            <span class="artifact-desc">Managed 6 engineering & UX contractors. Coordinated across business users and engineering.</span>
+          </div>
+          <div class="artifact-card">
+            <svg class="artifact-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="16" cy="16" r="11" stroke="#141413" stroke-width="1.2" opacity="0.4"/>
+              <circle cx="16" cy="16" r="6" stroke="#141413" stroke-width="1" opacity="0.2"/>
+              <circle cx="16" cy="16" r="2.5" fill="#141413" opacity="0.6"/>
+              <line x1="16" y1="5" x2="16" y2="8" stroke="#141413" stroke-width="1.2" opacity="0.3"/>
+              <line x1="16" y1="24" x2="16" y2="27" stroke="#141413" stroke-width="1.2" opacity="0.3"/>
+              <line x1="5" y1="16" x2="8" y2="16" stroke="#141413" stroke-width="1.2" opacity="0.3"/>
+              <line x1="24" y1="16" x2="27" y2="16" stroke="#141413" stroke-width="1.2" opacity="0.3"/>
+            </svg>
+            <span class="artifact-title">Auth Architecture</span>
+            <span class="artifact-desc">First use of fine-grained auth capabilities for the team — a foundational technical constraint.</span>
+          </div>
+          <div class="artifact-card">
+            <svg class="artifact-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="6" y="8" width="20" height="16" rx="2" stroke="#141413" stroke-width="1.2" opacity="0.4"/>
+              <line x1="10" y1="13" x2="22" y2="13" stroke="#141413" stroke-width="1" opacity="0.25"/>
+              <line x1="10" y1="17" x2="18" y2="17" stroke="#141413" stroke-width="1" opacity="0.2"/>
+              <line x1="10" y1="21" x2="20" y2="21" stroke="#141413" stroke-width="1" opacity="0.2"/>
+            </svg>
+            <span class="artifact-title">MVP & Critical Flows</span>
+            <span class="artifact-desc">Designed p0 and p1 flows for validation and production-ready handoff to engineering.</span>
+          </div>
+          <div class="artifact-card">
+            <svg class="artifact-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <polyline points="6,22 12,14 18,18 26,8" stroke="#141413" stroke-width="1.2" opacity="0.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="26" cy="8" r="2.5" fill="#4DD86F"/>
+              <line x1="6" y1="26" x2="28" y2="26" stroke="#141413" stroke-width="1" opacity="0.15"/>
+              <line x1="6" y1="6" x2="6" y2="26" stroke="#141413" stroke-width="1" opacity="0.15"/>
+            </svg>
+            <span class="artifact-title">Requirements Coordination</span>
+            <span class="artifact-desc">Aligned technical requirements between business users, engineers, and the product owner.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="section">
+    <div class="section-grid">
+      <p class="section-label">03 — Design Process</p>
+      <div>
+        <h2 class="section-h2">From ambiguity to production in structured phases.</h2>
+        <p class="body-text">The challenge was translating complex infrastructure monitoring data into actionable, scannable UX — for ops engineers who needed speed, clarity, and precision under pressure.</p>
+        <div class="process-list">
+          <div class="process-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <span class="step-title">Requirements & Technical Scoping</span>
+              <span class="step-detail">Coordinated with the lead developer and product owner to map technical constraints, data structures, and alerting rules. The fine-grained auth model required early alignment to avoid downstream redesigns.</span>
+            </div>
+          </div>
+          <div class="process-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <span class="step-title">Architecture & Information Design</span>
+              <span class="step-detail">Defined the information architecture for the monitoring dashboard — organizing 100M+ data points into scannable hierarchies. Prioritized anomaly alerts, asset health, and real-time metric visibility as the core p0 flows.</span>
+            </div>
+          </div>
+          <div class="process-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <span class="step-title">MVP Flow Design</span>
+              <span class="step-detail">Designed the MVP and critical interaction flows with the product team — covering anomaly detection views, alerting states, asset drill-down, and auth-based access levels. Iterated rapidly with lo-fi to hi-fi.</span>
+            </div>
+          </div>
+          <div class="process-step">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <span class="step-title">Production-Ready Screens</span>
+              <span class="step-detail">Created production-ready, developer-annotated screens across p0 and p1 flows. Validated requirements with the lead developer and product owner before handoff to engineering.</span>
+            </div>
+          </div>
+          <div class="process-step">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <span class="step-title">Launch & Multi-Environment Deployment</span>
+              <span class="step-detail">Supported launch across Production, Staging, and Autopush environments — verifying design integrity and flagging regressions through each deployment milestone.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCREENS -->
+  <section class="screens-section">
+    <div style="max-width:1152px;">
+      <span class="screens-label">UI Screens · Production</span>
+      <div class="screens-grid">
+        <figure class="screen-fig screen-full">
+          <img src="./img/radar-screens.png" alt="Radar — Detector detail panels showing parameter configuration, alert details, and error states"/>
+          <figcaption class="screen-caption">Detector detail flows — parameter config · alert details · error states</figcaption>
+        </figure>
+        <figure class="screen-fig">
+          <img src="./img/radar-dashboard.png" alt="Radar — Main detectors dashboard with 17,505 total alerts and 64.3% accuracy"/>
+          <figcaption class="screen-caption">Detectors dashboard — 17,505 alerts · 64.3% accuracy</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section class="section">
+    <div class="section-grid">
+      <p class="section-label">04 — Results</p>
+      <div>
+        <h2 class="section-h2">Shipped to production. Across three environments.</h2>
+        <p class="body-text">Radar launched successfully in Production, Staging, and Autopush environments. The platform gave Google's data center ops teams their first real-time, unified view of infrastructure health — enabling proactive anomaly detection before failures reached users.</p>
+        <p class="body-text">All p0 and p1 flows were validated, production-ready, and handed off to engineering with zero redesign cycles post-launch. The fine-grained auth system became a reference implementation for the team.</p>
+        <div class="impact-row">
+          <div class="impact-cell">
+            <div class="impact-number">100<span>M+</span></div>
+            <div class="impact-desc">Data points processed<br>by the platform</div>
+          </div>
+          <div class="impact-cell">
+            <div class="impact-number">3</div>
+            <div class="impact-desc">Environments launched:<br>Production · Staging · Autopush</div>
+          </div>
+          <div class="impact-cell">
+            <div class="impact-number">6</div>
+            <div class="impact-desc">Engineering & UX contractors<br>managed through delivery</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOT NAV -->
+  <div class="foot-nav">
+    <a href="./index.html#work">← All projects</a>
+    <a href="./opsmind.html">Next: OpsMind →</a>
+  </div>
+
+</div>
+</body>
+</html>
