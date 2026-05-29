@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CAWF — Raul Chavez</title>
+  <link rel="icon" type="image/x-icon" href="./img/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --paper: #FFFFFF;
+      --paper-2: #FAFAF9;
+      --paper-3: #F3F2EF;
+      --ink: #141413;
+      --ink-2: #3F3D3A;
+      --ink-3: #84827D;
+      --ink-4: #B5B3AE;
+      --rule: rgba(20,20,19,0.10);
+      --rule-strong: #141413;
+      --handson: #E5FF60;
+      --focus: #4DD86F;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Instrument Sans', system-ui, sans-serif;
+      font-size: 1rem;
+      line-height: 1.55;
+    }
+    .page { width: 100%; max-width: 1280px; margin: 0 auto; padding: 0 64px 120px; }
+
+    /* NAV */
+    .nav { display: flex; justify-content: space-between; align-items: center; padding: 22px 0; border-bottom: 1px solid var(--rule); position: sticky; top: 0; background: var(--paper); z-index: 100; }
+    .nav-lockup { display: flex; align-items: center; gap: 8px; text-decoration: none; }
+    .nav-mark { width: 22px; height: 22px; background: var(--ink); display: flex; align-items: center; justify-content: center; }
+    .nav-mark-inner { width: 8px; height: 8px; border-radius: 50%; background: var(--paper); }
+    .nav-l1 { font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); }
+    .nav-back { font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); text-decoration: none; }
+    .nav-back:hover { color: var(--ink); }
+
+    /* HERO */
+    .hero { padding: 80px 0 72px; border-bottom: 1px solid var(--rule); display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: end; }
+    .hero-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 20px; }
+    .hero-title { font-size: clamp(4rem, 9vw, 8rem); font-weight: 600; line-height: 0.92; letter-spacing: -0.04em; color: var(--ink); margin-bottom: 24px; }
+    .hero-title em { font-style: normal; background: linear-gradient(to bottom, transparent 55%, var(--handson) 55%); }
+    .hero-sub { font-size: 1.125rem; line-height: 1.6; color: var(--ink-2); max-width: 480px; }
+    .hero-meta { display: flex; flex-direction: column; gap: 28px; }
+    .meta-block { display: flex; flex-direction: column; gap: 6px; }
+    .meta-label { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-4); }
+    .meta-value { font-size: 1rem; font-weight: 500; color: var(--ink); }
+    .meta-value-mono { font-family: 'JetBrains Mono', monospace; font-size: 0.8125rem; color: var(--ink-3); line-height: 1.6; }
+    .status-chip { display: inline-flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--focus); }
+    .status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--focus); box-shadow: 0 0 0 3px color-mix(in oklab, #4DD86F 22%, transparent); animation: halo 3.2s ease-in-out infinite; }
+    @keyframes halo { 0%,100% { box-shadow: 0 0 0 3px color-mix(in oklab,#4DD86F 22%,transparent); } 50% { box-shadow: 0 0 0 5px color-mix(in oklab,#4DD86F 10%,transparent); } }
+
+    /* SECTIONS */
+    .section { padding: 72px 0; border-bottom: 1px solid var(--rule); }
+    .section-grid { display: grid; grid-template-columns: 260px 1fr; gap: 80px; align-items: start; }
+    .section-label { font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); padding-top: 4px; position: sticky; top: 80px; }
+    .section-h2 { font-size: clamp(1.75rem, 3vw, 2.5rem); font-weight: 500; line-height: 1.1; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 20px; }
+    .body-text { font-size: 1.0625rem; line-height: 1.7; color: var(--ink-2); }
+    .body-text + .body-text { margin-top: 16px; }
+
+    /* TAGS */
+    .tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+    .tag { font-family: 'JetBrains Mono', monospace; font-size: 0.625rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); border: 1px solid var(--rule); padding: 5px 10px; }
+
+    /* CALLOUT */
+    .callout { border-left: 2px solid var(--handson); padding: 20px 28px; background: var(--paper-2); margin-top: 32px; }
+    .callout p { font-size: 1.125rem; line-height: 1.6; color: var(--ink); font-weight: 500; letter-spacing: -0.01em; }
+
+    /* CONSTRAINT ROW */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 32px; }
+    .info-card { background: var(--paper-3); padding: 24px; border: 1px solid var(--rule); }
+    .info-label { font-family: 'JetBrains Mono', monospace; font-size: 0.625rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-4); margin-bottom: 10px; }
+    .info-text { font-size: 0.9375rem; line-height: 1.6; color: var(--ink-2); }
+
+    /* ISSUES GRID */
+    .issues-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--rule); border: 1px solid var(--rule); margin-top: 32px; }
+    .issue-cell { background: var(--paper); padding: 20px; }
+    .issue-icon { width: 28px; height: 28px; margin-bottom: 10px; }
+    .issue-title { font-size: 0.875rem; font-weight: 500; color: var(--ink); line-height: 1.3; margin-bottom: 6px; }
+    .issue-detail { font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; color: var(--ink-3); line-height: 1.5; }
+
+    /* ARTIFACT GRID */
+    .artifact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 32px; }
+    .artifact-card { border: 1px solid var(--rule); background: var(--paper-2); padding: 28px; display: flex; flex-direction: column; gap: 12px; }
+    .artifact-icon { width: 32px; height: 32px; }
+    .artifact-title { font-size: 1rem; font-weight: 500; color: var(--ink); }
+    .artifact-desc { font-size: 0.875rem; line-height: 1.6; color: var(--ink-3); font-family: 'JetBrains Mono', monospace; }
+
+    /* PROCESS STEPS */
+    .process-list { display: flex; flex-direction: column; margin-top: 32px; }
+    .process-step { display: grid; grid-template-columns: 48px 1fr; gap: 24px; padding: 28px 0; border-bottom: 1px solid var(--rule); align-items: start; }
+    .process-step:last-child { border-bottom: none; }
+    .step-num { font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; font-weight: 500; color: var(--ink-4); letter-spacing: 0.06em; padding-top: 3px; }
+    .step-body { display: flex; flex-direction: column; gap: 6px; }
+    .step-title { font-size: 1rem; font-weight: 500; color: var(--ink); }
+    .step-detail { font-size: 0.9375rem; line-height: 1.6; color: var(--ink-2); }
+    .step-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+    .step-tag { font-family: 'JetBrains Mono', monospace; font-size: 0.5625rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-4); border: 1px solid var(--rule); padding: 3px 7px; }
+
+    /* IMPACT NUMBERS */
+    .impact-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--rule); border: 1px solid var(--rule); margin-top: 48px; }
+    .impact-cell { background: var(--paper); padding: 32px 28px; }
+    .impact-number { font-size: 3.5rem; font-weight: 600; line-height: 1; letter-spacing: -0.04em; color: var(--ink); margin-bottom: 8px; }
+    .impact-number span { font-size: 2rem; font-weight: 400; color: var(--ink-3); }
+    .impact-desc { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--ink-3); line-height: 1.5; letter-spacing: 0.03em; }
+
+    /* FOOTER NAV */
+    .foot-nav { display: flex; justify-content: space-between; align-items: center; padding: 48px 0 0; border-top: 1px solid var(--rule); margin-top: 80px; }
+    .foot-nav a { font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); text-decoration: none; }
+    .foot-nav a:hover { color: var(--ink); }
+
+    @media (max-width: 900px) {
+      .page { padding: 0 32px 80px; }
+      .hero { grid-template-columns: 1fr; gap: 40px; }
+      .section-grid { grid-template-columns: 1fr; gap: 24px; }
+      .section-label { position: static; }
+      .impact-row, .issues-grid { grid-template-columns: 1fr 1fr; }
+      .artifact-grid, .two-col { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .page { padding: 0 20px 60px; }
+      .issues-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a class="nav-lockup" href="./index.html">
+      <div class="nav-mark"><div class="nav-mark-inner"></div></div>
+      <div class="nav-wordmark"><span class="nav-l1">Product Design</span></div>
+    </a>
+    <a class="nav-back" href="./index.html#work">← Back to work</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div>
+      <p class="hero-eyebrow">04 · B2C · Customer Platform · Google</p>
+      <h1 class="hero-title"><em>CAWF</em>.</h1>
+      <p class="hero-sub">Optimizing Gen AI conversational workflows across 35M monthly support sessions — a data-driven audit that uncovered up to $29M in annual support cost savings for Google.</p>
+      <div class="tag-row">
+        <span class="tag">Gen AI</span>
+        <span class="tag">Conversational UX</span>
+        <span class="tag">SEO Analysis</span>
+        <span class="tag">Call Forensics</span>
+        <span class="tag">Journey Mapping</span>
+        <span class="tag">Metrics Program</span>
+        <span class="tag">Google Play · gStore</span>
+      </div>
+    </div>
+    <div class="hero-meta">
+      <div class="meta-block">
+        <span class="meta-label">Status</span>
+        <span class="status-chip"><span class="status-dot"></span>Live in production</span>
+      </div>
+      <div class="meta-block">
+        <span class="meta-label">Client</span>
+        <span class="meta-value">Google</span>
+      </div>
+      <div class="meta-block">
+        <span class="meta-label">My Role</span>
+        <span class="meta-value">Staff Product Designer</span>
+      </div>
+      <div class="meta-block">
+        <span class="meta-label">Team</span>
+        <span class="meta-value-mono">Lead Researcher · UX Researcher<br>Data Analyst · SEO Specialist<br>Content Specialist · PM</span>
+      </div>
+      <div class="meta-block">
+        <span class="meta-label">Scope</span>
+        <span class="meta-value-mono">Google Play · gStore<br>Post-purchase support journeys</span>
+      </div>
+      <div class="meta-block">
+        <span class="meta-label">Deliverables</span>
+        <span class="meta-value-mono">Metrics program · Journey maps<br>QA framework · Key suggestions deck<br>Experiment plan · Bug tickets</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SITUATION -->
+  <section class="section">
+    <div class="section-grid">
+      <p class="section-label">01 — Situation</p>
+      <div>
+        <h2 class="section-h2">35 million support sessions a month. Most of them failing.</h2>
+        <p class="body-text">Every month, more than 35 million users reached out to Google's support services to resolve an issue. A significant portion of those sessions escalated to a human agent — and every escalation is a direct cost to the business. Google's Gen AI conversational workflows (cAWFs) were supposed to contain customers within self-service. The data showed they weren't.</p>
+        <p class="body-text">Significant investments had been made into Google's guided support experience (GSE) with the expectation of reducing contact volume. Instead, GSE was delivering a neutral experience — neither increasing nor decreasing escalations. The challenge was to understand <em>why</em> the cAWF experience wasn't working, and what was driving users to abandon self-service.</p>
+        <div class="two-col">
+          <div class="info-card">
+            <p class="info-label">The business goal</p>
+            <p class="info-text">Reduce escalation to human agents and increase CSAT — while keeping customers in self-service, the preferred and lowest-cost channel.</p>
+          </div>
+          <div class="info-card">
+            <p class="info-label">The research goal</p>
+            <p class="info-text">Build a scalable framework to measure cAWF efficacy, identify failure points, and quantify the cost savings potential of improvements.</p>
+          </div>
+        </div>
+        <div class="callout">
+          <p>"The challenge is to understand what is happening in the GSE experience and the drivers pushing the cAWF experience to not result in the expected reduction of contact volume."</p>
+        </div>
+
+        <!-- Issues found -->
+        <p style="font-family:'JetBrains Mono',monospace;font-size:0.6875rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-3);margin-top:48px;margin-bottom:0;">Key issues identified</p>
+        <div class="issues-grid">
+          <div class="issue-cell">
+            <svg class="issue-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="14" cy="14" r="10" stroke="#141413" stroke-width="1" opacity="0.25"/>
+              <line x1="14" y1="8" x2="14" y2="15" stroke="#141413" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+              <circle cx="14" cy="18" r="1.2" fill="#141413" opacity="0.5"/>
+            </svg>
+            <p class="issue-title">Incorrect entry point</p>
+            <p class="issue-detail">Users reaching wrong cAWF for their transaction type</p>
+          </div>
+          <div class="issue-cell">
+            <svg class="issue-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="6" y="8" width="16" height="12" rx="2" stroke="#141413" stroke-width="1" opacity="0.25"/>
+              <line x1="10" y1="13" x2="18" y2="13" stroke="#141413" stroke-width="1.2" opacity="0.3"/>
+              <line x1="14" y1="13" x2="14" y2="18" stroke="#141413" stroke-width="1" opacity="0.2"/>
+            </svg>
+            <p class="issue-title">Transaction not completable</p>
+            <p class="issue-detail">Users unable to finalize refunds or purchases through cAWF</p>
+          </div>
+          <div class="issue-cell">
+            <svg class="issue-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 20 L14 8 L21 20 Z" stroke="#141413" stroke-width="1" opacity="0.25" fill="none"/>
+              <line x1="14" y1="13" x2="14" y2="16" stroke="#141413" stroke-width="1.2" stroke-linecap="round" opacity="0.4"/>
+              <circle cx="14" cy="18" r="1" fill="#141413" opacity="0.4"/>
+            </svg>
+            <p class="issue-title">Abandonment & refund UX</p>
+            <p class="issue-detail">Refund status unclear, driving unnecessary escalation</p>
+          </div>
+          <div class="issue-cell">
+            <svg class="issue-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="5" y="6" width="18" height="16" rx="2" stroke="#141413" stroke-width="1" opacity="0.25"/>
+              <line x1="9" y1="11" x2="19" y2="11" stroke="#141413" stroke-width="1" opacity="0.2"/>
+              <line x1="9" y1="15" x2="15" y2="15" stroke="#141413" stroke-width="1" opacity="0.2"/>
+            </svg>
+            <p class="issue-title">Limited troubleshooting</p>
+            <p class="issue-detail">Troubleshooting options insufficient, pushing users to agents</p>
+          </div>
+          <div class="issue-cell">
+            <svg class="issue-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="14" cy="14" r="9" stroke="#141413" stroke-width="1" opacity="0.25"/>
+              <path d="M10 14 L14 18 L18 10" stroke="#141413" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.4"/>
+            </svg>
+            <p class="issue-title">Contact CTA placement</p>
+            <p class="issue-detail">Support agent CTA positioned too prominently at end of cAWF</p>
+          </div>
+          <div class="issue-cell">
+            <svg class="issue-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="6" y="5" width="10" height="14" rx="1.5" stroke="#141413" stroke-width="1" opacity="0.25"/>
+              <rect x="12" y="9" width="10" height="14" rx="1.5" stroke="#141413" stroke-width="1" opacity="0.2"/>
+              <line x1="9" y1="9" x2="14" y2="9" stroke="#141413" stroke-width="0.75" opacity="0.15"/>
+            </svg>
+            <p class="issue-title">Multiple requests blocked</p>
+            <p class="issue-detail">Users unable to handle more than one issue per session</p>
+          </div>
+          <div class="issue-cell">
+            <svg class="issue-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <polyline points="6,20 10,13 14,16 18,10 22,13" stroke="#141413" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.35" fill="none"/>
+              <circle cx="22" cy="13" r="2" fill="#E5FF60"/>
+            </svg>
+            <p class="issue-title">Navigation usability</p>
+            <p class="issue-detail">Poor navigation structure creating confusion and dead ends</p>
+          </div>
+          <div class="issue-cell">
+            <svg class="issue-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8 20 C8 15 12 12 14 12 C16 12 20 15 20 20" stroke="#141413" stroke-width="1" opacity="0.25" fill="none" stroke-linecap="round"/>
+              <path d="M11 14 C11 11 14 9 14 9" stroke="#141413" stroke-width="1" opacity="0.2" fill="none" stroke-linecap="round"/>
+              <circle cx="14" cy="8" r="2" stroke="#141413" stroke-width="1" opacity="0.2"/>
+            </svg>
+            <p class="issue-title">Language mismatch</p>
+            <p class="issue-detail">cAWF copy not matching how customers phrase their queries</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROLE -->
+  <section class="section">
+    <div class="section-grid">
+      <p class="section-label">02 — My Role</p>
+      <div>
+        <h2 class="section-h2">Staff Product Designer — leading a multidisciplinary team.</h2>
+        <p class="body-text">I led the UX workstream of the cAWF efficacy study, working as part of the Shannon Rodberg CX/UX team at Google. My role spanned the full arc of the engagement: structuring the research approach, leading stakeholder and SME interviews, defining the metrics program, orchestrating the data-driven audit, and translating findings into prioritized recommendations.</p>
+        <p class="body-text">I managed a cross-functional team — UX researcher, data analyst, SEO specialist, and content specialist — across two parallel scrum tracks (Delivery Issues cAWFs and Play cAWFs) running simultaneously. The output was a scalable optimization framework that xFN teams across Google could apply to their own cAWFs.</p>
+        <div class="artifact-grid">
+          <div class="artifact-card">
+            <svg class="artifact-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="4" y="6" width="24" height="20" rx="2" stroke="#141413" stroke-width="1.2" opacity="0.4"/>
+              <line x1="4" y1="12" x2="28" y2="12" stroke="#141413" stroke-width="0.75" opacity="0.2"/>
+              <polyline points="9,18 13,22 23,14" stroke="#4DD86F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="artifact-title">Success Metrics Program</span>
+            <span class="artifact-desc">Hypothesis framework to measure cAWF efficacy, track escalation rates, CSAT impact, and ROI of each optimization.</span>
+          </div>
+          <div class="artifact-card">
+            <svg class="artifact-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="10" cy="16" r="4" stroke="#141413" stroke-width="1.2" opacity="0.4"/>
+              <circle cx="22" cy="10" r="4" stroke="#141413" stroke-width="1.2" opacity="0.3"/>
+              <circle cx="22" cy="22" r="4" stroke="#141413" stroke-width="1.2" opacity="0.3"/>
+              <line x1="14" y1="16" x2="18" y2="12" stroke="#141413" stroke-width="0.75" opacity="0.25" stroke-dasharray="2 2"/>
+              <line x1="14" y1="16" x2="18" y2="20" stroke="#141413" stroke-width="0.75" opacity="0.25" stroke-dasharray="2 2"/>
+            </svg>
+            <span class="artifact-title">Stakeholder & SME Interviews</span>
+            <span class="artifact-desc">Structured interviews across all cAWF stakeholder types: product owners, technical SMEs, GStore product team, and GSE leadership.</span>
+          </div>
+          <div class="artifact-card">
+            <svg class="artifact-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <polyline points="4,22 10,14 16,18 22,10 28,13" stroke="#141413" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.4" fill="none"/>
+              <rect x="4" y="23" width="24" height="1" rx="0.5" fill="#141413" opacity="0.1"/>
+              <circle cx="22" cy="10" r="3" fill="#E5FF60"/>
+            </svg>
+            <span class="artifact-title">Journey Mapping & Call Forensics</span>
+            <span class="artifact-desc">End-to-end journey maps of post-purchase support flows, combined with call forensics to identify escalation trigger points.</span>
+          </div>
+          <div class="artifact-card">
+            <svg class="artifact-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="4" y="8" width="12" height="8" rx="2" stroke="#141413" stroke-width="1" opacity="0.3"/>
+              <rect x="4" y="19" width="12" height="5" rx="2" fill="#E5FF60" opacity="0.8"/>
+              <line x1="20" y1="10" x2="28" y2="10" stroke="#141413" stroke-width="1.2" opacity="0.2"/>
+              <line x1="20" y1="14" x2="28" y2="14" stroke="#141413" stroke-width="1.2" opacity="0.15"/>
+              <line x1="20" y1="18" x2="25" y2="18" stroke="#141413" stroke-width="1.2" opacity="0.15"/>
+              <line x1="20" y1="22" x2="28" y2="22" stroke="#141413" stroke-width="1.2" opacity="0.2"/>
+            </svg>
+            <span class="artifact-title">SEO & Data Mining</span>
+            <span class="artifact-desc">Analyzed thousands of data points from Google Pulse and Speakeasy — keyword analysis, search volume, and user query patterns.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="section">
+    <div class="section-grid">
+      <p class="section-label">03 — Design Process</p>
+      <div>
+        <h2 class="section-h2">A systematic, data-driven audit — from discovery to experiment.</h2>
+        <p class="body-text">The engagement followed a structured two-month research arc, built around a core discovery model that fed directly into prioritized optimization recommendations. Two scrum teams ran in parallel — one focused on Delivery Issues cAWFs, one on Play cAWFs — converging on the same hypothesis and metrics framework.</p>
+
+        <div class="process-list">
+          <div class="process-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <span class="step-title">Research Intake & SEO / Keyword Analysis</span>
+              <span class="step-detail">Scoped the cAWF landscape, prioritized which workflows to audit, established tooling and dataset access. Ran keyword and SEO analysis to map the gap between how users phrase queries and how the cAWF was written — this became the foundation for the language mismatch findings.</span>
+              <div class="step-tags"><span class="step-tag">SEO</span><span class="step-tag">Keyword analysis</span><span class="step-tag">Scoping</span></div>
+            </div>
+          </div>
+          <div class="process-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <span class="step-title">cAWF Transcript Reading — Success & Escalation Samples</span>
+              <span class="step-detail">Read and coded thousands of conversation transcripts from Google Pulse and Speakeasy — separating successful self-service resolutions from escalated sessions. Identified the exact failure moments: where users abandoned, where language broke down, and where the system dead-ended.</span>
+              <div class="step-tags"><span class="step-tag">Transcript analysis</span><span class="step-tag">Google Pulse</span><span class="step-tag">Speakeasy</span></div>
+            </div>
+          </div>
+          <div class="process-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <span class="step-title">Screen Flows & User Interaction % Analysis</span>
+              <span class="step-detail">Mapped user interaction percentages across each cAWF screen flow — identifying drop-off points, low-engagement CTAs, and the steps where escalation was most likely to trigger. This quantitative layer grounded every qualitative finding in measurable data.</span>
+              <div class="step-tags"><span class="step-tag">Interaction data</span><span class="step-tag">Drop-off analysis</span><span class="step-tag">Screen flows</span></div>
+            </div>
+          </div>
+          <div class="process-step">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <span class="step-title">Stakeholder & SME Interviews</span>
+              <span class="step-detail">Conducted structured interviews across four stakeholder types: all-stakeholder sessions (vision and context), technical SME interviews (system constraints), GStore product cAWF interviews (product ecosystem), and product cAWF interviews (user interaction and technical perspective). Each interview type had a tailored script and question framework.</span>
+              <div class="step-tags"><span class="step-tag">SME interviews</span><span class="step-tag">Stakeholder alignment</span><span class="step-tag">GStore</span></div>
+            </div>
+          </div>
+          <div class="process-step">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <span class="step-title">Journey Mapping & Call Forensics</span>
+              <span class="step-detail">Mapped full post-purchase customer journeys across Google Play and gStore — combining screen flow data, transcript analysis, and SME input into end-to-end journey maps. Call forensics identified the specific language and UX patterns that most reliably triggered escalation versus self-resolution.</span>
+              <div class="step-tags"><span class="step-tag">Journey mapping</span><span class="step-tag">Call forensics</span><span class="step-tag">Heuristics</span></div>
+            </div>
+          </div>
+          <div class="process-step">
+            <span class="step-num">06</span>
+            <div class="step-body">
+              <span class="step-title">QA Framework, Hypothesis & Impact/Effort Mapping</span>
+              <span class="step-detail">Built a QA framework that defined standards for cAWF quality — learnings and opportunity areas structured into testable hypotheses. Each hypothesis was scored against impact and effort to produce a prioritized list of quick wins, quick fixes, and longer-term improvements.</span>
+              <div class="step-tags"><span class="step-tag">QA framework</span><span class="step-tag">Hypothesis</span><span class="step-tag">Impact/effort</span></div>
+            </div>
+          </div>
+          <div class="process-step">
+            <span class="step-num">07</span>
+            <div class="step-body">
+              <span class="step-title">Experiment Plan & Key Suggestions</span>
+              <span class="step-detail">Translated findings into a structured experiment plan with mockups — covering quick wins (like language alignment, CTA repositioning) through to larger structural optimizations. Delivered the Play cAWF Key Suggestions deck to PSM stakeholders for review, alignment, and ownership assignment before implementation.</span>
+              <div class="step-tags"><span class="step-tag">Experiment plan</span><span class="step-tag">Mockups</span><span class="step-tag">Bug tickets</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section class="section">
+    <div class="section-grid">
+      <p class="section-label">04 — Results</p>
+      <div>
+        <h2 class="section-h2">$29M in potential savings. A scalable framework for Google.</h2>
+        <p class="body-text">The team uncovered systemic inefficiencies across Google Play and gStore post-purchase journeys — producing a comprehensive prioritized requirements list and optimization roadmap. Quick wins were documented as bug tickets for immediate implementation; larger structural improvements were packaged as experiment plans for PSM-led workstreams.</p>
+        <p class="body-text">Beyond the immediate recommendations, the engagement produced a scalable framework for measuring and optimizing cAWF quality — one that xFN gUP teams across Google could apply to their own workflows. The methodology became the standard for the cAWF efficacy study program.</p>
+        <div class="impact-row">
+          <div class="impact-cell">
+            <div class="impact-number">$29<span>M</span></div>
+            <div class="impact-desc">Future impact in support<br>cost savings unlocked</div>
+          </div>
+          <div class="impact-cell">
+            <div class="impact-number">35<span>M</span></div>
+            <div class="impact-desc">Monthly sessions across<br>Google Play & gStore</div>
+          </div>
+          <div class="impact-cell">
+            <div class="impact-number">2</div>
+            <div class="impact-desc">Parallel scrum teams<br>delivering simultaneously</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOT NAV -->
+  <div class="foot-nav">
+    <a href="./index.html#work">← All projects</a>
+    <a href="./opsmind.html">OpsMind →</a>
+  </div>
+
+</div>
+</body>
+</html>
