@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Raul Chavez — Design Lead</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --paper: #FFFFFF;
+      --paper-2: #FAFAF9;
+      --paper-3: #F3F2EF;
+      --ink: #141413;
+      --ink-2: #3F3D3A;
+      --ink-3: #84827D;
+      --ink-4: #B5B3AE;
+      --rule: rgba(20,20,19,0.10);
+      --rule-strong: #141413;
+      --handson: #E5FF60;
+      --focus: #4DD86F;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Instrument Sans', system-ui, sans-serif;
+      font-size: 1rem;
+      line-height: 1.55;
+    }
+    .page {
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 64px 80px;
+    }
+
+    /* NAV */
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 22px 0;
+      border-bottom: 1px solid var(--rule);
+      position: sticky;
+      top: 0;
+      background: var(--paper);
+      z-index: 100;
+    }
+    .nav-lockup { display: flex; align-items: center; gap: 8px; }
+    .nav-mark { width: 22px; height: 22px; background: var(--ink); display: flex; align-items: center; justify-content: center; }
+    .nav-mark-inner { width: 8px; height: 8px; border-radius: 50%; background: var(--paper); }
+    .nav-wordmark { display: flex; flex-direction: column; line-height: 1.1; }
+    .nav-l1 { font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); }
+    .nav-l2 { font-size: 0.6875rem; color: var(--ink-3); }
+    .nav-links { display: flex; gap: 32px; }
+    .nav-link { font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); text-decoration: none; }
+    .nav-link:hover { color: var(--ink); }
+
+    /* HERO */
+    .hero { padding: 80px 0 72px; border-bottom: 1px solid var(--rule); }
+    .hero-display {
+      font-size: clamp(5rem, 12vw, 10rem);
+      font-weight: 600;
+      line-height: 0.92;
+      letter-spacing: -0.04em;
+      color: var(--ink);
+      margin-bottom: 32px;
+    }
+    .mark-handson {
+      font-style: normal;
+      background: linear-gradient(to bottom, transparent 55%, var(--handson) 55%);
+    }
+    .mark-ai {
+      font-style: normal;
+      background: linear-gradient(to bottom, transparent 55%, var(--handson) 55%);
+    }
+    .hero-tags { display: flex; gap: 10px; align-items: center; margin-bottom: 72px; flex-wrap: wrap; }
+    .hero-tag { font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); }
+    .hero-sep { color: var(--ink-4); }
+    .hero-body { display: grid; grid-template-columns: 320px 1fr; gap: 80px; align-items: start; }
+    .hero-left-title { font-weight: 500; font-size: 1.375rem; line-height: 1.25; letter-spacing: -0.01em; color: var(--ink); margin-bottom: 16px; }
+    .mono-label { font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); }
+    .hero-about { font-size: 1.125rem; line-height: 1.6; color: var(--ink-2); }
+
+    /* SECTIONS */
+    .section { padding: 72px 0; border-bottom: 1px solid var(--rule); }
+    .section-grid { display: grid; grid-template-columns: 320px 1fr; gap: 80px; align-items: start; }
+    .section-h2 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 500; line-height: 1.1; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 16px; }
+    .section-sublabel { font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); line-height: 1.7; }
+
+    /* STATS */
+    .stats-list { display: flex; flex-direction: column; }
+    .stat-row { display: grid; grid-template-columns: 120px 1fr auto; align-items: start; gap: 32px; padding: 36px 0; border-bottom: 1px solid var(--rule); }
+    .stat-row:last-child { border-bottom: none; }
+    .stat-number { font-size: 4rem; font-weight: 600; line-height: 1; letter-spacing: -0.04em; font-variant-numeric: tabular-nums; color: var(--ink); padding-top: 2px; }
+    .stat-plus { font-size: 2rem; font-weight: 400; color: var(--ink-3); }
+    .stat-info { display: flex; flex-direction: column; gap: 6px; padding-top: 4px; }
+    .stat-title { font-size: 1.125rem; font-weight: 500; color: var(--ink); line-height: 1.2; }
+    .stat-desc { font-family: 'JetBrains Mono', monospace; font-size: 0.8125rem; color: var(--ink-3); letter-spacing: 0.03em; line-height: 1.5; }
+    .stat-meta { font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-4); text-align: right; white-space: nowrap; padding-top: 6px; }
+
+    /* WORK */
+    .work-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px 32px; }
+    .card { display: flex; flex-direction: column; }
+    .card-thumb { width: 100%; aspect-ratio: 4/3; background: var(--paper-3); border: 1px solid var(--rule); overflow: hidden; margin-bottom: 12px; }
+    .card-thumb svg { width: 100%; height: 100%; display: block; }
+    .card-status-row { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .status-dot.live {
+      background: var(--focus);
+      box-shadow: 0 0 0 3px color-mix(in oklab, #4DD86F 22%, transparent);
+      animation: halo 3.2s ease-in-out infinite;
+    }
+    @keyframes halo {
+      0%,100% { box-shadow: 0 0 0 3px color-mix(in oklab,#4DD86F 22%,transparent); }
+      50%      { box-shadow: 0 0 0 5px color-mix(in oklab,#4DD86F 10%,transparent); }
+    }
+    .card-project-name { font-size: 1rem; font-weight: 500; color: var(--ink); border-bottom: 1px solid var(--rule-strong); padding-bottom: 5px; margin-bottom: 6px; }
+    .card-meta { font-family: 'JetBrains Mono', monospace; font-size: 0.625rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 8px; }
+    .card-summary { font-size: 0.875rem; line-height: 1.55; color: var(--ink-2); }
+
+    /* DIAGRAM */
+    .diagram-wrap { width: 100%; border: 1px solid var(--rule); border-radius: 8px; background: var(--paper-2); padding: 24px 16px 16px; overflow: hidden; }
+    .phase-label { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; fill: #84827D; }
+    .d-node-title { font-family: 'Instrument Sans', sans-serif; font-size: 11px; font-weight: 500; fill: #141413; }
+    .d-node-sub { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; font-weight: 400; fill: #84827D; }
+    .d-ai-badge { font-family: 'JetBrains Mono', monospace; font-size: 8.5px; font-weight: 500; }
+
+    /* EXPERIENCE */
+    .exp-list { display: flex; flex-direction: column; }
+    .exp-item { padding: 28px 0; border-bottom: 1px solid var(--rule); }
+    .exp-item:last-child { border-bottom: none; }
+    .exp-date { font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; color: var(--ink-3); letter-spacing: 0.04em; margin-bottom: 6px; }
+    .exp-company { font-size: 1.125rem; font-weight: 500; color: var(--ink); margin-bottom: 2px; display: block; }
+    .exp-role { font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 10px; }
+    .exp-desc { font-size: 0.9375rem; line-height: 1.6; color: var(--ink-2); max-width: 600px; }
+
+    /* EDUCATION */
+    .edu-list { display: flex; flex-direction: column; }
+    .edu-item { padding: 24px 0; border-bottom: 1px solid var(--rule); }
+    .edu-item:last-child { border-bottom: none; }
+    .edu-year { font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; color: var(--ink-3); letter-spacing: 0.04em; margin-bottom: 4px; }
+    .edu-school { font-size: 1.125rem; font-weight: 500; color: var(--ink); margin-bottom: 2px; }
+    .edu-degree { font-size: 0.9375rem; color: var(--ink-2); }
+    .edu-field { font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; color: var(--ink-3); letter-spacing: 0.04em; margin-top: 2px; }
+
+    /* CONTACT */
+    .contact-grid { display: grid; grid-template-columns: 320px 1fr; gap: 80px; align-items: start; }
+    .contact-body p { font-size: 1.0625rem; line-height: 1.6; color: var(--ink-2); margin-bottom: 24px; max-width: 560px; }
+    .contact-links { display: flex; gap: 24px; align-items: center; }
+    .contact-link-primary { font-size: 1rem; font-weight: 500; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--ink); padding-bottom: 2px; }
+    .contact-link-primary:hover { border-bottom-color: var(--handson); }
+    .contact-link { font-size: 1rem; color: var(--ink-3); text-decoration: none; }
+    .contact-link:hover { color: var(--ink); }
+
+    /* FOOTER */
+    .footer { padding: 56px 0 0; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+    .footer-critters { display: flex; align-items: center; gap: 8px; }
+    .critter { width: 8px; height: 8px; border-radius: 50%; }
+    .footer-micro { font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; color: var(--ink-4); letter-spacing: 0.04em; text-align: center; line-height: 1.7; }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .page { padding: 0 32px 64px; }
+      .hero-body, .section-grid, .contact-grid { grid-template-columns: 1fr; gap: 32px; }
+      .hero-display { font-size: clamp(3.5rem, 14vw, 7rem); }
+      .work-grid { grid-template-columns: 1fr 1fr; }
+      .stat-row { grid-template-columns: 100px 1fr; }
+      .stat-meta { display: none; }
+    }
+    @media (max-width: 560px) {
+      .page { padding: 0 20px 48px; }
+      .work-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav-lockup">
+      <div class="nav-mark"><div class="nav-mark-inner"></div></div>
+      <div class="nav-wordmark">
+        <span class="nav-l1">Design</span>
+        <span class="nav-l2">Raul</span>
+      </div>
+    </div>
+    <div class="nav-links">
+      <a class="nav-link" href="#work">Work</a>
+      <a class="nav-link" href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <h1 class="hero-display">Raul <em class="mark-handson">Chavez</em>.</h1>
+    <div class="hero-tags">
+      <span class="hero-tag">UX · Product</span>
+      <span class="hero-sep">·</span>
+      <span class="hero-tag">Design Lead</span>
+      <span class="hero-sep">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+      <span class="hero-tag">Fintech · Crypto · Consultancy</span>
+      <span class="hero-sep">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+      <span class="hero-tag">Guadalajara, MX</span>
+    </div>
+    <div class="hero-body">
+      <div>
+        <p class="hero-left-title">Design Lead.<br><em class="mark-ai">Human Center AI Leverage.</em><br>Strategic. Research-driven.<br>From 0→1 to scale.</p>
+        <p class="mono-label" style="margin-top:16px;">About me</p>
+      </div>
+      <p class="hero-about">20+ years shaping products across fintech, crypto, retail, and consultancy. I lead multidisciplinary design teams, bridge research and strategy, and raise the bar for quality across organizations. Currently at Bitso — before that, Google, Jellyfish, Wizeline, and global service design in over 10 countries.</p>
+    </div>
+  </section>
+
+  <!-- TRACK RECORD -->
+  <section class="section">
+    <div class="section-grid">
+      <div>
+        <h2 class="section-h2">Track record.</h2>
+        <p class="section-sublabel">Research-first.<br>Always.<br>I lead, facilitate,<br>and prototype<br>alongside the team.</p>
+      </div>
+      <div class="stats-list">
+        <div class="stat-row">
+          <div class="stat-number">20<span class="stat-plus">+</span></div>
+          <div class="stat-info">
+            <span class="stat-title">Years in design</span>
+            <span class="stat-desc">From industrial to product to service design.</span>
+          </div>
+          <div class="stat-meta">Since · 2003</div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-number">6</div>
+          <div class="stat-info">
+            <span class="stat-title">Industries led</span>
+            <span class="stat-desc">Fintech, crypto, banking, retail, education, travel.</span>
+          </div>
+          <div class="stat-meta">Lead · Director</div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-number">10<span class="stat-plus">+</span></div>
+          <div class="stat-info">
+            <span class="stat-title">Countries worked in</span>
+            <span class="stat-desc">In-situ and distributed global teams.</span>
+          </div>
+          <div class="stat-meta">Global</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section class="section" id="work">
+    <div class="section-grid" style="margin-bottom:40px;">
+      <div>
+        <h2 class="section-h2">Work.</h2>
+        <p class="section-sublabel">Selected projects.<br>In production,<br>in beta, or in progress.</p>
+      </div>
+      <div></div>
+    </div>
+    <div class="work-grid">
+
+      <!-- Hubble -->
+      <div class="card">
+        <div class="card-thumb">
+          <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+            <rect width="400" height="300" fill="#F3F2EF"/>
+            <ellipse cx="200" cy="158" rx="152" ry="44" fill="none" stroke="#141413" stroke-width="1" opacity="0.12"/>
+            <circle cx="200" cy="145" r="72" fill="#141413" opacity="0.85"/>
+            <path d="M48 158 Q200 208 352 158" fill="none" stroke="#141413" stroke-width="1" opacity="0.12"/>
+            <circle cx="306" cy="110" r="12" fill="#B5B3AE"/>
+            <circle cx="60" cy="50" r="2" fill="#141413" opacity="0.18"/>
+            <circle cx="340" cy="60" r="1.5" fill="#141413" opacity="0.14"/>
+            <circle cx="130" cy="35" r="1.5" fill="#141413" opacity="0.12"/>
+            <circle cx="360" cy="240" r="2" fill="#141413" opacity="0.12"/>
+            <circle cx="50" cy="260" r="1.5" fill="#141413" opacity="0.1"/>
+            <circle cx="200" cy="145" r="14" fill="#E5FF60"/>
+          </svg>
+        </div>
+        <div class="card-status-row">
+          <div class="status-dot live"></div>
+          <span style="font-size:0.875rem;font-weight:500;color:#141413;">Hubble</span>
+        </div>
+        <p class="card-project-name">Hubble</p>
+        <p class="card-meta">Internal tool · Crypto · PayOps</p>
+        <p class="card-summary">AI-crafted operational internal tool to manage 9 million users' daily operations — around $350M USD a month.</p>
+      </div>
+
+      <!-- Radar -->
+      <div class="card">
+        <div class="card-thumb">
+          <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+            <rect width="400" height="300" fill="#F3F2EF"/>
+            <circle cx="200" cy="158" r="110" fill="none" stroke="#141413" stroke-width="0.75" opacity="0.12"/>
+            <circle cx="200" cy="158" r="74" fill="none" stroke="#141413" stroke-width="0.75" opacity="0.16"/>
+            <circle cx="200" cy="158" r="40" fill="none" stroke="#141413" stroke-width="0.75" opacity="0.2"/>
+            <line x1="200" y1="44" x2="200" y2="272" stroke="#141413" stroke-width="0.4" opacity="0.1"/>
+            <line x1="86" y1="158" x2="314" y2="158" stroke="#141413" stroke-width="0.4" opacity="0.1"/>
+            <line x1="200" y1="158" x2="290" y2="78" stroke="#141413" stroke-width="1.5" opacity="0.4"/>
+            <circle cx="278" cy="90" r="6" fill="#141413" opacity="0.65"/>
+            <circle cx="278" cy="90" r="11" fill="none" stroke="#141413" stroke-width="0.75" opacity="0.2"/>
+            <circle cx="148" cy="130" r="4" fill="#B5B3AE" opacity="0.7"/>
+            <circle cx="230" cy="202" r="3.5" fill="#B5B3AE" opacity="0.5"/>
+            <circle cx="200" cy="158" r="4" fill="#141413" opacity="0.45"/>
+            <circle cx="290" cy="68" r="9" fill="#E5FF60"/>
+            <text font-family="JetBrains Mono, monospace" font-size="9" font-weight="700" fill="#141413" x="290" y="72" text-anchor="middle">!</text>
+          </svg>
+        </div>
+        <div class="card-status-row">
+          <div class="status-dot live"></div>
+          <span style="font-size:0.875rem;font-weight:500;color:#141413;">Radar</span>
+        </div>
+        <p class="card-project-name">Radar</p>
+        <p class="card-meta">Internal tool · B2B · Google</p>
+        <p class="card-summary">Data center asset monitoring system processing 100M+ data points across Google infrastructure.</p>
+      </div>
+
+      <!-- OpsMind -->
+      <div class="card">
+        <div class="card-thumb">
+          <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+            <rect width="400" height="300" fill="#F3F2EF"/>
+            <rect x="68" y="66" width="120" height="154" rx="4" fill="#FFFFFF" stroke="#141413" stroke-width="0.75" opacity="0.55"/>
+            <rect x="76" y="74" width="120" height="154" rx="4" fill="#FAFAF9" stroke="#141413" stroke-width="0.5" opacity="0.3"/>
+            <line x1="84" y1="108" x2="178" y2="108" stroke="#141413" stroke-width="1" opacity="0.18"/>
+            <line x1="84" y1="122" x2="178" y2="122" stroke="#141413" stroke-width="1" opacity="0.18"/>
+            <line x1="84" y1="136" x2="158" y2="136" stroke="#141413" stroke-width="1" opacity="0.14"/>
+            <line x1="84" y1="150" x2="178" y2="150" stroke="#141413" stroke-width="1" opacity="0.18"/>
+            <line x1="84" y1="164" x2="148" y2="164" stroke="#141413" stroke-width="1" opacity="0.14"/>
+            <line x1="196" y1="162" x2="248" y2="150" stroke="#141413" stroke-width="0.75" stroke-dasharray="3 3" opacity="0.25"/>
+            <circle cx="272" cy="140" r="44" fill="#FFFFFF" opacity="0.55"/>
+            <circle cx="272" cy="140" r="44" fill="none" stroke="#141413" stroke-width="1.5" opacity="0.3"/>
+            <line x1="305" y1="173" x2="326" y2="194" stroke="#141413" stroke-width="2.5" stroke-linecap="round" opacity="0.35"/>
+            <rect x="248" y="126" width="48" height="7" rx="2" fill="#E5FF60" opacity="0.9"/>
+            <rect x="248" y="138" width="34" height="5" rx="2" fill="#141413" opacity="0.1"/>
+            <rect x="248" y="148" width="42" height="5" rx="2" fill="#141413" opacity="0.1"/>
+            <rect x="312" y="68" width="52" height="22" rx="4" fill="#E8EDFF" stroke="#7C9CFF" stroke-width="0.6"/>
+            <text font-family="JetBrains Mono, monospace" font-size="8" font-weight="500" fill="#1a2a5e" x="338" y="83" text-anchor="middle">⬡ AI</text>
+          </svg>
+        </div>
+        <div class="card-status-row">
+          <div class="status-dot live"></div>
+          <span style="font-size:0.875rem;font-weight:500;color:#141413;">OpsMind</span>
+        </div>
+        <p class="card-project-name">OpsMind</p>
+        <p class="card-meta">Internal tool · B2B · Google</p>
+        <p class="card-summary">AI document management platform unifying DCOps search. Launched early 2025, saving $12.5M/year in labor costs.</p>
+      </div>
+
+      <!-- CAWF -->
+      <div class="card">
+        <div class="card-thumb">
+          <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+            <rect width="400" height="300" fill="#F3F2EF"/>
+            <rect x="50" y="56" width="168" height="52" rx="16" fill="#141413" opacity="0.08"/>
+            <rect x="50" y="56" width="168" height="52" rx="16" fill="none" stroke="#141413" stroke-width="0.6" opacity="0.18"/>
+            <line x1="72" y1="78" x2="200" y2="78" stroke="#141413" stroke-width="1.5" opacity="0.16"/>
+            <line x1="72" y1="94" x2="170" y2="94" stroke="#141413" stroke-width="1.5" opacity="0.12"/>
+            <polygon points="66,108 50,122 82,108" fill="#141413" opacity="0.07"/>
+            <path d="M134 130 Q134 158 200 158 Q266 158 266 130" fill="none" stroke="#141413" stroke-width="0.75" stroke-dasharray="3 3" opacity="0.2"/>
+            <rect x="182" y="130" width="168" height="52" rx="16" fill="#E5FF60" opacity="0.65"/>
+            <rect x="182" y="130" width="168" height="52" rx="16" fill="none" stroke="#141413" stroke-width="0.6" opacity="0.2"/>
+            <line x1="204" y1="152" x2="334" y2="152" stroke="#141413" stroke-width="1.5" opacity="0.2"/>
+            <line x1="204" y1="168" x2="294" y2="168" stroke="#141413" stroke-width="1.5" opacity="0.16"/>
+            <polygon points="318,182 350,196 334,182" fill="#E5FF60" opacity="0.65"/>
+            <rect x="50" y="214" width="96" height="46" rx="5" fill="#FAFAF9" stroke="#141413" stroke-width="0.5" opacity="0.7"/>
+            <text font-family="Instrument Sans, sans-serif" font-size="17" font-weight="600" fill="#141413" opacity="0.65" x="98" y="234" text-anchor="middle">$29M</text>
+            <text font-family="JetBrains Mono, monospace" font-size="7.5" fill="#84827D" x="98" y="250" text-anchor="middle">savings</text>
+            <rect x="254" y="214" width="96" height="46" rx="5" fill="#FAFAF9" stroke="#141413" stroke-width="0.5" opacity="0.7"/>
+            <text font-family="Instrument Sans, sans-serif" font-size="17" font-weight="600" fill="#141413" opacity="0.65" x="302" y="234" text-anchor="middle">35M</text>
+            <text font-family="JetBrains Mono, monospace" font-size="7.5" fill="#84827D" x="302" y="250" text-anchor="middle">sessions/mo</text>
+          </svg>
+        </div>
+        <div class="card-status-row">
+          <div class="status-dot live"></div>
+          <span style="font-size:0.875rem;font-weight:500;color:#141413;">CAWF</span>
+        </div>
+        <p class="card-project-name">CAWF</p>
+        <p class="card-meta">B2C · Customer platform · Google</p>
+        <p class="card-summary">Optimizing Gen AI conversational workflows across 35M monthly sessions — up to $29M in support cost savings.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- AI DESIGN PROCESS -->
+  <section class="section">
+    <div class="section-grid" style="margin-bottom:40px;">
+      <div>
+        <h2 class="section-h2">Design AI driven process.</h2>
+        <p class="section-sublabel" style="margin-top:8px;">Human-centered.<br>AI-leveraged.<br>From discovery<br>to dev handoff.</p>
+      </div>
+      <p style="font-size:1rem;line-height:1.6;color:#3F3D3A;">A design workflow where AI amplifies every stage — from synthesizing research to generating coded prototypes aligned with the design system, closing the loop with a Git pull request to the dev team.</p>
+    </div>
+    <div class="diagram-wrap">
+      <svg width="100%" viewBox="0 0 680 860" role="img">
+        <title>Design AI-driven process</title>
+        <defs>
+          <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+            <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </marker>
+        </defs>
+        <text class="phase-label" x="40" y="52">Research</text>
+        <text class="phase-label" x="40" y="192">Synthesis</text>
+        <text class="phase-label" x="40" y="300">Ideation</text>
+        <text class="phase-label" x="40" y="440">Design system</text>
+        <text class="phase-label" x="40" y="540">Prototype</text>
+        <text class="phase-label" x="40" y="660">Audit</text>
+        <text class="phase-label" x="40" y="760">Handoff</text>
+        <line x1="40" y1="58" x2="640" y2="58" stroke="#141413" stroke-width="0.4" opacity="0.08"/>
+        <line x1="40" y1="198" x2="640" y2="198" stroke="#141413" stroke-width="0.4" opacity="0.08"/>
+        <line x1="40" y1="306" x2="640" y2="306" stroke="#141413" stroke-width="0.4" opacity="0.08"/>
+        <line x1="40" y1="446" x2="640" y2="446" stroke="#141413" stroke-width="0.4" opacity="0.08"/>
+        <line x1="40" y1="546" x2="640" y2="546" stroke="#141413" stroke-width="0.4" opacity="0.08"/>
+        <line x1="40" y1="666" x2="640" y2="666" stroke="#141413" stroke-width="0.4" opacity="0.08"/>
+        <line x1="40" y1="766" x2="640" y2="766" stroke="#141413" stroke-width="0.4" opacity="0.08"/>
+        <rect x="160" y="68" width="220" height="54" rx="6" fill="#FAFAF9" stroke="#141413" stroke-width="0.5"/>
+        <text class="d-node-title" x="270" y="89" text-anchor="middle" dominant-baseline="central">1. Discovery</text>
+        <text class="d-node-sub" x="270" y="107" text-anchor="middle" dominant-baseline="central">User interviews · Research plan</text>
+        <rect x="400" y="68" width="218" height="54" rx="6" fill="#E8EDFF" stroke="#7C9CFF" stroke-width="0.5"/>
+        <text class="d-ai-badge" x="415" y="90" text-anchor="start" dominant-baseline="central" fill="#1a2a5e">⬡ AI</text>
+        <text class="d-node-title" x="444" y="90" text-anchor="start" dominant-baseline="central" fill="#1a2a5e" font-size="10">Set research plan baseline</text>
+        <text class="d-node-sub" x="415" y="107" text-anchor="start" dominant-baseline="central" fill="#3a4888">Guides interview structure</text>
+        <line x1="380" y1="95" x2="400" y2="95" stroke="#7C9CFF" stroke-width="0.5" marker-end="url(#arr)" stroke-dasharray="3 2"/>
+        <line x1="270" y1="122" x2="270" y2="148" stroke="#141413" stroke-width="0.5" opacity="0.35" marker-end="url(#arr)"/>
+        <rect x="160" y="152" width="220" height="36" rx="6" fill="#FAFAF9" stroke="#141413" stroke-width="0.5"/>
+        <text class="d-node-title" x="270" y="170" text-anchor="middle" dominant-baseline="central">Synthesize research</text>
+        <rect x="400" y="152" width="218" height="36" rx="6" fill="#E8EDFF" stroke="#7C9CFF" stroke-width="0.5"/>
+        <text class="d-ai-badge" x="415" y="170" text-anchor="start" dominant-baseline="central" fill="#1a2a5e">⬡</text>
+        <text class="d-node-title" x="432" y="170" text-anchor="start" dominant-baseline="central" fill="#1a2a5e" font-size="10">Analyze &amp; cluster findings</text>
+        <line x1="380" y1="170" x2="400" y2="170" stroke="#7C9CFF" stroke-width="0.5" marker-end="url(#arr)" stroke-dasharray="3 2"/>
+        <line x1="270" y1="188" x2="270" y2="210" stroke="#141413" stroke-width="0.5" opacity="0.35" marker-end="url(#arr)"/>
+        <rect x="160" y="214" width="220" height="54" rx="6" fill="#FAFAF9" stroke="#141413" stroke-width="0.5"/>
+        <text class="d-node-title" x="270" y="234" text-anchor="middle" dominant-baseline="central">2. Problem statements</text>
+        <text class="d-node-sub" x="270" y="252" text-anchor="middle" dominant-baseline="central">Jobs to be done</text>
+        <line x1="270" y1="268" x2="270" y2="316" stroke="#141413" stroke-width="0.5" opacity="0.35" marker-end="url(#arr)"/>
+        <rect x="160" y="320" width="220" height="54" rx="6" fill="#FAFAF9" stroke="#141413" stroke-width="0.5"/>
+        <text class="d-node-title" x="270" y="340" text-anchor="middle" dominant-baseline="central">3. Ideation</text>
+        <text class="d-node-sub" x="270" y="358" text-anchor="middle" dominant-baseline="central">Product team workshop</text>
+        <rect x="400" y="320" width="218" height="54" rx="6" fill="#E8EDFF" stroke="#7C9CFF" stroke-width="0.5"/>
+        <text class="d-ai-badge" x="415" y="340" text-anchor="start" dominant-baseline="central" fill="#1a2a5e">⬡</text>
+        <text class="d-node-title" x="432" y="340" text-anchor="start" dominant-baseline="central" fill="#1a2a5e" font-size="10">AI as brainstorm partner</text>
+        <text class="d-node-sub" x="415" y="358" text-anchor="start" dominant-baseline="central" fill="#3a4888">Bounce ideas, stress-test</text>
+        <line x1="380" y1="347" x2="400" y2="347" stroke="#7C9CFF" stroke-width="0.5" marker-end="url(#arr)" stroke-dasharray="3 2"/>
+        <line x1="270" y1="374" x2="270" y2="410" stroke="#141413" stroke-width="0.5" opacity="0.35" marker-end="url(#arr)"/>
+        <line x1="590" y1="414" x2="590" y2="600" stroke="#F59F3A" stroke-width="0.75" stroke-dasharray="4 3" opacity="0.7"/>
+        <rect x="408" y="414" width="248" height="52" rx="6" fill="#FEF3E2" stroke="#F59F3A" stroke-width="0.75"/>
+        <text class="d-node-title" x="532" y="432" text-anchor="middle" dominant-baseline="central" fill="#5a3500" font-size="10">4b. Design system · AI Markdown</text>
+        <text class="d-node-sub" x="532" y="450" text-anchor="middle" dominant-baseline="central" fill="#8a5a00">Figma → AI-readable spec</text>
+        <path d="M590 466 L590 530 L382 530" fill="none" stroke="#F59F3A" stroke-width="0.5" stroke-dasharray="3 2" marker-end="url(#arr)"/>
+        <path d="M590 600 L590 638 L382 638" fill="none" stroke="#F59F3A" stroke-width="0.5" stroke-dasharray="3 2" marker-end="url(#arr)"/>
+        <rect x="160" y="414" width="220" height="54" rx="6" fill="#FAFAF9" stroke="#141413" stroke-width="0.5"/>
+        <text class="d-node-title" x="270" y="434" text-anchor="middle" dominant-baseline="central">5. Design system</text>
+        <text class="d-node-sub" x="270" y="452" text-anchor="middle" dominant-baseline="central">Repo on GitHub</text>
+        <line x1="270" y1="468" x2="270" y2="510" stroke="#141413" stroke-width="0.5" opacity="0.35" marker-end="url(#arr)"/>
+        <rect x="160" y="514" width="220" height="66" rx="6" fill="#FAFAF9" stroke="#141413" stroke-width="0.5"/>
+        <text class="d-node-title" x="270" y="534" text-anchor="middle" dominant-baseline="central">6. Create branch · Prototype</text>
+        <text class="d-node-sub" x="270" y="551" text-anchor="middle" dominant-baseline="central">Cursor · Claude Code</text>
+        <circle cx="180" cy="570" r="4" fill="none" stroke="#F59F3A" stroke-width="1"/>
+        <circle cx="192" cy="560" r="4" fill="none" stroke="#F59F3A" stroke-width="1"/>
+        <circle cx="192" cy="580" r="4" fill="none" stroke="#F59F3A" stroke-width="1"/>
+        <path d="M180 566 Q184 562 188 560" fill="none" stroke="#F59F3A" stroke-width="0.75"/>
+        <path d="M180 574 Q184 578 188 580" fill="none" stroke="#F59F3A" stroke-width="0.75"/>
+        <line x1="192" y1="564" x2="192" y2="576" stroke="#F59F3A" stroke-width="0.75"/>
+        <text class="d-node-sub" x="208" y="571" dominant-baseline="central" fill="#8a5a00">new branch</text>
+        <line x1="270" y1="580" x2="270" y2="620" stroke="#141413" stroke-width="0.5" opacity="0.35" marker-end="url(#arr)"/>
+        <rect x="160" y="624" width="220" height="54" rx="6" fill="#FAFAF9" stroke="#141413" stroke-width="0.5"/>
+        <text class="d-node-title" x="270" y="644" text-anchor="middle" dominant-baseline="central">7. Audit &amp; verify</text>
+        <text class="d-node-sub" x="270" y="662" text-anchor="middle" dominant-baseline="central">UX patterns · Design system</text>
+        <rect x="40" y="624" width="108" height="54" rx="6" fill="#E8EDFF" stroke="#7C9CFF" stroke-width="0.5"/>
+        <text class="d-ai-badge" x="94" y="644" text-anchor="middle" dominant-baseline="central" fill="#1a2a5e">⬡ Claude skill</text>
+        <text class="d-node-sub" x="94" y="661" text-anchor="middle" dominant-baseline="central" fill="#3a4888">Review &amp; flag</text>
+        <line x1="148" y1="651" x2="160" y2="651" stroke="#7C9CFF" stroke-width="0.5" marker-end="url(#arr)" stroke-dasharray="3 2"/>
+        <line x1="270" y1="678" x2="270" y2="720" stroke="#141413" stroke-width="0.5" opacity="0.35" marker-end="url(#arr)"/>
+        <rect x="160" y="724" width="220" height="54" rx="6" fill="#FAFAF9" stroke="#141413" stroke-width="0.5"/>
+        <text class="d-node-title" x="270" y="744" text-anchor="middle" dominant-baseline="central">8. Commit · Pull request</text>
+        <text class="d-node-sub" x="270" y="762" text-anchor="middle" dominant-baseline="central">Handoff to dev team</text>
+        <line x1="270" y1="778" x2="270" y2="812" stroke="#141413" stroke-width="0.5" stroke-dasharray="5 3" opacity="0.3" marker-end="url(#arr)"/>
+        <rect x="160" y="816" width="220" height="30" rx="6" fill="none" stroke="#B5B3AE" stroke-width="0.75" stroke-dasharray="5 3"/>
+        <text class="d-node-title" x="270" y="831" text-anchor="middle" dominant-baseline="central" fill="#84827D" font-size="10">9. Dev connects back · Merge</text>
+        <text class="phase-label" x="390" y="831" fill="#B5B3AE">dev team</text>
+        <line x1="160" y1="856" x2="180" y2="856" stroke="#7C9CFF" stroke-width="0.75" stroke-dasharray="3 2"/>
+        <text class="d-node-sub" x="186" y="856" dominant-baseline="central" fill="#84827D">AI-assisted step</text>
+        <line x1="310" y1="856" x2="330" y2="856" stroke="#F59F3A" stroke-width="0.75" stroke-dasharray="3 2"/>
+        <text class="d-node-sub" x="336" y="856" dominant-baseline="central" fill="#84827D">Design system bridge</text>
+        <line x1="484" y1="856" x2="504" y2="856" stroke="#B5B3AE" stroke-width="0.75" stroke-dasharray="5 3"/>
+        <text class="d-node-sub" x="510" y="856" dominant-baseline="central" fill="#B5B3AE">Dev boundary</text>
+      </svg>
+    </div>
+  </section>
+
+  <!-- GET IN TOUCH -->
+  <section class="section" id="contact">
+    <div class="contact-grid">
+      <div>
+        <h2 class="section-h2">Get in touch.</h2>
+        <p class="mono-label" style="margin-top:8px;">Reply · GMT-6 · GDL</p>
+      </div>
+      <div class="contact-body">
+        <p>I lead design from research to delivery, building teams and products that hold up at scale. Always open to talking strategy, research, or what great design looks like in complex orgs.</p>
+        <div class="contact-links">
+          <a class="contact-link-primary" href="mailto:raulchaveze@gmail.com">raulchaveze@gmail.com</a>
+          <a class="contact-link" href="https://raulchavez.persona.co" target="_blank">raulchavez.persona.co</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section class="section">
+    <div class="section-grid">
+      <div>
+        <h2 class="section-h2">Experience.</h2>
+        <p class="section-sublabel">Hands-on leadership<br>across orgs, teams,<br>and products.</p>
+      </div>
+      <div class="exp-list">
+        <div class="exp-item">
+          <p class="exp-date">2025.10 — Present</p>
+          <span class="exp-company">Bitso</span>
+          <p class="exp-role">Lead Product Designer</p>
+          <p class="exp-desc">Strategic and technical design reference at a crypto fintech, influencing cross-functional decisions and raising the bar for design quality across teams.</p>
+        </div>
+        <div class="exp-item">
+          <p class="exp-date">2023.04 — 2025.09</p>
+          <span class="exp-company">Google</span>
+          <p class="exp-role">Lead Experience Designer</p>
+          <p class="exp-desc">Staffed and managed multidisciplinary teams on consultancy projects as Lead Researcher / Designer. Collaborated with stakeholders across multiple products including AI-driven platforms.</p>
+        </div>
+        <div class="exp-item">
+          <p class="exp-date">2021.04 — 2023.04</p>
+          <span class="exp-company">Jellyfish</span>
+          <p class="exp-role">UX Director</p>
+          <p class="exp-desc">Built, staffed, and managed project pipelines and UX teams for the LATAM region. Led DesignOps, Product Design, and CRO work for banking, fintech, retail, and consultancy clients.</p>
+        </div>
+        <div class="exp-item">
+          <p class="exp-date">2019.03 — 2021.03</p>
+          <span class="exp-company">Wizeline</span>
+          <p class="exp-role">Lead UX Designer</p>
+          <p class="exp-desc">Led product designers on a native iOS app and web platform for Nike and fintech clients.</p>
+        </div>
+        <div class="exp-item">
+          <p class="exp-date">2017.04 — 2019.03</p>
+          <span class="exp-company">Unsettled</span>
+          <p class="exp-role">Senior Service Designer</p>
+          <p class="exp-desc">Orchestrated value-driven experiences with in-situ and global teams across 10+ countries.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section class="section" style="border-bottom:none;">
+    <div class="section-grid">
+      <div>
+        <h2 class="section-h2">Education.</h2>
+        <p class="section-sublabel" style="margin-top:8px;">Industrial design foundation<br>+ advanced service<br>&amp; experience design.</p>
+      </div>
+      <div class="edu-list">
+        <div class="edu-item">
+          <p class="edu-year">2015 — 2017</p>
+          <p class="edu-school">PUC Católica de Chile</p>
+          <p class="edu-degree">Master's in Advanced Design</p>
+          <p class="edu-field">Service &amp; Experience Design</p>
+        </div>
+        <div class="edu-item">
+          <p class="edu-year">2006 — 2011</p>
+          <p class="edu-school">ITESM GDL</p>
+          <p class="edu-degree">Bachelor's in Industrial Design</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-critters">
+      <div class="critter" style="background:#4DD86F;"></div>
+      <div class="critter" style="background:#7C9CFF;"></div>
+      <div class="critter" style="background:#F2A5C4;"></div>
+      <div class="critter" style="background:#F59F3A;"></div>
+    </div>
+    <div class="footer-micro">
+      Last updated May 2026<br>
+      &copy; 2026 Raul Chavez directly
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>
