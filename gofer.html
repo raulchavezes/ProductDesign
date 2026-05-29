@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gofer — Raul Chavez</title>
+  <link rel="icon" type="image/x-icon" href="./img/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --paper: #FFFFFF;
+      --paper-2: #FAFAF9;
+      --paper-3: #F3F2EF;
+      --ink: #141413;
+      --ink-2: #3F3D3A;
+      --ink-3: #84827D;
+      --ink-4: #B5B3AE;
+      --rule: rgba(20,20,19,0.10);
+      --handson: #E5FF60;
+      --focus: #4DD86F;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--paper); color: var(--ink); font-family: 'Instrument Sans', system-ui, sans-serif; font-size: 1rem; line-height: 1.55; }
+    .page { width: 100%; max-width: 1280px; margin: 0 auto; padding: 0 64px 120px; }
+
+    /* NAV */
+    .nav { display: flex; justify-content: space-between; align-items: center; padding: 22px 0; border-bottom: 1px solid var(--rule); position: sticky; top: 0; background: var(--paper); z-index: 100; }
+    .nav-lockup { display: flex; align-items: center; gap: 8px; text-decoration: none; }
+    .nav-mark { width: 22px; height: 22px; background: var(--ink); display: flex; align-items: center; justify-content: center; }
+    .nav-mark-inner { width: 8px; height: 8px; border-radius: 50%; background: var(--paper); }
+    .nav-l1 { font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); }
+    .nav-back { font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); text-decoration: none; }
+    .nav-back:hover { color: var(--ink); }
+
+    /* HERO */
+    .hero { padding: 80px 0 72px; border-bottom: 1px solid var(--rule); display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: end; }
+    .hero-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 20px; }
+    .hero-title { font-size: clamp(5rem, 12vw, 10rem); font-weight: 600; line-height: 0.92; letter-spacing: -0.04em; color: var(--ink); margin-bottom: 24px; }
+    .hero-title em { font-style: normal; background: linear-gradient(to bottom, transparent 55%, var(--handson) 55%); }
+    .hero-sub { font-size: 1.125rem; line-height: 1.6; color: var(--ink-2); max-width: 480px; }
+    .hero-meta { display: flex; flex-direction: column; gap: 28px; }
+    .meta-block { display: flex; flex-direction: column; gap: 6px; }
+    .meta-label { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-4); }
+    .meta-value { font-size: 1rem; font-weight: 500; color: var(--ink); }
+    .meta-value-mono { font-family: 'JetBrains Mono', monospace; font-size: 0.8125rem; color: var(--ink-3); line-height: 1.6; }
+    .status-chip { display: inline-flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--focus); }
+    .status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--focus); box-shadow: 0 0 0 3px color-mix(in oklab, #4DD86F 22%, transparent); animation: halo 3.2s ease-in-out infinite; }
+    @keyframes halo { 0%,100% { box-shadow: 0 0 0 3px color-mix(in oklab,#4DD86F 22%,transparent); } 50% { box-shadow: 0 0 0 5px color-mix(in oklab,#4DD86F 10%,transparent); } }
+
+    /* TAGS */
+    .tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+    .tag { font-family: 'JetBrains Mono', monospace; font-size: 0.625rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); border: 1px solid var(--rule); padding: 5px 10px; }
+
+    /* SECTIONS */
+    .section { padding: 72px 0; border-bottom: 1px solid var(--rule); }
+    .section-grid { display: grid; grid-template-columns: 260px 1fr; gap: 80px; align-items: start; }
+    .section-label { font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); padding-top: 4px; position: sticky; top: 80px; }
+    .section-h2 { font-size: clamp(1.75rem, 3vw, 2.5rem); font-weight: 500; line-height: 1.1; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 20px; }
+    .body-text { font-size: 1.0625rem; line-height: 1.7; color: var(--ink-2); }
+    .body-text + .body-text { margin-top: 16px; }
+
+    /* CALLOUT */
+    .callout { border-left: 2px solid var(--handson); padding: 20px 28px; background: var(--paper-2); margin-top: 32px; }
+    .callout p { font-size: 1.125rem; line-height: 1.6; color: var(--ink); font-weight: 500; letter-spacing: -0.01em; }
+    .callout cite { display: block; font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; color: var(--ink-3); font-style: normal; margin-top: 10px; letter-spacing: 0.04em; }
+
+    /* RESEARCH NUMBERS */
+    .research-numbers { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1px; background: var(--rule); border: 1px solid var(--rule); margin-top: 48px; }
+    .rn-cell { background: var(--paper); padding: 28px 20px; }
+    .rn-number { font-size: 2.75rem; font-weight: 600; line-height: 1; letter-spacing: -0.04em; color: var(--ink); margin-bottom: 6px; }
+    .rn-number span { font-size: 1.5rem; font-weight: 400; color: var(--ink-3); }
+    .rn-desc { font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; color: var(--ink-3); line-height: 1.5; }
+
+    /* LOCATION CARD */
+    .location-banner { background: var(--ink); color: var(--paper); padding: 32px 40px; margin-top: 32px; display: flex; align-items: center; gap: 32px; }
+    .location-pin { font-size: 2rem; }
+    .location-text { display: flex; flex-direction: column; gap: 6px; }
+    .location-title { font-size: 1.25rem; font-weight: 600; letter-spacing: -0.02em; }
+    .location-sub { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--ink-4); letter-spacing: 0.04em; }
+
+    /* ARTIFACT GRID */
+    .artifact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 32px; }
+    .artifact-card { border: 1px solid var(--rule); background: var(--paper-2); padding: 28px; display: flex; flex-direction: column; gap: 12px; }
+    .artifact-icon { width: 32px; height: 32px; }
+    .artifact-title { font-size: 1rem; font-weight: 500; color: var(--ink); }
+    .artifact-desc { font-size: 0.875rem; line-height: 1.6; color: var(--ink-3); font-family: 'JetBrains Mono', monospace; }
+
+    /* PROCESS STEPS */
+    .process-list { display: flex; flex-direction: column; margin-top: 32px; }
+    .process-step { display: grid; grid-template-columns: 48px 1fr; gap: 24px; padding: 28px 0; border-bottom: 1px solid var(--rule); align-items: start; }
+    .process-step:last-child { border-bottom: none; }
+    .step-num { font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; font-weight: 500; color: var(--ink-4); letter-spacing: 0.06em; padding-top: 3px; }
+    .step-body { display: flex; flex-direction: column; gap: 6px; }
+    .step-title { font-size: 1rem; font-weight: 500; color: var(--ink); }
+    .step-detail { font-size: 0.9375rem; line-height: 1.6; color: var(--ink-2); }
+    .step-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+    .step-tag { font-family: 'JetBrains Mono', monospace; font-size: 0.5625rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-4); border: 1px solid var(--rule); padding: 3px 7px; }
+
+    /* INSIGHTS */
+    .insights-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; margin-top: 32px; }
+    .insight-card { border: 1px solid var(--rule); padding: 28px; display: flex; flex-direction: column; gap: 16px; }
+    .insight-number { font-family: 'JetBrains Mono', monospace; font-size: 0.625rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-4); }
+    .insight-title { font-size: 1.125rem; font-weight: 500; color: var(--ink); line-height: 1.25; letter-spacing: -0.01em; }
+    .insight-body { font-size: 0.9375rem; line-height: 1.65; color: var(--ink-2); }
+
+    /* TENSION SLIDERS */
+    .tensions { display: flex; flex-direction: column; gap: 24px; margin-top: 32px; }
+    .tension-row { display: grid; grid-template-columns: 120px 1fr 120px; gap: 20px; align-items: center; padding: 20px 0; border-bottom: 1px solid var(--rule); }
+    .tension-row:last-child { border-bottom: none; }
+    .tension-label { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 500; color: var(--ink); letter-spacing: 0.02em; }
+    .tension-label.right { text-align: right; color: var(--ink-3); }
+    .tension-bar { height: 4px; background: var(--paper-3); border-radius: 2px; position: relative; }
+    .tension-dot { width: 14px; height: 14px; border-radius: 50%; background: var(--ink); position: absolute; top: -5px; transform: translateX(-50%); }
+
+    /* FEATURES */
+    .features-list { display: flex; flex-direction: column; margin-top: 32px; }
+    .feature-row { display: grid; grid-template-columns: 32px 1fr auto; gap: 20px; padding: 24px 0; border-bottom: 1px solid var(--rule); align-items: start; }
+    .feature-row:last-child { border-bottom: none; }
+    .feature-num { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 500; color: var(--ink-4); }
+    .feature-name { font-size: 1rem; font-weight: 500; color: var(--ink); margin-bottom: 4px; }
+    .feature-detail { font-size: 0.875rem; color: var(--ink-3); line-height: 1.55; }
+    .feature-badge { font-family: 'JetBrains Mono', monospace; font-size: 0.5625rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 8px; white-space: nowrap; align-self: start; }
+    .badge-mvp { background: var(--handson); color: var(--ink); }
+    .badge-future { background: var(--paper-3); color: var(--ink-3); border: 1px solid var(--rule); }
+
+    /* COMPETITIVE */
+    .comp-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--rule); border: 1px solid var(--rule); margin-top: 32px; }
+    .comp-cell { background: var(--paper); padding: 24px 20px; }
+    .comp-cat { font-size: 0.875rem; font-weight: 500; color: var(--ink); margin-bottom: 10px; }
+    .comp-desc { font-size: 0.8125rem; line-height: 1.55; color: var(--ink-3); }
+
+    /* IMPACT */
+    .impact-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--rule); border: 1px solid var(--rule); margin-top: 48px; }
+    .impact-cell { background: var(--paper); padding: 32px 28px; }
+    .impact-number { font-size: 3.5rem; font-weight: 600; line-height: 1; letter-spacing: -0.04em; color: var(--ink); margin-bottom: 8px; }
+    .impact-number span { font-size: 2rem; font-weight: 400; color: var(--ink-3); }
+    .impact-desc { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--ink-3); line-height: 1.5; }
+
+    /* FOOT NAV */
+    .foot-nav { display: flex; justify-content: space-between; align-items: center; padding: 48px 0 0; border-top: 1px solid var(--rule); margin-top: 80px; }
+    .foot-nav a { font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); text-decoration: none; }
+    .foot-nav a:hover { color: var(--ink); }
+
+    @media (max-width: 900px) {
+      .page { padding: 0 32px 80px; }
+      .hero { grid-template-columns: 1fr; gap: 40px; }
+      .section-grid { grid-template-columns: 1fr; gap: 24px; }
+      .section-label { position: static; }
+      .research-numbers { grid-template-columns: 1fr 1fr; }
+      .insights-grid, .comp-grid { grid-template-columns: 1fr; }
+      .artifact-grid { grid-template-columns: 1fr; }
+      .impact-row { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .page { padding: 0 20px 60px; }
+      .tension-row { grid-template-columns: 80px 1fr 80px; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a class="nav-lockup" href="./index.html">
+      <div class="nav-mark"><div class="nav-mark-inner"></div></div>
+      <div class="nav-wordmark"><span class="nav-l1">Product Design</span></div>
+    </a>
+    <a class="nav-back" href="./index.html#work">← Back to work</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div>
+      <p class="hero-eyebrow">06 · Sales Tool · B2B · Google · UXR</p>
+      <h1 class="hero-title"><em>Gofer</em>.</h1>
+      <p class="hero-sub">A 6-week, research-first engagement to define the MVP of Google's AI-powered sales enablement platform — 16 interviews, 6 competitor deep-dives, and an in-person discovery sprint in New York.</p>
+      <div class="tag-row">
+        <span class="tag">User Research</span>
+        <span class="tag">MVP Prioritization</span>
+        <span class="tag">Competitive Analysis</span>
+        <span class="tag">Journey Mapping</span>
+        <span class="tag">Desirability Testing</span>
+        <span class="tag">AI · Gemini</span>
+        <span class="tag">Sales Enablement</span>
+      </div>
+    </div>
+    <div class="hero-meta">
+      <div class="meta-block">
+        <span class="meta-label">Status</span>
+        <span class="status-chip"><span class="status-dot"></span>MVP Delivered — Nov 2024</span>
+      </div>
+      <div class="meta-block">
+        <span class="meta-label">Client</span>
+        <span class="meta-value">Google · GO/LINK</span>
+      </div>
+      <div class="meta-block">
+        <span class="meta-label">My Role</span>
+        <span class="meta-value">Lead UX Researcher & Designer</span>
+      </div>
+      <div class="meta-block">
+        <span class="meta-label">Team</span>
+        <span class="meta-value-mono">Lead Researcher (me) · UX Researcher<br>Project Manager · Stakeholders (LDAP@kravitz)</span>
+      </div>
+      <div class="meta-block">
+        <span class="meta-label">Timeline</span>
+        <span class="meta-value-mono">6 weeks · Oct–Nov 2024</span>
+      </div>
+      <div class="meta-block">
+        <span class="meta-label">Deliverables</span>
+        <span class="meta-value-mono">78-slide research report · MVP feature matrix<br>E2E sales journey map · Competitive analysis<br>Desirability scoring · Feature prioritization</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SITUATION -->
+  <section class="section">
+    <div class="section-grid">
+      <p class="section-label">01 — Situation</p>
+      <div>
+        <h2 class="section-h2">Google building a new AI sales tool. No validated learning yet.</h2>
+        <p class="body-text">Google was developing a new AI-powered sales application platform called Gofer — Gemini-integrated, built to help enterprise B2B sales teams find better leads, craft smarter outreach, and close more deals. But the space was crowded, the user needs were unvalidated, and GenAI was still evolving fast enough that even the product team was learning what was possible.</p>
+        <p class="body-text">Before any design or engineering investment, the team needed answers: Who exactly are the users? What does the full sales journey look like across different company sizes? What capabilities would actually change how reps work — and which would go unused? And where does the competitive landscape leave a genuine gap for Gofer to carve out a unique position?</p>
+
+        <div class="callout">
+          <p>"[Research tools today are too] broad and not relevant to the areas I need to understand. I don't need a high level overview but more specific data: how products are changing, any trends on their company, if a company is growing, how their products are performing, where the revenue is coming from."</p>
+          <cite>— Deirdre, B2B Sales Rep (research participant)</cite>
+        </div>
+
+        <div class="research-numbers">
+          <div class="rn-cell">
+            <div class="rn-number">12</div>
+            <div class="rn-desc">Sellers interviewed<br>across B2B verticals</div>
+          </div>
+          <div class="rn-cell">
+            <div class="rn-number">4</div>
+            <div class="rn-desc">Buyers of sales<br>software tools</div>
+          </div>
+          <div class="rn-cell">
+            <div class="rn-number">6</div>
+            <div class="rn-desc">Competitors deep-<br>dived in analysis</div>
+          </div>
+          <div class="rn-cell">
+            <div class="rn-number">11</div>
+            <div class="rn-desc">Features evaluated<br>for desirability</div>
+          </div>
+          <div class="rn-cell">
+            <div class="rn-number">78</div>
+            <div class="rn-desc">Slides in the final<br>research deliverable</div>
+          </div>
+        </div>
+
+        <div class="location-banner">
+          <span class="location-pin">✈</span>
+          <div class="location-text">
+            <span class="location-title">In-person discovery sprint — New York City</span>
+            <span class="location-sub">On-site at Google's NY offices · Ethnographic interviews with enterprise sales teams</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROLE -->
+  <section class="section">
+    <div class="section-grid">
+      <p class="section-label">02 — My Role</p>
+      <div>
+        <h2 class="section-h2">Lead UX Researcher — from kickoff to MVP recommendation.</h2>
+        <p class="body-text">I led the full 6-week UXR engagement as Lead Researcher — structuring the research plan, designing the discussion guides, recruiting and conducting 16 interviews across two user groups, running the competitive analysis across 6 products, synthesizing findings into insights, and delivering the final 78-slide MVP prioritization report to Google stakeholders.</p>
+        <p class="body-text">The engagement followed a structured divergent-convergent cycle: broad discovery → pattern identification → synthesis into insights → opportunity mapping → feature desirability testing → MVP recommendation. A research-first approach with no assumptions carried forward into the product without evidence.</p>
+
+        <div class="artifact-grid">
+          <div class="artifact-card">
+            <svg class="artifact-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="10" cy="16" r="4" stroke="#141413" stroke-width="1.2" opacity="0.4"/>
+              <circle cx="22" cy="10" r="4" stroke="#141413" stroke-width="1.2" opacity="0.3"/>
+              <circle cx="22" cy="22" r="4" stroke="#141413" stroke-width="1.2" opacity="0.3"/>
+              <line x1="14" y1="14" x2="18" y2="11" stroke="#141413" stroke-width="0.75" opacity="0.25"/>
+              <line x1="14" y1="18" x2="18" y2="21" stroke="#141413" stroke-width="0.75" opacity="0.25"/>
+              <circle cx="10" cy="16" r="2" fill="#E5FF60"/>
+            </svg>
+            <span class="artifact-title">16 Qualitative Interviews</span>
+            <span class="artifact-desc">1:1 sessions with Sellers (12) and Buyers (4) across small, medium and large B2B organizations. Conducted in-person in NYC and remotely.</span>
+          </div>
+          <div class="artifact-card">
+            <svg class="artifact-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <polyline points="4,24 10,15 16,19 22,11 28,14" stroke="#141413" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.4" fill="none"/>
+              <line x1="4" y1="26" x2="28" y2="26" stroke="#141413" stroke-width="0.75" opacity="0.15"/>
+              <circle cx="10" cy="15" r="2" fill="#141413" opacity="0.3"/>
+              <circle cx="16" cy="19" r="2" fill="#141413" opacity="0.3"/>
+              <circle cx="22" cy="11" r="2.5" fill="#E5FF60"/>
+            </svg>
+            <span class="artifact-title">E2E Sales Journey Map</span>
+            <span class="artifact-desc">Full end-to-end sales journey mapped across prospecting, outreach, engagement, and close — with pain points at each stage by company size.</span>
+          </div>
+          <div class="artifact-card">
+            <svg class="artifact-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="4" y="8" width="24" height="16" rx="2" stroke="#141413" stroke-width="1.2" opacity="0.4"/>
+              <line x1="4" y1="14" x2="28" y2="14" stroke="#141413" stroke-width="0.75" opacity="0.2"/>
+              <line x1="12" y1="14" x2="12" y2="24" stroke="#141413" stroke-width="0.75" opacity="0.2"/>
+              <rect x="14" y="16" width="7" height="3" rx="1" fill="#E5FF60" opacity="0.9"/>
+              <rect x="14" y="21" width="10" height="2" rx="1" fill="#141413" opacity="0.1"/>
+            </svg>
+            <span class="artifact-title">Desirability Testing (11 Features)</span>
+            <span class="artifact-desc">Evaluated 11 hypothesized capabilities through user testing. Each scored on desirability, MVP inclusion, and business size relevance.</span>
+          </div>
+          <div class="artifact-card">
+            <svg class="artifact-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="10" cy="12" r="4" stroke="#141413" stroke-width="1" opacity="0.3"/>
+              <circle cx="22" cy="12" r="4" stroke="#141413" stroke-width="1" opacity="0.3"/>
+              <circle cx="10" cy="22" r="4" stroke="#141413" stroke-width="1" opacity="0.3"/>
+              <circle cx="22" cy="22" r="4" stroke="#141413" stroke-width="1" opacity="0.3"/>
+              <circle cx="16" cy="17" r="5" fill="none" stroke="#141413" stroke-width="1.2" opacity="0.4"/>
+              <circle cx="16" cy="17" r="2" fill="#141413" opacity="0.5"/>
+            </svg>
+            <span class="artifact-title">Competitive Analysis (6 Products)</span>
+            <span class="artifact-desc">Deep-dive audit of 6 existing AI-powered sales products — features, weaknesses, user likes/dislikes, and market gaps Gofer can own.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="section">
+    <div class="section-grid">
+      <p class="section-label">03 — Research Process</p>
+      <div>
+        <h2 class="section-h2">6 weeks. Diverge, synthesize, converge, ship.</h2>
+        <p class="body-text">The engagement followed a structured innovation model — divergent-convergent cycles that transformed raw market and user data into a validated, prioritized MVP recommendation. No phase was skipped. No feature was assumed. Everything was evidence-backed.</p>
+
+        <div class="process-list">
+          <div class="process-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <span class="step-title">Kickoff & Research Design — New York</span>
+              <span class="step-detail">Kicked off the engagement in-person at Google's NY offices with a structured kickoff covering: problem space alignment, research goal definition, competitor landscape mapping, methodology selection, target audience definition, recruitment screener, and discussion guide development. The in-person format enabled rapid alignment with stakeholders and direct ethnographic observation of the NYC sales environment.</span>
+              <div class="step-tags"><span class="step-tag">NYC on-site</span><span class="step-tag">Discussion guide</span><span class="step-tag">Screener design</span><span class="step-tag">Goal alignment</span></div>
+            </div>
+          </div>
+          <div class="process-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <span class="step-title">Desk Research & Competitive Analysis</span>
+              <span class="step-detail">Conducted contextual research on the AI-powered sales enablement landscape — mapping the global market, identifying technology and UX standards being set by competitors, and building a deep understanding of what already exists. Audited 6 existing products across 4 strategic categories: Competitor Intelligence, Sales Analysis & Coaching, Content Management, and Agent Support. Mapped feature overlap, pricing, user pain points, and whitespace opportunities.</span>
+              <div class="step-tags"><span class="step-tag">6 products</span><span class="step-tag">4 market categories</span><span class="step-tag">Feature mapping</span><span class="step-tag">Gap analysis</span></div>
+            </div>
+          </div>
+          <div class="process-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <span class="step-title">Primary Interviews — Sellers & Buyers (16 sessions)</span>
+              <span class="step-detail">Conducted 1:1 qualitative interviews with two groups: 12 B2B Sellers (salespeople who identify, contact, and close enterprise deals) and 4 Buyers (decision makers who authorize software investment). Participants were recruited across three company size segments — Small (10-30 sellers), Medium (50-200), and Large (500+). Interviews covered end-to-end sales workflows, tool usage patterns, frustrations, unmet needs, and reactions to early Gofer capability concepts.</span>
+              <div class="step-tags"><span class="step-tag">12 sellers</span><span class="step-tag">4 buyers</span><span class="step-tag">3 company sizes</span><span class="step-tag">1:1 moderated</span></div>
+            </div>
+          </div>
+          <div class="process-step">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <span class="step-title">Sales Journey Mapping & Insight Synthesis</span>
+              <span class="step-detail">Mapped the full end-to-end sales journey across all participant types — identifying each step from initial prospecting through outreach, qualification, engagement, and close. Layered in pain points, tool usage, and friction across each stage. Synthesized 16 interview sessions into 3 core learning goals, extracted patterns and themes, and formulated solution hypotheses grounded in evidence from real users.</span>
+              <div class="step-tags"><span class="step-tag">Journey mapping</span><span class="step-tag">Pattern extraction</span><span class="step-tag">Insight synthesis</span></div>
+            </div>
+          </div>
+          <div class="process-step">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <span class="step-title">Desirability Testing — 11 Hypothesized Features</span>
+              <span class="step-detail">Tested 11 hypothesized product capabilities with participants — evaluating each feature's desirability, perceived value, and relevance by company size. Each feature was scored on a preference ranking (Game Changer / In Between / Table Stakes / Not for me) and plotted on a desirability matrix. Features were also evaluated against three key user tensions: Signal vs Noise, Quality vs Speed, and Upskill vs Automate. This informed the final MVP inclusion decisions.</span>
+              <div class="step-tags"><span class="step-tag">11 features</span><span class="step-tag">Desirability matrix</span><span class="step-tag">Preference ranking</span><span class="step-tag">Size-based needs</span></div>
+            </div>
+          </div>
+          <div class="process-step">
+            <span class="step-num">06</span>
+            <div class="step-body">
+              <span class="step-title">MVP Prioritization & Final Deliverable</span>
+              <span class="step-detail">Converged all research streams into a prioritized MVP recommendation — defining which features to build first, which to defer, and how the product should position itself in the market. Delivered as a 78-slide research report to Google stakeholders covering: executive summary, learning goals, full methodology, who we talked to, E2E sales journey, acceptance criteria, features overview matrix, individual feature analysis, and MVP recommendation with next steps.</span>
+              <div class="step-tags"><span class="step-tag">78-slide report</span><span class="step-tag">MVP definition</span><span class="step-tag">Feature matrix</span><span class="step-tag">Next steps</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INSIGHTS -->
+  <section class="section">
+    <div class="section-grid">
+      <p class="section-label">04 — Key Insights</p>
+      <div>
+        <h2 class="section-h2">What we learned about how sales reps actually work.</h2>
+        <p class="body-text">The research revealed a consistent pattern across all participant types and company sizes: the current market of sales tools has neglected what sellers actually need most — the ability to find and connect with the right prospects efficiently. Most tools are too broad, delivering noise instead of signal.</p>
+
+        <div class="insights-grid">
+          <div class="insight-card">
+            <span class="insight-number">Insight 01</span>
+            <span class="insight-title">Signal vs Noise is the core problem</span>
+            <span class="insight-body">Salespeople spend enormous time separating signal from noise — researching leads that turn out to be unqualified, using tools that surface irrelevant data. The highest-value AI capability is one that delivers specific, actionable intelligence rather than broad market overviews.</span>
+          </div>
+          <div class="insight-card">
+            <span class="insight-number">Insight 02</span>
+            <span class="insight-title">Reps value craft — AI can't replace it</span>
+            <span class="insight-body">Salespeople consider their interpersonal skills and relationship-building to be their craft. They're deeply skeptical of AI that automates connection rather than augmenting it. The ideal Gofer persona is a smart, proactive partner — not an autonomous agent replacing judgment.</span>
+          </div>
+          <div class="insight-card">
+            <span class="insight-number">Insight 03</span>
+            <span class="insight-title">Company size drives feature needs radically</span>
+            <span class="insight-body">Small teams (10-30 sellers) need AI to make them competitive against larger orgs — they want automation and speed. Large orgs (500+ sellers) need quality and upskilling over speed. The MVP feature set and positioning must account for these fundamentally different motivations.</span>
+          </div>
+        </div>
+
+        <!-- Tensions -->
+        <p style="font-family:'JetBrains Mono',monospace;font-size:0.6875rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-3);margin-top:48px;margin-bottom:0;">What users value — key tensions</p>
+        <div class="tensions">
+          <div class="tension-row">
+            <span class="tension-label">Signal</span>
+            <div class="tension-bar">
+              <div class="tension-dot" style="left: 20%; background: var(--ink);"></div>
+            </div>
+            <span class="tension-label right">Noise</span>
+          </div>
+          <div class="tension-row">
+            <span class="tension-label">Quality</span>
+            <div class="tension-bar">
+              <div class="tension-dot" style="left: 45%; background: var(--ink);"></div>
+            </div>
+            <span class="tension-label right">Speed</span>
+          </div>
+          <div class="tension-row">
+            <span class="tension-label">Upskill</span>
+            <div class="tension-bar">
+              <div class="tension-dot" style="left: 42%; background: var(--ink);"></div>
+            </div>
+            <span class="tension-label right">Automate</span>
+          </div>
+        </div>
+
+        <div class="callout">
+          <p>"Research is about making sure I'm asking the right questions."</p>
+          <cite>— Shelby, B2B Sales Rep (research participant)</cite>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MVP -->
+  <section class="section">
+    <div class="section-grid">
+      <p class="section-label">05 — MVP Definition</p>
+      <div>
+        <h2 class="section-h2">What to build — and what to defer.</h2>
+        <p class="body-text">After testing 11 hypothesized features against participant desirability scores and the competitive landscape, the research produced a clear MVP recommendation. The core value proposition: Gofer carves a market niche by combining capabilities that proactively analyze broad data to identify qualified targets, suggest outreach strategies, improve connection rates, and reduce brute force prospecting tactics.</p>
+
+        <div class="features-list">
+          <div class="feature-row">
+            <span class="feature-num">01</span>
+            <div>
+              <p class="feature-name">Smart prospect targeting & lead scoring</p>
+              <p class="feature-detail">AI-powered identification of qualified prospects using company growth signals, product fit indicators, and sales history patterns. Highest game-changer ranking across all participant groups.</p>
+            </div>
+            <span class="feature-badge badge-mvp">MVP</span>
+          </div>
+          <div class="feature-row">
+            <span class="feature-num">02</span>
+            <div>
+              <p class="feature-name">Prospect profiles mapped to company typologies</p>
+              <p class="feature-detail">Generates prospect profiles based on sales history patterns. Helps reps understand who they're targeting and how to position — training the model over time.</p>
+            </div>
+            <span class="feature-badge badge-mvp">MVP</span>
+          </div>
+          <div class="feature-row">
+            <span class="feature-num">03</span>
+            <div>
+              <p class="feature-name">Competitor intelligence & battle cards</p>
+              <p class="feature-detail">Real-time analysis of competitor activity, positioning, and weaknesses. Delivers targeted battlecard insights to support objection handling and pitch differentiation.</p>
+            </div>
+            <span class="feature-badge badge-mvp">MVP</span>
+          </div>
+          <div class="feature-row">
+            <span class="feature-num">04</span>
+            <div>
+              <p class="feature-name">AI-coached outreach personalization</p>
+              <p class="feature-detail">Suggests personalized outreach messaging based on prospect signals, company context, and historical response patterns — improving connection rates without replacing the rep's voice.</p>
+            </div>
+            <span class="feature-badge badge-mvp">MVP</span>
+          </div>
+          <div class="feature-row">
+            <span class="feature-num">05</span>
+            <div>
+              <p class="feature-name">Email coaching & writing assistance</p>
+              <p class="feature-detail">AI-powered email coaching — not just generation. Helps reps improve their own writing and approach, balancing the upskill vs automate tension identified in research.</p>
+            </div>
+            <span class="feature-badge badge-mvp">MVP</span>
+          </div>
+          <div class="feature-row">
+            <span class="feature-num">07</span>
+            <div>
+              <p class="feature-name">Call sentiment & outcome analysis</p>
+              <p class="feature-detail">Macro-level sentiment analysis focused on cause-and-effect in conversations — identifying what topics and approaches correlate with positive outcomes. Desirability avg 1.4 in testing.</p>
+            </div>
+            <span class="feature-badge badge-future">Future</span>
+          </div>
+          <div class="feature-row">
+            <span class="feature-num">11</span>
+            <div>
+              <p class="feature-name">Email tracking & metrics</p>
+              <p class="feature-detail">Valuable as a component of the coaching feature rather than a standalone capability. Most participants already had basic versions of this in their existing tool stack.</p>
+            </div>
+            <span class="feature-badge badge-future">Future</span>
+          </div>
+        </div>
+
+        <!-- Competitive categories -->
+        <p style="font-family:'JetBrains Mono',monospace;font-size:0.6875rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-3);margin-top:48px;margin-bottom:0;">Competitive landscape — 4 strategic categories</p>
+        <div class="comp-grid">
+          <div class="comp-cell">
+            <p class="comp-cat">Competitor Intelligence</p>
+            <p class="comp-desc">Tools that gather and analyze competitor information — identifying opportunities, threats, and winning strategies.</p>
+          </div>
+          <div class="comp-cell">
+            <p class="comp-cat">Sales Analysis & Coaching</p>
+            <p class="comp-desc">Enable teams to analyze sales data, identify improvement areas, coach reps, and increase revenue performance.</p>
+          </div>
+          <div class="comp-cell">
+            <p class="comp-cat">Content Management</p>
+            <p class="comp-desc">Central location to create, manage, and distribute sales content — pitch decks, collateral, marketing materials.</p>
+          </div>
+          <div class="comp-cell">
+            <p class="comp-cat">Agent Support</p>
+            <p class="comp-desc">Flexible AI agents helping with prospecting, lead qualification, and closing — freeing reps for high-value activities.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section class="section">
+    <div class="section-grid">
+      <p class="section-label">06 — Results</p>
+      <div>
+        <h2 class="section-h2">A market niche carved. An MVP validated by evidence.</h2>
+        <p class="body-text">The 6-week engagement produced a comprehensive, evidence-backed foundation for Gofer's product development — eliminating guesswork and giving the Google engineering team a clear, prioritized set of features to build, with confidence in the underlying user demand.</p>
+        <p class="body-text">The MVP recommendation carved out a distinct position in a crowded market: Gofer's unique value is not in replicating what Gong or Salesforce already do well, but in combining proactive prospect identification, personalized outreach coaching, and competitor intelligence in a way that no existing product delivers in a single, integrated experience.</p>
+        <div class="impact-row">
+          <div class="impact-cell">
+            <div class="impact-number">16</div>
+            <div class="impact-desc">Interviews across Sellers<br>and Buyers in B2B sales</div>
+          </div>
+          <div class="impact-cell">
+            <div class="impact-number">78</div>
+            <div class="impact-desc">Slides delivering the full<br>research + MVP report</div>
+          </div>
+          <div class="impact-cell">
+            <div class="impact-number">6<span>wks</span></div>
+            <div class="impact-desc">From kickoff in NYC<br>to MVP delivered</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOT NAV -->
+  <div class="foot-nav">
+    <a href="./index.html#work">← All projects</a>
+    <a href="./citypulse.html">Pulse City →</a>
+  </div>
+
+</div>
+</body>
+</html>
