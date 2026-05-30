@@ -60,6 +60,51 @@
     .nav-link { font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); text-decoration: none; }
     .nav-link:hover { color: var(--ink); }
 
+    /* NAV HAMBURGER */
+    .nav-burger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 32px;
+      height: 32px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .nav-burger span {
+      display: block;
+      width: 100%;
+      height: 1.5px;
+      background: var(--ink);
+      transition: transform 0.25s ease, opacity 0.25s ease;
+    }
+    .nav-burger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav-burger.open span:nth-child(2) { opacity: 0; }
+    .nav-burger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    /* NAV DROPDOWN (mobile) */
+    .nav-dropdown {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: var(--paper);
+      border-bottom: 1px solid var(--rule);
+      padding: 0 20px 20px;
+      flex-direction: column;
+      gap: 0;
+    }
+    .nav-dropdown.open { display: flex; }
+    .nav-dropdown .nav-link {
+      padding: 14px 0;
+      border-bottom: 1px solid var(--rule);
+      font-size: 0.75rem;
+    }
+    .nav-dropdown .nav-link:last-child { border-bottom: none; }
+
     /* HERO */
     .hero { padding: 80px 0 72px; border-bottom: 1px solid var(--rule); }
     .hero-display {
@@ -126,6 +171,140 @@
 
     /* DIAGRAM */
     .diagram-wrap { width: 70%; margin: 0 auto; border: 1px solid var(--rule); border-radius: 8px; background: var(--paper-2); padding: 24px 16px 16px; overflow: hidden; }
+    @media (max-width: 900px) { .diagram-wrap { width: 100%; } }
+    .diagram-svg { display: block; width: 100%; }
+
+    /* DIAGRAM MOBILE */
+    .diagram-mobile { display: none; }
+    @media (max-width: 640px) {
+      .diagram-svg { display: none; }
+      .diagram-mobile { display: flex; flex-direction: column; gap: 0; }
+      .dm-phase {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.6rem;
+        font-weight: 500;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #84827D;
+        padding: 16px 0 6px;
+        border-top: 1px solid rgba(20,20,19,0.08);
+        margin-top: 4px;
+      }
+      .dm-phase:first-child { border-top: none; padding-top: 0; margin-top: 0; }
+      .dm-node {
+        border-radius: 6px;
+        padding: 10px 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+      }
+      .dm-node-main {
+        background: #FAFAF9;
+        border: 0.5px solid #141413;
+      }
+      .dm-node-ai {
+        background: #E8EDFF;
+        border: 0.5px solid #7C9CFF;
+        margin-left: 16px;
+      }
+      .dm-node-orange {
+        background: #FEF3E2;
+        border: 0.75px solid #F59F3A;
+        margin-left: 16px;
+      }
+      .dm-node-dev {
+        background: transparent;
+        border: 0.75px dashed #B5B3AE;
+      }
+      .dm-node-title {
+        font-family: 'Instrument Sans', sans-serif;
+        font-size: 12px;
+        font-weight: 500;
+        color: #141413;
+        line-height: 1.3;
+      }
+      .dm-node-title.ai { color: #1a2a5e; }
+      .dm-node-title.orange { color: #5a3500; }
+      .dm-node-title.dev { color: #84827D; }
+      .dm-node-sub {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 9.5px;
+        color: #84827D;
+        line-height: 1.4;
+      }
+      .dm-node-sub.ai { color: #3a4888; }
+      .dm-node-sub.orange { color: #8a5a00; }
+      .dm-ai-badge {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 8.5px;
+        font-weight: 500;
+        color: #1a2a5e;
+        margin-bottom: 1px;
+      }
+      .dm-ai-badge.orange { color: #8a5a00; }
+      /* vertical connector between main and AI node */
+      .dm-v-connector {
+        width: 1px;
+        height: 10px;
+        margin-left: 24px;
+        background: transparent;
+        border-left: 1px dashed;
+      }
+      .dm-v-connector.ai { border-color: #7C9CFF; }
+      .dm-v-connector.orange { border-color: #F59F3A; }
+      /* vertical arrow between steps */
+      .dm-arrow {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 24px;
+        gap: 0;
+        margin: 6px 0;
+      }
+      .dm-arrow-line {
+        width: 1px;
+        height: 16px;
+        background: rgba(20,20,19,0.35);
+      }
+      .dm-arrow-head {
+        width: 0;
+        height: 0;
+        border-left: 4px solid transparent;
+        border-right: 4px solid transparent;
+        border-top: 5px solid rgba(20,20,19,0.35);
+      }
+      .dm-arrow.dashed .dm-arrow-line {
+        background: none;
+        border-left: 1px dashed rgba(20,20,19,0.25);
+      }
+      /* legend */
+      .dm-legend {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        margin-top: 20px;
+        padding-top: 16px;
+        border-top: 1px solid rgba(20,20,19,0.08);
+      }
+      .dm-legend-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 9px;
+        color: #84827D;
+      }
+      .dm-legend-line {
+        display: inline-block;
+        width: 20px;
+        height: 1px;
+        border-top: 1.5px dashed;
+        flex-shrink: 0;
+      }
+      .dm-legend-line.ai { border-color: #7C9CFF; }
+      .dm-legend-line.orange { border-color: #F59F3A; }
+      .dm-legend-line.dev { border-color: #B5B3AE; border-top-width: 1px; }
+    }
     .phase-label { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; fill: #84827D; }
     .d-node-title { font-family: 'Instrument Sans', sans-serif; font-size: 11px; font-weight: 500; fill: #141413; }
     .d-node-sub { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; font-weight: 400; fill: #84827D; }
@@ -214,6 +393,9 @@
       .work-grid { grid-template-columns: 1fr 1fr; }
       .stat-row { grid-template-columns: 100px 1fr; }
       .stat-meta { display: none; }
+      .nav { position: relative; }
+      .nav-links { display: none; }
+      .nav-burger { display: flex; }
     }
     @media (max-width: 560px) {
       .page { padding: 0 20px 48px; }
@@ -237,6 +419,15 @@
       <a class="nav-link" href="#process">Design AI Process</a>
       <a class="nav-link" href="#experience">Experience</a>
       <a class="nav-link" href="#contact">Contact</a>
+    </div>
+    <button class="nav-burger" id="navBurger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-dropdown" id="navDropdown">
+      <a class="nav-link" href="#work" onclick="closeMenu()">Work</a>
+      <a class="nav-link" href="#process" onclick="closeMenu()">Design AI Process</a>
+      <a class="nav-link" href="#experience" onclick="closeMenu()">Experience</a>
+      <a class="nav-link" href="#contact" onclick="closeMenu()">Contact</a>
     </div>
   </nav>
 
@@ -542,7 +733,7 @@
       <p style="font-size:1rem;line-height:1.6;color:#3F3D3A;">A design workflow where strategy, systems, and AI work in sync — from <strong>FigJam</strong> mapping and <strong>Confluence</strong> documentation to markdown <strong>Figma</strong> design systems, UI Front-end library in <strong>Github</strong>, coded prototyping in <strong>Cursor</strong>, and iteration with <strong>Claude skills</strong> through to delivery. <br><br> Connecting research, design, and engineering in one continuous workflow enables faster validation, tighter feedback loops, and a more seamless path from concept to implementation. AI becomes part of the process not just for speed, but as a creative and technical collaborator throughout.</p>
     </div>
     <div class="diagram-wrap">
-      <svg width="100%" viewBox="0 0 680 860" role="img">
+      <svg class="diagram-svg" width="100%" viewBox="0 0 680 860" role="img">
         <title>Design AI-driven process</title>
         <defs>
           <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
@@ -635,6 +826,120 @@
         <line x1="484" y1="856" x2="504" y2="856" stroke="#B5B3AE" stroke-width="0.75" stroke-dasharray="5 3"/>
         <text class="d-node-sub" x="510" y="856" dominant-baseline="central" fill="#B5B3AE">Dev boundary</text>
       </svg>
+
+      <!-- MOBILE DIAGRAM -->
+      <div class="diagram-mobile">
+
+        <!-- RESEARCH -->
+        <p class="dm-phase">Research</p>
+        <div class="dm-node dm-node-main">
+          <div class="dm-node-title">1. Discovery</div>
+          <div class="dm-node-sub">User interviews · Research plan</div>
+        </div>
+        <div class="dm-v-connector ai"></div>
+        <div class="dm-node dm-node-ai">
+          <span class="dm-ai-badge">⬡ AI</span>
+          <div class="dm-node-title ai">Set research plan baseline</div>
+          <div class="dm-node-sub ai">Guides interview structure</div>
+        </div>
+
+        <div class="dm-arrow"><div class="dm-arrow-line"></div><div class="dm-arrow-head"></div></div>
+
+        <!-- SYNTHESIS -->
+        <p class="dm-phase">Synthesis</p>
+        <div class="dm-node dm-node-main">
+          <div class="dm-node-title">Synthesize research</div>
+        </div>
+        <div class="dm-v-connector ai"></div>
+        <div class="dm-node dm-node-ai">
+          <span class="dm-ai-badge">⬡</span>
+          <div class="dm-node-title ai">Analyze &amp; cluster findings</div>
+        </div>
+
+        <div class="dm-arrow"><div class="dm-arrow-line"></div><div class="dm-arrow-head"></div></div>
+
+        <div class="dm-node dm-node-main">
+          <div class="dm-node-title">2. Problem statements</div>
+          <div class="dm-node-sub">Jobs to be done</div>
+        </div>
+
+        <div class="dm-arrow"><div class="dm-arrow-line"></div><div class="dm-arrow-head"></div></div>
+
+        <!-- IDEATION -->
+        <p class="dm-phase">Ideation</p>
+        <div class="dm-node dm-node-main">
+          <div class="dm-node-title">3. Ideation</div>
+          <div class="dm-node-sub">Product team workshop</div>
+        </div>
+        <div class="dm-v-connector ai"></div>
+        <div class="dm-node dm-node-ai">
+          <span class="dm-ai-badge">⬡</span>
+          <div class="dm-node-title ai">AI as brainstorm partner</div>
+          <div class="dm-node-sub ai">Bounce ideas, stress-test</div>
+        </div>
+
+        <div class="dm-arrow"><div class="dm-arrow-line"></div><div class="dm-arrow-head"></div></div>
+
+        <!-- DESIGN SYSTEM -->
+        <p class="dm-phase">Design system</p>
+        <div class="dm-node dm-node-main">
+          <div class="dm-node-title">5. Design system</div>
+          <div class="dm-node-sub">Repo on GitHub</div>
+        </div>
+        <div class="dm-v-connector orange"></div>
+        <div class="dm-node dm-node-orange">
+          <span class="dm-ai-badge orange">⬡ AI Markdown</span>
+          <div class="dm-node-title orange">4b. Design system · AI Markdown</div>
+          <div class="dm-node-sub orange">Figma → AI-readable spec</div>
+        </div>
+
+        <div class="dm-arrow"><div class="dm-arrow-line"></div><div class="dm-arrow-head"></div></div>
+
+        <!-- PROTOTYPE -->
+        <p class="dm-phase">Prototype</p>
+        <div class="dm-node dm-node-main">
+          <div class="dm-node-title">6. Create branch · Prototype</div>
+          <div class="dm-node-sub">Cursor · Claude Code · new branch</div>
+        </div>
+
+        <div class="dm-arrow"><div class="dm-arrow-line"></div><div class="dm-arrow-head"></div></div>
+
+        <!-- AUDIT -->
+        <p class="dm-phase">Audit</p>
+        <div class="dm-node dm-node-ai" style="margin-left:0;">
+          <span class="dm-ai-badge">⬡ Claude skill</span>
+          <div class="dm-node-sub ai">Review &amp; flag</div>
+        </div>
+        <div class="dm-v-connector ai"></div>
+        <div class="dm-node dm-node-main">
+          <div class="dm-node-title">7. Audit &amp; verify</div>
+          <div class="dm-node-sub">UX patterns · Design system</div>
+        </div>
+
+        <div class="dm-arrow"><div class="dm-arrow-line"></div><div class="dm-arrow-head"></div></div>
+
+        <!-- HANDOFF -->
+        <p class="dm-phase">Handoff</p>
+        <div class="dm-node dm-node-main">
+          <div class="dm-node-title">8. Commit · Pull request</div>
+          <div class="dm-node-sub">Handoff to dev team</div>
+        </div>
+
+        <div class="dm-arrow dashed"><div class="dm-arrow-line"></div><div class="dm-arrow-head"></div></div>
+
+        <div class="dm-node dm-node-dev">
+          <div class="dm-node-title dev">9. Dev connects back · Merge</div>
+          <div class="dm-node-sub">AI-assisted step · Design system bridge · Dev boundary</div>
+        </div>
+
+        <!-- LEGEND -->
+        <div class="dm-legend">
+          <div class="dm-legend-item"><span class="dm-legend-line ai"></span> AI-assisted step</div>
+          <div class="dm-legend-item"><span class="dm-legend-line orange"></span> Design system bridge</div>
+          <div class="dm-legend-item"><span class="dm-legend-line dev"></span> Dev boundary</div>
+        </div>
+
+      </div>
     </div>
   </section>
 
@@ -735,5 +1040,17 @@
   </footer>
 
 </div>
+<script>
+  const burger = document.getElementById('navBurger');
+  const dropdown = document.getElementById('navDropdown');
+  burger.addEventListener('click', () => {
+    const open = dropdown.classList.toggle('open');
+    burger.classList.toggle('open', open);
+  });
+  function closeMenu() {
+    dropdown.classList.remove('open');
+    burger.classList.remove('open');
+  }
+</script>
 </body>
 </html>
