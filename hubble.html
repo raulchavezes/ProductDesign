@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hubble — Raul Chavez</title>
+  <link rel="icon" type="image/x-icon" href="./img/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --paper: #FFFFFF;
+      --paper-2: #FAFAF9;
+      --paper-3: #F3F2EF;
+      --ink: #141413;
+      --ink-2: #3F3D3A;
+      --ink-3: #84827D;
+      --ink-4: #B5B3AE;
+      --rule: rgba(20,20,19,0.10);
+      --handson: #E5FF60;
+      --focus: #4DD86F;
+      --ai-bg: #E8EDFF;
+      --ai-border: #7C9CFF;
+      --ai-text: #1a2a5e;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--paper); color: var(--ink); font-family: 'Instrument Sans', system-ui, sans-serif; font-size: 1rem; line-height: 1.55; }
+    .page { width: 100%; max-width: 1280px; margin: 0 auto; padding: 0 64px 120px; }
+
+    /* NAV */
+    .nav { display: flex; justify-content: space-between; align-items: center; padding: 22px 0; border-bottom: 1px solid var(--rule); position: sticky; top: 0; background: var(--paper); z-index: 100; }
+    .nav-lockup { display: flex; align-items: center; gap: 8px; text-decoration: none; }
+    .nav-mark { width: 22px; height: 22px; background: var(--ink); display: flex; align-items: center; justify-content: center; }
+    .nav-mark-inner { width: 8px; height: 8px; border-radius: 50%; background: var(--paper); }
+    .nav-l1 { font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); }
+    .nav-back { font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); text-decoration: none; }
+    .nav-back:hover { color: var(--ink); }
+
+    /* HERO */
+    .hero { padding: 80px 0 72px; border-bottom: 1px solid var(--rule); display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: end; }
+    .hero-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 20px; }
+    .hero-title { font-size: clamp(5rem, 12vw, 10rem); font-weight: 600; line-height: 0.92; letter-spacing: -0.04em; color: var(--ink); margin-bottom: 24px; }
+    .hero-title em { font-style: normal; background: linear-gradient(to bottom, transparent 55%, var(--handson) 55%); }
+    .hero-sub { font-size: 1.125rem; line-height: 1.6; color: var(--ink-2); max-width: 480px; }
+    .hero-meta { display: flex; flex-direction: column; gap: 28px; }
+    .meta-block { display: flex; flex-direction: column; gap: 6px; }
+    .meta-label { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-4); }
+    .meta-value { font-size: 1rem; font-weight: 500; color: var(--ink); }
+    .meta-value-mono { font-family: 'JetBrains Mono', monospace; font-size: 0.8125rem; color: var(--ink-3); line-height: 1.6; }
+    .status-chip { display: inline-flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--focus); }
+    .status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--focus); box-shadow: 0 0 0 3px color-mix(in oklab, #4DD86F 22%, transparent); animation: halo 3.2s ease-in-out infinite; }
+    @keyframes halo { 0%,100% { box-shadow: 0 0 0 3px color-mix(in oklab,#4DD86F 22%,transparent); } 50% { box-shadow: 0 0 0 5px color-mix(in oklab,#4DD86F 10%,transparent); } }
+
+    /* TAGS */
+    .tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+    .tag { font-family: 'JetBrains Mono', monospace; font-size: 0.625rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); border: 1px solid var(--rule); padding: 5px 10px; }
+    .tag-ai { background: var(--ai-bg); border-color: var(--ai-border); color: var(--ai-text); }
+
+    /* SECTIONS */
+    .section { padding: 72px 0; border-bottom: 1px solid var(--rule); }
+    .section-grid { display: grid; grid-template-columns: 260px 1fr; gap: 80px; align-items: start; }
+    .section-label { font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); padding-top: 4px; position: sticky; top: 80px; }
+    .section-h2 { font-size: clamp(1.75rem, 3vw, 2.5rem); font-weight: 500; line-height: 1.1; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 20px; }
+    .body-text { font-size: 1.0625rem; line-height: 1.7; color: var(--ink-2); }
+    .body-text + .body-text { margin-top: 16px; }
+
+    /* CALLOUT */
+    .callout { border-left: 2px solid var(--handson); padding: 20px 28px; background: var(--paper-2); margin-top: 32px; }
+    .callout p { font-size: 1.125rem; line-height: 1.6; color: var(--ink); font-weight: 500; letter-spacing: -0.01em; }
+
+    /* AI BADGE */
+    .ai-badge { display: inline-flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; font-weight: 500; background: var(--ai-bg); border: 1px solid var(--ai-border); color: var(--ai-text); padding: 5px 10px; margin-top: 12px; }
+
+    /* IMPACT NUMBERS */
+    .impact-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--rule); border: 1px solid var(--rule); margin-top: 48px; }
+    .impact-cell { background: var(--paper); padding: 32px 28px; }
+    .impact-number { font-size: 3rem; font-weight: 600; line-height: 1; letter-spacing: -0.04em; color: var(--ink); margin-bottom: 8px; }
+    .impact-number span { font-size: 1.75rem; font-weight: 400; color: var(--ink-3); }
+    .impact-desc { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--ink-3); line-height: 1.5; }
+
+    /* TEAM ORG */
+    .org-block { background: var(--paper-3); border: 1px solid var(--rule); padding: 32px; margin-top: 32px; }
+    .org-label { font-family: 'JetBrains Mono', monospace; font-size: 0.625rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-4); margin-bottom: 20px; }
+    .org-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+    .org-me { background: var(--ink); color: var(--paper); font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; font-weight: 500; padding: 6px 12px; }
+    .org-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--ink-4); flex-shrink: 0; }
+    .org-item { font-size: 0.9375rem; color: var(--ink-2); }
+    .org-sub { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--ink-3); }
+    .org-divider { height: 1px; background: var(--rule); margin: 16px 0; }
+
+    /* PROCESS STEPS */
+    .process-list { display: flex; flex-direction: column; margin-top: 32px; }
+    .process-step { display: grid; grid-template-columns: 48px 1fr; gap: 24px; padding: 28px 0; border-bottom: 1px solid var(--rule); align-items: start; }
+    .process-step:last-child { border-bottom: none; }
+    .step-num { font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; font-weight: 500; color: var(--ink-4); letter-spacing: 0.06em; padding-top: 3px; }
+    .step-body { display: flex; flex-direction: column; gap: 8px; }
+    .step-title { font-size: 1rem; font-weight: 500; color: var(--ink); }
+    .step-detail { font-size: 0.9375rem; line-height: 1.6; color: var(--ink-2); }
+    .step-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .step-tag { font-family: 'JetBrains Mono', monospace; font-size: 0.5625rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-4); border: 1px solid var(--rule); padding: 3px 7px; }
+    .step-tag.ai { background: var(--ai-bg); border-color: var(--ai-border); color: var(--ai-text); }
+
+    /* AI PROCESS HIGHLIGHT */
+    .ai-process { background: var(--ai-bg); border: 1px solid var(--ai-border); padding: 28px 32px; margin-top: 32px; }
+    .ai-process-title { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ai-text); margin-bottom: 12px; }
+    .ai-process-body { font-size: 1rem; line-height: 1.7; color: var(--ink-2); }
+    .code-flow { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 16px; }
+    .code-step { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; background: var(--paper); border: 1px solid var(--ai-border); color: var(--ai-text); padding: 6px 12px; }
+    .code-arrow { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--ai-border); }
+
+    /* SCREENS */
+    .screen-full { margin-top: 40px; }
+    .screen-full img { width: 100%; display: block; border: 1px solid var(--rule); background: var(--paper-3); }
+    .screen-caption { font-family: 'JetBrains Mono', monospace; font-size: 0.625rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-4); margin-top: 10px; }
+    .screen-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 24px; }
+    .screen-fig { display: flex; flex-direction: column; gap: 8px; }
+    .screen-fig img { width: 100%; display: block; border: 1px solid var(--rule); background: var(--paper-3); }
+
+    /* ARTIFACT GRID */
+    .artifact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 32px; }
+    .artifact-card { border: 1px solid var(--rule); background: var(--paper-2); padding: 28px; display: flex; flex-direction: column; gap: 12px; }
+    .artifact-icon { width: 32px; height: 32px; }
+    .artifact-title { font-size: 1rem; font-weight: 500; color: var(--ink); }
+    .artifact-desc { font-size: 0.875rem; line-height: 1.6; color: var(--ink-3); font-family: 'JetBrains Mono', monospace; }
+
+    /* FOOTER NAV */
+    .foot-nav { display: flex; justify-content: space-between; align-items: center; padding: 48px 0 0; border-top: 1px solid var(--rule); margin-top: 80px; }
+    .foot-nav a { font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); text-decoration: none; }
+    .foot-nav a:hover { color: var(--ink); }
+
+    @media (max-width: 900px) {
+      .page { padding: 0 32px 80px; }
+      .hero { grid-template-columns: 1fr; gap: 40px; }
+      .section-grid { grid-template-columns: 1fr; gap: 24px; }
+      .section-label { position: static; }
+      .impact-row { grid-template-columns: 1fr 1fr; }
+      .artifact-grid, .screen-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .page { padding: 0 20px 60px; }
+      .impact-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a class="nav-lockup" href="./index.html">
+      <div class="nav-mark"><div class="nav-mark-inner"></div></div>
+      <div class="nav-wordmark"><span class="nav-l1">Product Design</span></div>
+    </a>
+    <a class="nav-back" href="./index.html#work">← Back to work</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div>
+      <p class="hero-eyebrow">01 · Internal Tool · Crypto · PayOps · Bitso</p>
+      <h1 class="hero-title"><em>Hub</em>ble.</h1>
+      <p class="hero-sub">AI-crafted operational platform managing 9 million users' daily crypto and fiat operations — $220M USD flowing through it every day. Led as Lead Designer heading 4 designers across 5 product squads.</p>
+      <div class="tag-row">
+        <span class="tag">Lead Designer</span>
+        <span class="tag">Team of 4</span>
+        <span class="tag">5 Product Squads</span>
+        <span class="tag">KYB / KYC</span>
+        <span class="tag">PayOps</span>
+        <span class="tag tag-ai">⬡ Cursor AI</span>
+        <span class="tag tag-ai">⬡ Claude Code</span>
+        <span class="tag tag-ai">⬡ GitHub PRs</span>
+      </div>
+    </div>
+    <div class="hero-meta">
+      <div class="meta-block">
+        <span class="meta-label">Status</span>
+        <span class="status-chip"><span class="status-dot"></span>Live in production</span>
+      </div>
+      <div class="meta-block">
+        <span class="meta-label">Company</span>
+        <span class="meta-value">Bitso — Crypto Fintech</span>
+      </div>
+      <div class="meta-block">
+        <span class="meta-label">My Role</span>
+        <span class="meta-value">Lead Product Designer</span>
+      </div>
+      <div class="meta-block">
+        <span class="meta-label">Team</span>
+        <span class="meta-value-mono">4 Designers (led & mentored)<br>5 Product Squads (fleet lead)<br>PMs · Engineers · Data · Compliance</span>
+      </div>
+      <div class="meta-block">
+        <span class="meta-label">Scale</span>
+        <span class="meta-value-mono">9M users · $220M USD daily<br>Multi-currency: MXN, ARS, BRL, COP, USD, Crypto</span>
+      </div>
+      <div class="meta-block">
+        <span class="meta-label">AI Design Process</span>
+        <span class="meta-value-mono">Cursor AI · Claude Code · Figma<br>Prototypes → PRs → GitHub</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SITUATION -->
+  <section class="section">
+    <div class="section-grid">
+      <p class="section-label">01 — Situation</p>
+      <div>
+        <h2 class="section-h2">$220M a day through a system that wasn't built to handle it.</h2>
+        <p class="body-text">Bitso's operational back-office had outgrown the tool it was built on. The legacy Bitso Admin — a patchwork of interfaces accumulated over years of growth — was handling the daily operations of 9 million users across 7 currencies in multiple markets. But it was brittle, inconsistent, and operationally risky at the scale Bitso had reached.</p>
+        <p class="body-text">Every day, $220M USD moved through the platform in the form of SPEI deposits, FIAT withdrawals, crypto transfers, KYB verifications, account screening, and compliance reviews. The teams running these operations — PayOps, Compliance, Risk, KYC analysts — were doing it through an interface that slowed them down and created errors at scale.</p>
+        <p class="body-text">Hubble was the answer: a new, purpose-built internal platform designed from the ground up for the complexity of a scaled crypto fintech — unified, consistent, and built to grow.</p>
+
+        <div class="callout">
+          <p>The challenge wasn't just design. It was migrating 9 million users' operational data, 5 product squads, and 7 currencies into a new system while keeping $220M/day in operations running without disruption.</p>
+        </div>
+
+        <div class="impact-row">
+          <div class="impact-cell">
+            <div class="impact-number">$220<span>M</span></div>
+            <div class="impact-desc">USD daily operations<br>through Hubble</div>
+          </div>
+          <div class="impact-cell">
+            <div class="impact-number">9<span>M</span></div>
+            <div class="impact-desc">Users managed<br>on the platform</div>
+          </div>
+          <div class="impact-cell">
+            <div class="impact-number">5</div>
+            <div class="impact-desc">Product squads<br>in the fleet</div>
+          </div>
+          <div class="impact-cell">
+            <div class="impact-number">7</div>
+            <div class="impact-desc">Currencies: MXN · ARS · BRL<br>COP · USD · USDC · Crypto</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROLE -->
+  <section class="section">
+    <div class="section-grid">
+      <p class="section-label">02 — My Role</p>
+      <div>
+        <h2 class="section-h2">Lead Designer — team lead, mentor, and strategic design reference.</h2>
+        <p class="body-text">As Lead Product Designer at Bitso, I was the strategic and technical design reference across a fleet of 5 product squads — influencing cross-functional decisions, raising the design quality bar across teams, and driving design system adoption throughout the organization.</p>
+        <p class="body-text">Within that fleet, one squad was fully dedicated to designing and implementing Hubble. I led that squad's design direction while also mentoring and managing 4 designers across the other squads — setting standards, running design reviews, unblocking teams, and building a cohesive design culture at Bitso.</p>
+
+        <div class="org-block">
+          <p class="org-label">Team structure</p>
+          <div class="org-row">
+            <span class="org-me">Raul — Lead Designer</span>
+            <span class="org-sub">Strategic reference · 5 squads · Design system</span>
+          </div>
+          <div class="org-divider"></div>
+          <div class="org-row">
+            <div class="org-dot"></div>
+            <span class="org-item">4 Product Designers — led, mentored, and reviewed</span>
+          </div>
+          <div class="org-row">
+            <div class="org-dot"></div>
+            <span class="org-item">Hubble Squad — 1 designer (Hubble platform design)</span>
+          </div>
+          <div class="org-row">
+            <div class="org-dot"></div>
+            <span class="org-item">4 additional squads — PayOps · KYC · Compliance · Growth</span>
+          </div>
+          <div class="org-divider"></div>
+          <div class="org-row">
+            <div class="org-dot"></div>
+            <span class="org-sub">Each squad: PM · Engineers · Data · Design · Compliance stakeholders</span>
+          </div>
+        </div>
+
+        <div class="artifact-grid">
+          <div class="artifact-card">
+            <svg class="artifact-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="16" cy="10" r="4" stroke="#141413" stroke-width="1.2" opacity="0.4"/>
+              <path d="M8 26c0-4.418 3.582-8 8-8s8 3.582 8 8" stroke="#141413" stroke-width="1.2" opacity="0.3" stroke-linecap="round"/>
+              <circle cx="8" cy="9" r="2.5" stroke="#141413" stroke-width="0.75" opacity="0.2"/>
+              <circle cx="24" cy="9" r="2.5" stroke="#141413" stroke-width="0.75" opacity="0.2"/>
+              <circle cx="16" cy="10" r="1.5" fill="#E5FF60"/>
+            </svg>
+            <span class="artifact-title">Team Lead & Mentor</span>
+            <span class="artifact-desc">Led 4 designers. Weekly 1:1s, design reviews, career growth, and design culture across 5 squads at Bitso.</span>
+          </div>
+          <div class="artifact-card">
+            <svg class="artifact-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="4" y="6" width="24" height="20" rx="2" stroke="#141413" stroke-width="1.2" opacity="0.4"/>
+              <line x1="4" y1="12" x2="28" y2="12" stroke="#141413" stroke-width="0.75" opacity="0.2"/>
+              <rect x="8" y="16" width="7" height="5" rx="1" fill="#E5FF60" opacity="0.9"/>
+              <rect x="17" y="16" width="7" height="5" rx="1" fill="#141413" opacity="0.1"/>
+            </svg>
+            <span class="artifact-title">Design System Leadership</span>
+            <span class="artifact-desc">Owned Bitso's design system — components, tokens, patterns — ensuring consistency across all product surfaces.</span>
+          </div>
+          <div class="artifact-card">
+            <svg class="artifact-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="5" y="8" width="22" height="16" rx="2" stroke="#141413" stroke-width="1.2" opacity="0.4"/>
+              <line x1="5" y1="13" x2="27" y2="13" stroke="#141413" stroke-width="0.75" opacity="0.2"/>
+              <line x1="11" y1="8" x2="11" y2="24" stroke="#141413" stroke-width="0.75" opacity="0.2"/>
+              <rect x="13" y="15" width="8" height="3" rx="1" fill="#E8EDFF" stroke="#7C9CFF" stroke-width="0.5"/>
+            </svg>
+            <span class="artifact-title">KYB / KYC Platform Design</span>
+            <span class="artifact-desc">Designed the full KYB migration to Hubble — related parties, verification flows, account screening, compliance tools.</span>
+          </div>
+          <div class="artifact-card">
+            <svg class="artifact-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="6" y="4" width="14" height="18" rx="2" stroke="#141413" stroke-width="1.2" opacity="0.4"/>
+              <line x1="9" y1="9" x2="17" y2="9" stroke="#141413" stroke-width="1" opacity="0.2"/>
+              <line x1="9" y1="12" x2="17" y2="12" stroke="#141413" stroke-width="1" opacity="0.2"/>
+              <line x1="9" y1="15" x2="14" y2="15" stroke="#141413" stroke-width="1" opacity="0.15"/>
+              <polyline points="18,16 22,20 28,12" stroke="#4DD86F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="artifact-title">Cross-functional Alignment</span>
+            <span class="artifact-desc">Bridged design, engineering, compliance, and PayOps — ensuring requirements were translated into usable, production-ready flows.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI DESIGN PROCESS -->
+  <section class="section">
+    <div class="section-grid">
+      <p class="section-label">03 — AI Design Process</p>
+      <div>
+        <h2 class="section-h2">Design directly in code. Ship PRs. Skip the handoff.</h2>
+        <p class="body-text">Hubble was where I fully embraced an AI-first design workflow — not as an experiment, but as the primary way I worked. Instead of designing in Figma and handing off specs for engineers to interpret, I prototyped directly in <strong>Cursor AI</strong> and <strong>Claude Code</strong>, generating working code that could be validated in the real UI environment.</p>
+        <p class="body-text">When a prototype was solid, I pushed it directly — opening PRs to GitHub and contributing changes to the actual product codebase. This compressed the design-to-production cycle dramatically: what would have taken days of back-and-forth between design and engineering happened in hours, with fewer misinterpretations and a tighter feedback loop.</p>
+
+        <div class="ai-process">
+          <p class="ai-process-title">⬡ AI-First Design Workflow</p>
+          <p class="ai-process-body">Research & requirements → Figma explorations → Cursor AI prototype → Claude Code refinement → PR to GitHub → Production</p>
+          <div class="code-flow">
+            <span class="code-step">Figma</span>
+            <span class="code-arrow">→</span>
+            <span class="code-step">Cursor AI</span>
+            <span class="code-arrow">→</span>
+            <span class="code-step">Claude Code</span>
+            <span class="code-arrow">→</span>
+            <span class="code-step">git commit</span>
+            <span class="code-arrow">→</span>
+            <span class="code-step">PR → GitHub</span>
+            <span class="code-arrow">→</span>
+            <span class="code-step">Production</span>
+          </div>
+        </div>
+
+        <div class="process-list">
+          <div class="process-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <span class="step-title">Discovery & Requirements — with Compliance and PayOps</span>
+              <span class="step-detail">Each Hubble feature started with deep discovery alongside Compliance, KYC analysts, PayOps operators, and PMs. Understanding the regulatory constraints, operational edge cases, and user mental models before touching any design tool — especially critical for a platform handling financial compliance at scale.</span>
+              <div class="step-tags"><span class="step-tag">Stakeholder interviews</span><span class="step-tag">Compliance requirements</span><span class="step-tag">Workflow mapping</span></div>
+            </div>
+          </div>
+          <div class="process-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <span class="step-title">Figma Explorations & Design System</span>
+              <span class="step-detail">Initial explorations in Figma — rapidly iterating on information architecture, layout patterns, and component usage. All work built on Bitso's design system, which I owned and evolved. Design crits with the squad and compliance stakeholders before moving to prototype.</span>
+              <div class="step-tags"><span class="step-tag">Figma</span><span class="step-tag">Design system</span><span class="step-tag">Design crits</span><span class="step-tag">IA explorations</span></div>
+            </div>
+          </div>
+          <div class="process-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <span class="step-title">⬡ AI Prototyping in Cursor — Working Code, Not Mocks</span>
+              <span class="step-detail">Once the design direction was clear, I moved directly into Cursor AI to build working prototypes in code. Using AI assistance to generate near-production-quality React components, I could validate real interactions, test edge cases in actual data scenarios, and share functional prototypes with engineers and PMs — not static mocks. This approach was especially powerful for Hubble's complex table-heavy interfaces where real data behavior is hard to simulate in design tools.</span>
+              <div class="step-tags"><span class="step-tag ai">⬡ Cursor AI</span><span class="step-tag ai">⬡ Claude Code</span><span class="step-tag">React components</span><span class="step-tag">Working prototype</span></div>
+            </div>
+          </div>
+          <div class="process-step">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <span class="step-title">⬡ Direct GitHub PRs — Design as Code Contribution</span>
+              <span class="step-detail">When prototypes were validated, I opened PRs directly to Hubble's GitHub repository — contributing code changes, copy updates, configuration tweaks, and feature flag implementations without routing through the traditional designer-to-developer handoff. This put me in daily Git workflows alongside engineers: reviewing PRs, understanding technical constraints firsthand, and maintaining technical credibility within an engineering-dominant environment.</span>
+              <div class="step-tags"><span class="step-tag ai">⬡ GitHub PRs</span><span class="step-tag">Git workflow</span><span class="step-tag">Code review</span><span class="step-tag">Direct contribution</span></div>
+            </div>
+          </div>
+          <div class="process-step">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <span class="step-title">Validation, QA & Iteration in Production</span>
+              <span class="step-detail">Validated designs in staging environments with real operational data — working with KYC analysts and PayOps teams to test flows against actual compliance scenarios. Iterated rapidly based on operator feedback, using the same AI-assisted code workflow to ship fixes and improvements without waiting for engineering bandwidth.</span>
+              <div class="step-tags"><span class="step-tag">Staging validation</span><span class="step-tag">Operator testing</span><span class="step-tag">QA</span><span class="step-tag">Rapid iteration</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPLORATIONS -->
+  <section class="section">
+    <div class="section-grid">
+      <p class="section-label">04 — Design Explorations</p>
+      <div>
+        <h2 class="section-h2">KYB migration — ideation, flows & architecture.</h2>
+        <p class="body-text">Before building in Hubble, I explored the full migration of KYB from the legacy Bitso Admin — mapping related parties, verification flows, and compliance requirements into Hubble's new information architecture. These explorations informed the final design decisions across the KYB and compliance squads.</p>
+
+        <div class="screen-full" style="margin-top: 32px;">
+          <img src="./img/hubble/explore_01.png" alt="Hubble — KYB migration exploration overview"/>
+          <p class="screen-caption">KYB migration overview · Legacy admin → Hubble · Information architecture</p>
+        </div>
+
+        <div class="screen-grid">
+          <div class="screen-fig">
+            <img src="./img/hubble/explore_02.png" alt="Hubble — KYB flow exploration 02"/>
+            <p class="screen-caption">KYB flow exploration · Related parties structure</p>
+          </div>
+          <div class="screen-fig">
+            <img src="./img/hubble/explore_03.png" alt="Hubble — KYB flow exploration 03"/>
+            <p class="screen-caption">Verification flow · PEP / UBO · GDC status</p>
+          </div>
+        </div>
+
+        <div class="screen-grid">
+          <div class="screen-fig">
+            <img src="./img/hubble/explore_04.png" alt="Hubble — Compliance ideation 04"/>
+            <p class="screen-caption">Compliance tools · Account screening · Risk flags</p>
+          </div>
+          <div class="screen-fig">
+            <img src="./img/hubble/explore_05.png" alt="Hubble — Compliance ideation 05"/>
+            <p class="screen-caption">Account actions · Products & services · Multi-currency</p>
+          </div>
+        </div>
+
+        <div class="screen-full">
+          <img src="./img/hubble/explore_06.png" alt="Hubble — KYB ideation summary"/>
+          <p class="screen-caption">Ideation summary · Design decisions · Handoff to squad</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCREENS -->
+  <section class="section">
+    <div class="section-grid">
+      <p class="section-label">05 — Product Screens</p>
+      <div>
+        <h2 class="section-h2">Hubble in production — KYB, PayOps & Compliance.</h2>
+        <p class="body-text">The platform covers the full operational surface of Bitso's PayOps and Compliance teams — from KYB verification of businesses and related parties, to account actions, level management, and reconciliation reporting.</p>
+
+        <!-- KYB Related Parties — full width -->
+        <div class="screen-full" style="margin-top: 32px;">
+          <img src="./img/hubble-kyb-parties.png" alt="Hubble — KYB Related Parties view showing administrators and shareholders with PEP/UBO verification status"/>
+          <p class="screen-caption">KYB migration — Related parties · Administrators & shareholders · PEP/UBO · GDC verification status</p>
+        </div>
+
+        <!-- Account Actions + KYC Levels -->
+        <div class="screen-grid">
+          <div class="screen-fig">
+            <img src="./img/hubble-account-actions.png" alt="Hubble — User profile account actions: SPEI deposits, FIAT withdrawals, Crypto transfers, risk flags"/>
+            <p class="screen-caption">Account actions · Products & services · Risk flags · Multi-currency</p>
+          </div>
+          <div class="screen-fig">
+            <img src="./img/hubble-kyc-levels.png" alt="Hubble — Business user KYC levels and limits: ARS, BRL, COP, Crypto, MXN, USD"/>
+            <p class="screen-caption">KYC levels · Transaction limits · Multi-currency per market</p>
+          </div>
+        </div>
+
+        <!-- Reports — full width -->
+        <div class="screen-full">
+          <img src="./img/hubble-reports.png" alt="Hubble — Reconciliation reports table with balance reports, dates, status and download links"/>
+          <p class="screen-caption">Reconciliation reports · Balance reporting · Multi-currency audit trail</p>
+        </div>
+
+        <!-- Additional screens -->
+        <div class="screen-full">
+          <img src="./img/hubble/screen_01.png" alt="Hubble — Production screen 01"/>
+          <p class="screen-caption">Hubble production — primary operational view</p>
+        </div>
+
+        <div class="screen-grid">
+          <div class="screen-fig">
+            <img src="./img/hubble/screen_02.png" alt="Hubble — Production screen 02"/>
+            <p class="screen-caption">Operator workflow · Detail view</p>
+          </div>
+          <div class="screen-fig">
+            <img src="./img/hubble/screen_03.png" alt="Hubble — Production screen 03"/>
+            <p class="screen-caption">Compliance panel · Status tracking</p>
+          </div>
+        </div>
+
+        <div class="screen-grid">
+          <div class="screen-fig">
+            <img src="./img/hubble/screen_04.png" alt="Hubble — Production screen 04"/>
+            <p class="screen-caption">Transaction view · Multi-currency</p>
+          </div>
+          <div class="screen-fig">
+            <img src="./img/hubble/screen_05.png" alt="Hubble — Production screen 05"/>
+            <p class="screen-caption">User profile · Risk flags</p>
+          </div>
+        </div>
+
+        <div class="screen-grid">
+          <div class="screen-fig">
+            <img src="./img/hubble/screen_06.png" alt="Hubble — Production screen 06"/>
+            <p class="screen-caption">Account actions · SPEI · FIAT · Crypto</p>
+          </div>
+          <div class="screen-fig">
+            <img src="./img/hubble/screen_07.png" alt="Hubble — Production screen 07"/>
+            <p class="screen-caption">KYC levels · Market limits</p>
+          </div>
+        </div>
+
+        <div class="screen-full">
+          <img src="./img/hubble/screen_08.png" alt="Hubble — Production screen 08"/>
+          <p class="screen-caption">Reconciliation · Balance reports · Audit trail</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RBAC -->
+  <section class="section">
+    <div class="section-grid">
+      <p class="section-label">06 — RBAC Design</p>
+      <div>
+        <h2 class="section-h2">Role-based access — design system for operator permissions.</h2>
+        <p class="body-text">One of the most complex design challenges in Hubble was defining a role-based access control system for a platform where operator permissions directly affect compliance outcomes. I designed the full RBAC system — from role creation flows to the permissions matrix — ensuring operational teams could be managed safely at scale.</p>
+
+        <div class="screen-full" style="margin-top: 32px;">
+          <img src="./img/hubble-rbac-explore.png" alt="Hubble — RBAC role management exploration showing role creator with analyst and manager role types"/>
+          <p class="screen-caption">Design exploration — RBAC role management · Role creator · Permissions matrix</p>
+        </div>
+
+        <div class="screen-grid">
+          <div class="screen-fig">
+            <img src="./img/hubble/rbac-dashboard-ref.png" alt="Hubble — RBAC dashboard reference"/>
+            <p class="screen-caption">RBAC dashboard · Role overview · Operator assignment</p>
+          </div>
+          <div class="screen-fig">
+            <img src="./img/hubble/rbac-features.png" alt="Hubble — RBAC features matrix"/>
+            <p class="screen-caption">Permissions matrix · Feature access · Role types</p>
+          </div>
+        </div>
+
+        <div class="screen-grid">
+          <div class="screen-fig">
+            <img src="./img/hubble/flow-create-role.png" alt="Hubble — Flow: create a new role"/>
+            <p class="screen-caption">Flow — Create role · Analyst · Manager · Custom</p>
+          </div>
+          <div class="screen-fig">
+            <img src="./img/hubble/flow-assign-role.png" alt="Hubble — Flow: assign role to operator"/>
+            <p class="screen-caption">Flow — Assign role · Operator management · Audit log</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section class="section">
+    <div class="section-grid">
+      <p class="section-label">07 — Results</p>
+      <div>
+        <h2 class="section-h2">A unified platform for $220M/day. Shipped in code.</h2>
+        <p class="body-text">Hubble replaced the legacy Bitso Admin as the operational backbone for PayOps, Compliance, KYC, and Risk teams — giving operators a consistent, scalable platform purpose-built for the complexity of a regulated crypto fintech operating across multiple markets and currencies.</p>
+        <p class="body-text">The AI-first design process meant features went from concept to production faster than any traditional design-to-engineering handoff allowed. By working directly in code, prototyping in Cursor AI, and contributing PRs to GitHub, the design work became indistinguishable from engineering work — and Hubble shipped as a reflection of that tight integration.</p>
+        <p class="body-text">For the team of 4 designers under my leadership, the work on Hubble served as both a product and a model — demonstrating what an AI-oriented, technically engaged design practice looks like in a high-stakes, high-scale production environment.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOT NAV -->
+  <div class="foot-nav">
+    <a href="./index.html#work">← All projects</a>
+    <a href="./radar.html">Radar →</a>
+  </div>
+
+</div>
+</body>
+</html>
