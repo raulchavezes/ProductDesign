@@ -165,6 +165,48 @@
     .footer-micro { font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; color: var(--ink-4); letter-spacing: 0.04em; text-align: center; line-height: 1.7; }
 
     /* RESPONSIVE */
+    /* === CARD HOVER ANIMATIONS === */
+    .hubble-moon { transform-box: view-box; transform-origin: 200px 145px; animation: hubble-orbit 6s linear infinite; animation-play-state: paused; }
+    .card:hover .hubble-moon { animation-play-state: running; }
+    @keyframes hubble-orbit { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+    .radar-sweep { transform-box: view-box; transform-origin: 200px 158px; animation: radar-rotate 3.5s linear infinite; animation-play-state: paused; }
+    .card:hover .radar-sweep { animation-play-state: running; }
+    @keyframes radar-rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+    .opsmind-skel-1 { animation: skel-write 2.6s ease-in-out infinite; animation-delay: 0s; animation-play-state: paused; }
+    .opsmind-skel-2 { animation: skel-write 2.6s ease-in-out infinite; animation-delay: 0.45s; animation-play-state: paused; }
+    .opsmind-skel-3 { animation: skel-write 2.6s ease-in-out infinite; animation-delay: 0.9s; animation-play-state: paused; }
+    .card:hover .opsmind-skel-1, .card:hover .opsmind-skel-2, .card:hover .opsmind-skel-3 { animation-play-state: running; }
+    @keyframes skel-write {
+      0%, 5%   { stroke-dasharray: 80; stroke-dashoffset: 80; opacity: 0; }
+      38%, 68% { stroke-dasharray: 80; stroke-dashoffset: 0;  opacity: 0.7; }
+      100%     { stroke-dasharray: 80; stroke-dashoffset: 0;  opacity: 0; }
+    }
+
+    .city-pins { transform-box: view-box; transform-origin: 200px 150px; animation: city-orbit 10s linear infinite; animation-play-state: paused; }
+    .card:hover .city-pins { animation-play-state: running; }
+    @keyframes city-orbit { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+    .gofer-bullet-1 { animation: write-in 2.2s ease-out infinite; animation-delay: 0s;     animation-play-state: paused; }
+    .gofer-bullet-2 { animation: write-in 2.2s ease-out infinite; animation-delay: 0.35s;  animation-play-state: paused; }
+    .gofer-bullet-3 { animation: write-in 2.2s ease-out infinite; animation-delay: 0.7s;   animation-play-state: paused; }
+    .gofer-bullet-4 { animation: write-in 2.2s ease-out infinite; animation-delay: 1.05s;  animation-play-state: paused; }
+    .card:hover .gofer-bullet-1, .card:hover .gofer-bullet-2,
+    .card:hover .gofer-bullet-3, .card:hover .gofer-bullet-4 { animation-play-state: running; }
+
+    .cawf-line-1 { animation: write-in 2.2s ease-out infinite; animation-delay: 0s;    animation-play-state: paused; }
+    .cawf-line-2 { animation: write-in 2.2s ease-out infinite; animation-delay: 0.4s;  animation-play-state: paused; }
+    .cawf-line-3 { animation: write-in 2.2s ease-out infinite; animation-delay: 0.8s;  animation-play-state: paused; }
+    .cawf-line-4 { animation: write-in 2.2s ease-out infinite; animation-delay: 1.2s;  animation-play-state: paused; }
+    .card:hover .cawf-line-1, .card:hover .cawf-line-2,
+    .card:hover .cawf-line-3, .card:hover .cawf-line-4 { animation-play-state: running; }
+
+    @keyframes write-in {
+      0%        { stroke-dasharray: 300; stroke-dashoffset: 300; }
+      55%, 100% { stroke-dasharray: 300; stroke-dashoffset: 0; }
+    }
+
     @media (max-width: 900px) {
       .page { padding: 0 32px 64px; }
       .hero-body, .section-grid, .contact-grid { grid-template-columns: 1fr; gap: 32px; }
@@ -274,7 +316,7 @@
             <ellipse cx="200" cy="158" rx="152" ry="44" fill="none" stroke="#141413" stroke-width="1" opacity="0.12"/>
             <circle cx="200" cy="145" r="72" fill="#141413" opacity="0.85"/>
             <path d="M48 158 Q200 208 352 158" fill="none" stroke="#141413" stroke-width="1" opacity="0.12"/>
-            <circle cx="306" cy="110" r="12" fill="#B5B3AE"/>
+            <g class="hubble-moon"><circle cx="306" cy="110" r="12" fill="#B5B3AE"/></g>
             <circle cx="60" cy="50" r="2" fill="#141413" opacity="0.18"/>
             <circle cx="340" cy="60" r="1.5" fill="#141413" opacity="0.14"/>
             <circle cx="130" cy="35" r="1.5" fill="#141413" opacity="0.12"/>
@@ -302,9 +344,11 @@
             <circle cx="200" cy="158" r="40" fill="none" stroke="#141413" stroke-width="0.75" opacity="0.2"/>
             <line x1="200" y1="44" x2="200" y2="272" stroke="#141413" stroke-width="0.4" opacity="0.1"/>
             <line x1="86" y1="158" x2="314" y2="158" stroke="#141413" stroke-width="0.4" opacity="0.1"/>
-            <line x1="200" y1="158" x2="290" y2="78" stroke="#141413" stroke-width="1.5" opacity="0.4"/>
-            <circle cx="278" cy="90" r="6" fill="#141413" opacity="0.65"/>
-            <circle cx="278" cy="90" r="11" fill="none" stroke="#141413" stroke-width="0.75" opacity="0.2"/>
+            <g class="radar-sweep">
+              <line x1="200" y1="158" x2="290" y2="78" stroke="#141413" stroke-width="1.5" opacity="0.4"/>
+              <circle cx="278" cy="90" r="6" fill="#141413" opacity="0.65"/>
+              <circle cx="278" cy="90" r="11" fill="none" stroke="#141413" stroke-width="0.75" opacity="0.2"/>
+            </g>
             <circle cx="148" cy="130" r="4" fill="#B5B3AE" opacity="0.7"/>
             <circle cx="230" cy="202" r="3.5" fill="#B5B3AE" opacity="0.5"/>
             <circle cx="200" cy="158" r="4" fill="#141413" opacity="0.45"/>
@@ -340,6 +384,9 @@
             <rect x="248" y="126" width="48" height="7" rx="2" fill="#E5FF60" opacity="0.9"/>
             <rect x="248" y="138" width="34" height="5" rx="2" fill="#141413" opacity="0.1"/>
             <rect x="248" y="148" width="42" height="5" rx="2" fill="#141413" opacity="0.1"/>
+            <line class="opsmind-skel-1" x1="237" y1="127" x2="303" y2="127" stroke="#7C9CFF" stroke-width="6" stroke-linecap="round"/>
+            <line class="opsmind-skel-2" x1="234" y1="141" x2="308" y2="141" stroke="#7C9CFF" stroke-width="5" stroke-linecap="round"/>
+            <line class="opsmind-skel-3" x1="237" y1="155" x2="289" y2="155" stroke="#7C9CFF" stroke-width="5" stroke-linecap="round"/>
             <rect x="312" y="68" width="52" height="22" rx="4" fill="#E8EDFF" stroke="#7C9CFF" stroke-width="0.6"/>
             <text font-family="JetBrains Mono, monospace" font-size="8" font-weight="500" fill="#1a2a5e" x="338" y="83" text-anchor="middle">⬡ AI</text>
           </svg>
@@ -364,18 +411,20 @@
             <ellipse cx="200" cy="150" rx="55" ry="90" fill="none" stroke="#141413" stroke-width="0.5" opacity="0.1"/>
             <line x1="110" y1="150" x2="290" y2="150" stroke="#141413" stroke-width="0.5" opacity="0.1"/>
             <!-- City pins -->
-            <circle cx="168" cy="118" r="5" fill="#141413" opacity="0.7"/>
-            <line x1="168" y1="118" x2="168" y2="100" stroke="#141413" stroke-width="1" opacity="0.4"/>
-            <circle cx="168" cy="97" r="4" fill="#E5FF60"/>
-            <circle cx="230" cy="132" r="5" fill="#141413" opacity="0.7"/>
-            <line x1="230" y1="132" x2="230" y2="114" stroke="#141413" stroke-width="1" opacity="0.4"/>
-            <circle cx="230" cy="111" r="4" fill="#E5FF60"/>
-            <circle cx="195" cy="170" r="5" fill="#141413" opacity="0.7"/>
-            <line x1="195" y1="170" x2="195" y2="152" stroke="#141413" stroke-width="1" opacity="0.4"/>
-            <circle cx="195" cy="149" r="4" fill="#E5FF60"/>
-            <circle cx="152" cy="158" r="3.5" fill="#B5B3AE" opacity="0.6"/>
-            <circle cx="248" cy="162" r="3.5" fill="#B5B3AE" opacity="0.6"/>
-            <circle cx="215" cy="115" r="3" fill="#B5B3AE" opacity="0.5"/>
+            <g class="city-pins">
+              <circle cx="168" cy="118" r="5" fill="#141413" opacity="0.7"/>
+              <line x1="168" y1="118" x2="168" y2="100" stroke="#141413" stroke-width="1" opacity="0.4"/>
+              <circle cx="168" cy="97" r="4" fill="#E5FF60"/>
+              <circle cx="230" cy="132" r="5" fill="#141413" opacity="0.7"/>
+              <line x1="230" y1="132" x2="230" y2="114" stroke="#141413" stroke-width="1" opacity="0.4"/>
+              <circle cx="230" cy="111" r="4" fill="#E5FF60"/>
+              <circle cx="195" cy="170" r="5" fill="#141413" opacity="0.7"/>
+              <line x1="195" y1="170" x2="195" y2="152" stroke="#141413" stroke-width="1" opacity="0.4"/>
+              <circle cx="195" cy="149" r="4" fill="#E5FF60"/>
+              <circle cx="152" cy="158" r="3.5" fill="#B5B3AE" opacity="0.6"/>
+              <circle cx="248" cy="162" r="3.5" fill="#B5B3AE" opacity="0.6"/>
+              <circle cx="215" cy="115" r="3" fill="#B5B3AE" opacity="0.5"/>
+            </g>
             <!-- Label -->
             <rect x="266" y="50" width="88" height="22" rx="4" fill="#141413" opacity="0.85"/>
             <text font-family="JetBrains Mono, monospace" font-size="8" font-weight="500" fill="#E5FF60" x="310" y="65" text-anchor="middle">14 cities</text>
@@ -383,11 +432,12 @@
         </div>
         <div class="card-status-row">
           <div class="status-dot live"></div>
-          <span style="font-size:0.875rem;font-weight:500;color:#141413;">05</span>
+          <span style="font-size:0.875rem;font-weight:500;color:#141413;">04</span>
         </div>
         <p class="card-project-name">Pulse City</p>
         <p class="card-meta">Internal tool · B2B · Nike</p>
         <p class="card-summary">Crowdsourcing platform connecting Nike's global field employees to HQ — launched in 14 key cities to drive product decision-making from the ground up.</p>
+
       </a>
 
       <!-- Gofer -->
@@ -402,13 +452,13 @@
             <text font-family="JetBrains Mono, monospace" font-size="8" font-weight="700" fill="#E5FF60" x="111" y="62" text-anchor="middle">YOUR PRODUCT</text>
             <!-- Bullet rows left -->
             <circle cx="50" cy="92" r="3" fill="#4DD86F"/>
-            <line x1="60" y1="92" x2="176" y2="92" stroke="#141413" stroke-width="1.2" opacity="0.2"/>
+            <line class="gofer-bullet-1" x1="60" y1="92" x2="176" y2="92" stroke="#141413" stroke-width="1.2" opacity="0.2"/>
             <circle cx="50" cy="112" r="3" fill="#4DD86F"/>
-            <line x1="60" y1="112" x2="165" y2="112" stroke="#141413" stroke-width="1.2" opacity="0.2"/>
+            <line class="gofer-bullet-2" x1="60" y1="112" x2="165" y2="112" stroke="#141413" stroke-width="1.2" opacity="0.2"/>
             <circle cx="50" cy="132" r="3" fill="#4DD86F"/>
-            <line x1="60" y1="132" x2="170" y2="132" stroke="#141413" stroke-width="1.2" opacity="0.2"/>
+            <line class="gofer-bullet-3" x1="60" y1="132" x2="170" y2="132" stroke="#141413" stroke-width="1.2" opacity="0.2"/>
             <circle cx="50" cy="152" r="3" fill="#4DD86F"/>
-            <line x1="60" y1="152" x2="158" y2="152" stroke="#141413" stroke-width="1.2" opacity="0.2"/>
+            <line class="gofer-bullet-4" x1="60" y1="152" x2="158" y2="152" stroke="#141413" stroke-width="1.2" opacity="0.2"/>
             <line x1="32" y1="170" x2="190" y2="170" stroke="#141413" stroke-width="0.5" opacity="0.12"/>
             <!-- Win rate chip -->
             <rect x="44" y="180" width="64" height="20" rx="4" fill="#E5FF60"/>
@@ -439,7 +489,7 @@
         </div>
         <div class="card-status-row">
           <div class="status-dot live"></div>
-          <span style="font-size:0.875rem;font-weight:500;color:#141413;">06</span>
+          <span style="font-size:0.875rem;font-weight:500;color:#141413;">05</span>
         </div>
         <p class="card-project-name">Gofer</p>
         <p class="card-meta">Sales tool · B2B · Google</p>
@@ -453,14 +503,14 @@
             <rect width="400" height="300" fill="#F3F2EF"/>
             <rect x="50" y="56" width="168" height="52" rx="16" fill="#141413" opacity="0.08"/>
             <rect x="50" y="56" width="168" height="52" rx="16" fill="none" stroke="#141413" stroke-width="0.6" opacity="0.18"/>
-            <line x1="72" y1="78" x2="200" y2="78" stroke="#141413" stroke-width="1.5" opacity="0.16"/>
-            <line x1="72" y1="94" x2="170" y2="94" stroke="#141413" stroke-width="1.5" opacity="0.12"/>
+            <line class="cawf-line-1" x1="72" y1="78" x2="200" y2="78" stroke="#141413" stroke-width="1.5" opacity="0.16"/>
+            <line class="cawf-line-2" x1="72" y1="94" x2="170" y2="94" stroke="#141413" stroke-width="1.5" opacity="0.12"/>
             <polygon points="66,108 50,122 82,108" fill="#141413" opacity="0.07"/>
             <path d="M134 130 Q134 158 200 158 Q266 158 266 130" fill="none" stroke="#141413" stroke-width="0.75" stroke-dasharray="3 3" opacity="0.2"/>
             <rect x="182" y="130" width="168" height="52" rx="16" fill="#E5FF60" opacity="0.65"/>
             <rect x="182" y="130" width="168" height="52" rx="16" fill="none" stroke="#141413" stroke-width="0.6" opacity="0.2"/>
-            <line x1="204" y1="152" x2="334" y2="152" stroke="#141413" stroke-width="1.5" opacity="0.2"/>
-            <line x1="204" y1="168" x2="294" y2="168" stroke="#141413" stroke-width="1.5" opacity="0.16"/>
+            <line class="cawf-line-3" x1="204" y1="152" x2="334" y2="152" stroke="#141413" stroke-width="1.5" opacity="0.2"/>
+            <line class="cawf-line-4" x1="204" y1="168" x2="294" y2="168" stroke="#141413" stroke-width="1.5" opacity="0.16"/>
             <polygon points="318,182 350,196 334,182" fill="#E5FF60" opacity="0.65"/>
             <rect x="50" y="214" width="96" height="46" rx="5" fill="#FAFAF9" stroke="#141413" stroke-width="0.5" opacity="0.7"/>
             <text font-family="Instrument Sans, sans-serif" font-size="17" font-weight="600" fill="#141413" opacity="0.65" x="98" y="234" text-anchor="middle">$29M</text>
@@ -472,7 +522,7 @@
         </div>
         <div class="card-status-row">
           <div class="status-dot live"></div>
-          <span style="font-size:0.875rem;font-weight:500;color:#141413;">04</span>
+          <span style="font-size:0.875rem;font-weight:500;color:#141413;">06</span>
         </div>
         <p class="card-project-name">AI Conversational Workflow</p>
         <p class="card-meta">B2C · Customer platform · Google</p>
