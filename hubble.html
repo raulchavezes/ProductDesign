@@ -26,7 +26,7 @@
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-    body { background: var(--paper); color: var(--ink); font-family: 'Instrument Sans', system-ui, sans-serif; font-size: 1rem; line-height: 1.55; }
+    body { background: var(--paper); color: var(--ink); font-family: 'Instrument Sans', system-ui, sans-serif; font-size: 1rem; line-height: 1.55; overflow-x: hidden; }
     .page { width: 100%; max-width: 1280px; margin: 0 auto; padding: 0 64px 120px; }
 
     /* NAV */
@@ -57,6 +57,11 @@
     .tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
     .tag { font-family: 'JetBrains Mono', monospace; font-size: 0.625rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); border: 1px solid var(--rule); padding: 5px 10px; }
     .tag-ai { background: var(--ai-bg); border-color: var(--ai-border); color: var(--ai-text); }
+
+    /* HERO IMAGE STRIP */
+    .hero-image-strip { border-bottom: 1px solid var(--rule); }
+    .hero-image-strip img { width: 100%; display: block; }
+    .hero-image-strip .strip-caption { padding: 12px 64px; font-family: 'JetBrains Mono', monospace; font-size: 0.625rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-4); }
 
     /* SECTIONS */
     .section { padding: 72px 0; border-bottom: 1px solid var(--rule); }
@@ -112,11 +117,22 @@
 
     /* SCREENS */
     .screen-full { margin-top: 40px; }
-    .screen-full img { width: 100%; display: block; border: 1px solid var(--rule); background: var(--paper-3); }
+    .screen-full img, .screen-full video { width: 100%; display: block; border: 1px solid var(--rule); background: var(--paper-3); }
     .screen-caption { font-family: 'JetBrains Mono', monospace; font-size: 0.625rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-4); margin-top: 10px; }
     .screen-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 24px; }
     .screen-fig { display: flex; flex-direction: column; gap: 8px; }
     .screen-fig img { width: 100%; display: block; border: 1px solid var(--rule); background: var(--paper-3); }
+    .screen-label { font-family: 'JetBrains Mono', monospace; font-size: 0.5625rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; padding: 7px 10px; margin-bottom: 0; }
+    .screen-label.before { background: var(--paper-3); color: var(--ink-4); border: 1px solid var(--rule); border-bottom: none; }
+    .screen-label.after { background: var(--ai-bg); color: var(--ai-text); border: 1px solid var(--ai-border); border-bottom: none; }
+
+    /* BEFORE / AFTER */
+    .ba-block { margin-top: 48px; }
+    .ba-title { font-family: 'JetBrains Mono', monospace; font-size: 0.625rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-4); margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--rule); }
+    .ba-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--rule); }
+    .ba-col { background: var(--paper); display: flex; flex-direction: column; }
+    .ba-col img { width: 100%; display: block; }
+    .ba-caption { font-family: 'JetBrains Mono', monospace; font-size: 0.625rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-4); margin-top: 10px; }
 
     /* ARTIFACT GRID */
     .artifact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 32px; }
@@ -136,11 +152,13 @@
       .section-grid { grid-template-columns: 1fr; gap: 24px; }
       .section-label { position: static; }
       .impact-row { grid-template-columns: 1fr 1fr; }
-      .artifact-grid, .screen-grid { grid-template-columns: 1fr; }
+      .artifact-grid, .screen-grid, .ba-grid { grid-template-columns: 1fr; }
+      .hero-image-strip .strip-caption { padding: 12px 32px; }
     }
     @media (max-width: 560px) {
       .page { padding: 0 20px 60px; }
       .impact-row { grid-template-columns: 1fr; }
+      .hero-image-strip .strip-caption { padding: 12px 20px; }
     }
   </style>
 </head>
@@ -168,6 +186,7 @@
         <span class="tag">5 Product Squads</span>
         <span class="tag">KYB / KYC</span>
         <span class="tag">PayOps</span>
+        <span class="tag">Customer Support</span>
         <span class="tag tag-ai">⬡ Cursor AI</span>
         <span class="tag tag-ai">⬡ Claude Code</span>
         <span class="tag tag-ai">⬡ GitHub PRs</span>
@@ -187,8 +206,8 @@
         <span class="meta-value">Lead Product Designer</span>
       </div>
       <div class="meta-block">
-        <span class="meta-label">Team</span>
-        <span class="meta-value-mono">4 Designers (led & mentored)<br>5 Product Squads (fleet lead)<br>PMs · Engineers · Data · Compliance</span>
+        <span class="meta-label">Users & Stakeholders</span>
+        <span class="meta-value-mono">PayOps · KYC · KYB · Compliance<br>Risk · Customer Support</span>
       </div>
       <div class="meta-block">
         <span class="meta-label">Scale</span>
@@ -201,6 +220,16 @@
     </div>
   </section>
 
+</div>
+
+<!-- HERO IMAGE — full bleed -->
+<div class="hero-image-strip">
+  <img src="./img/hubble/hero-levels.jpg" alt="Hubble in production — KYC Levels management showing multi-currency limits and requirements matrix"/>
+  <p class="strip-caption">Hubble in production — KYC Levels · Multi-currency limits · USD · ARS · BRL · COP · MXN · Crypto</p>
+</div>
+
+<div class="page">
+
   <!-- SITUATION -->
   <section class="section">
     <div class="section-grid">
@@ -208,7 +237,7 @@
       <div>
         <h2 class="section-h2">$220M a day through a system that wasn't built to handle it.</h2>
         <p class="body-text">Bitso's operational back-office had outgrown the tool it was built on. The legacy Bitso Admin — a patchwork of interfaces accumulated over years of growth — was handling the daily operations of 9 million users across 7 currencies in multiple markets. But it was brittle, inconsistent, and operationally risky at the scale Bitso had reached.</p>
-        <p class="body-text">Every day, $220M USD moved through the platform in the form of SPEI deposits, FIAT withdrawals, crypto transfers, KYB verifications, account screening, and compliance reviews. The teams running these operations — PayOps, Compliance, Risk, KYC analysts — were doing it through an interface that slowed them down and created errors at scale.</p>
+        <p class="body-text">Every day, $220M USD moved through the platform in the form of SPEI deposits, FIAT withdrawals, crypto transfers, KYB verifications, account screening, and compliance reviews. The teams running these operations — PayOps, Compliance, Risk, KYC analysts, and Customer Support — were doing it through an interface that slowed them down and created errors at scale.</p>
         <p class="body-text">Hubble was the answer: a new, purpose-built internal platform designed from the ground up for the complexity of a scaled crypto fintech — unified, consistent, and built to grow.</p>
 
         <div class="callout">
@@ -268,7 +297,7 @@
           <div class="org-divider"></div>
           <div class="org-row">
             <div class="org-dot"></div>
-            <span class="org-sub">Each squad: PM · Engineers · Data · Design · Compliance stakeholders</span>
+            <span class="org-sub">Users & stakeholders: PayOps · KYC · KYB · Compliance · Risk · Customer Support</span>
           </div>
         </div>
 
@@ -351,8 +380,8 @@
           <div class="process-step">
             <span class="step-num">01</span>
             <div class="step-body">
-              <span class="step-title">Discovery & Requirements — with Compliance and PayOps</span>
-              <span class="step-detail">Each Hubble feature started with deep discovery alongside Compliance, KYC analysts, PayOps operators, and PMs. Understanding the regulatory constraints, operational edge cases, and user mental models before touching any design tool — especially critical for a platform handling financial compliance at scale.</span>
+              <span class="step-title">Discovery & Requirements — with Compliance, PayOps and Customer Support</span>
+              <span class="step-detail">Each Hubble feature started with deep discovery alongside Compliance, KYC analysts, PayOps operators, Customer Support, and PMs. Understanding the regulatory constraints, operational edge cases, and user mental models before touching any design tool — especially critical for a platform handling financial compliance at scale.</span>
               <div class="step-tags"><span class="step-tag">Stakeholder interviews</span><span class="step-tag">Compliance requirements</span><span class="step-tag">Workflow mapping</span></div>
             </div>
           </div>
@@ -384,11 +413,18 @@
             <span class="step-num">05</span>
             <div class="step-body">
               <span class="step-title">Validation, QA & Iteration in Production</span>
-              <span class="step-detail">Validated designs in staging environments with real operational data — working with KYC analysts and PayOps teams to test flows against actual compliance scenarios. Iterated rapidly based on operator feedback, using the same AI-assisted code workflow to ship fixes and improvements without waiting for engineering bandwidth.</span>
+              <span class="step-detail">Validated designs in staging environments with real operational data — working with KYC analysts, PayOps, and Customer Support teams to test flows against actual compliance scenarios. Iterated rapidly based on operator feedback, using the same AI-assisted code workflow to ship fixes and improvements without waiting for engineering bandwidth.</span>
               <div class="step-tags"><span class="step-tag">Staging validation</span><span class="step-tag">Operator testing</span><span class="step-tag">QA</span><span class="step-tag">Rapid iteration</span></div>
             </div>
           </div>
         </div>
+
+        <!-- Design System / Web Components -->
+        <div class="screen-full">
+          <img src="./img/hubble/web-components.png" alt="Bitso Web Design System — WDSSelectionCard component in Figma with dark mode variant"/>
+          <p class="screen-caption">Bitso Web Design System · WDSSelectionCard component · Light &amp; Dark mode · Ready for dev</p>
+        </div>
+
       </div>
     </div>
   </section>
@@ -398,8 +434,30 @@
     <div class="section-grid">
       <p class="section-label">04 — Design Explorations</p>
       <div>
-        <h2 class="section-h2">KYB migration — ideation, flows & architecture.</h2>
-        <p class="body-text">Before building in Hubble, I explored the full migration of KYB from the legacy Bitso Admin — mapping related parties, verification flows, and compliance requirements into Hubble's new information architecture. These explorations informed the final design decisions across the KYB and compliance squads.</p>
+        <h2 class="section-h2">Continuous discovery — building with teams, not for them.</h2>
+        <p class="body-text">Before and throughout the build, we ran a continuous discovery process — interviewing KYC analysts, PayOps operators, Customer Support agents, and Compliance stakeholders on an ongoing basis. Each new feature in Hubble was informed by direct conversations with the people using the platform daily: understanding their mental models, pain points with the legacy admin, and the workflows that needed to be preserved or reimagined.</p>
+        <p class="body-text">This wasn't a one-time discovery phase — it was embedded into the product cycle. As we shipped features, we went back to teams to validate, collect feedback, and feed learnings into the next iteration. The exploration artifacts below capture the early concept phase — before the final system was defined.</p>
+
+        <!-- Concept explorations -->
+        <div class="screen-grid">
+          <div class="screen-fig">
+            <img src="./img/hubble/exp-dashboard.png" alt="Hubble concept exploration — Admin Portal dashboard with permissions overview"/>
+            <p class="screen-caption">Concept exploration · Admin Portal dashboard · Role &amp; permissions overview</p>
+          </div>
+          <div class="screen-fig">
+            <img src="./img/hubble/exp-roles.png" alt="Hubble concept exploration — Role management with Administrator, Manager, Supervisor, Analyst cards"/>
+            <p class="screen-caption">Concept exploration · Role management · Administrator · Manager · Supervisor · Analyst</p>
+          </div>
+        </div>
+
+        <!-- Concept prototype video -->
+        <div class="screen-full">
+          <video autoplay muted loop playsinline>
+            <source src="./img/hubble/concept-prototype.mp4" type="video/mp4"/>
+          </video>
+          <p class="screen-caption">Concept prototype · Early interaction exploration · Admin Portal · Pre-Hubble definition</p>
+        </div>
+
       </div>
     </div>
   </section>
@@ -409,19 +467,72 @@
     <div class="section-grid">
       <p class="section-label">05 — Product Screens</p>
       <div>
-        <h2 class="section-h2">Hubble in production — KYB, PayOps & Compliance.</h2>
-        <p class="body-text">The platform covers the full operational surface of Bitso's PayOps and Compliance teams — from KYB verification of businesses and related parties, to account actions, level management, and reconciliation reporting.</p>
-      </div>
-    </div>
-  </section>
+        <h2 class="section-h2">Hubble in production — KYB, PayOps, Business Management &amp; Compliance.</h2>
+        <p class="body-text">The platform covers the full operational surface of Bitso's teams — from KYB verification of businesses and related parties, to KYC level management, account actions, multi-account authorized users, and reconciliation flows. Every screen was designed and validated with the operators who use it daily.</p>
 
-  <!-- RBAC -->
-  <section class="section">
-    <div class="section-grid">
-      <p class="section-label">06 — RBAC Design</p>
-      <div>
-        <h2 class="section-h2">Role-based access — design system for operator permissions.</h2>
-        <p class="body-text">One of the most complex design challenges in Hubble was defining a role-based access control system for a platform where operator permissions directly affect compliance outcomes. I designed the full RBAC system — from role creation flows to the permissions matrix — ensuring operational teams could be managed safely at scale.</p>
+        <!-- Business Management — Authorized Users -->
+        <div class="screen-full" style="margin-top:40px;">
+          <img src="./img/hubble/authorized.png" alt="Hubble — Business Management · Authorized users list with Create new request panel"/>
+          <p class="screen-caption">Business Management · Authorized users · Create new request · Status workflow</p>
+        </div>
+
+        <!-- Multi-account + Authorized Users detail -->
+        <div class="screen-grid">
+          <div class="screen-fig">
+            <img src="./img/hubble/multiuser.png" alt="Hubble — Products & Services · Authorized Users tab showing status management"/>
+            <p class="screen-caption">User profile · Products &amp; Services · Authorized Users · Status: Enabled · Disabled · Blocked</p>
+          </div>
+          <div class="screen-fig">
+            <img src="./img/hubble/authorized-users.png" alt="Hubble — Multi Account Authorized User modal showing account details and linked users"/>
+            <p class="screen-caption">Multi Account · Authorized User detail · Account details · Linked users · Roles</p>
+          </div>
+        </div>
+
+        <!-- BEFORE / AFTER -->
+        <div class="ba-block">
+          <p class="ba-title">Before → After — Legacy Bitso Admin vs. Hubble</p>
+
+          <!-- Levels -->
+          <div class="ba-grid" style="margin-bottom: 2px;">
+            <div class="ba-col">
+              <p class="screen-label before">Before · Legacy Admin · Account Limit Overrides</p>
+              <img src="./img/hubble/admin-levels.png" alt="Legacy Bitso Admin — Account Limit Overrides form"/>
+            </div>
+            <div class="ba-col">
+              <p class="screen-label after">After · Hubble · KYC Levels &amp; Limit Management</p>
+              <img src="./img/hubble/levels.jpg" alt="Hubble — KYC Levels with multi-currency tabs and Set Limit side panel"/>
+            </div>
+          </div>
+          <p class="ba-caption">Levels &amp; limit management — from an isolated override form to a structured multi-currency levels system with inline actions</p>
+
+          <!-- Multiuser / Authorized Users -->
+          <div class="ba-grid" style="margin-top: 40px; margin-bottom: 2px;">
+            <div class="ba-col">
+              <p class="screen-label before">Before · Legacy Admin · User List with Action Modal</p>
+              <img src="./img/hubble/admin-multiuser.png" alt="Legacy Bitso Admin — Dense users table with action overlay modal"/>
+            </div>
+            <div class="ba-col">
+              <p class="screen-label after">After · Hubble · Clean Authorized Users Table</p>
+              <img src="./img/hubble/multiuser.png" alt="Hubble — Clean Authorized Users table with clear status pills"/>
+            </div>
+          </div>
+          <p class="ba-caption">User management — from a dense data-dump table with modal overlays to a clean, scannable list with clear status states</p>
+
+          <!-- Authorized User Requests -->
+          <div class="ba-grid" style="margin-top: 40px; margin-bottom: 2px;">
+            <div class="ba-col">
+              <p class="screen-label before">Before · Legacy Admin · Authorized User Requests</p>
+              <img src="./img/hubble/admin-authorized.png" alt="Legacy Bitso Admin — Authorized User Requests dense table"/>
+            </div>
+            <div class="ba-col">
+              <p class="screen-label after">After · Hubble · Business Management</p>
+              <img src="./img/hubble/hero-bizinfo.jpg" alt="Hubble — Business Management with clean Authorized User detail panel"/>
+            </div>
+          </div>
+          <p class="ba-caption">Business Management — from a flat requests table to a structured Business Management module with contextual detail panels</p>
+
+        </div>
+
       </div>
     </div>
   </section>
@@ -429,10 +540,10 @@
   <!-- RESULTS -->
   <section class="section">
     <div class="section-grid">
-      <p class="section-label">07 — Results</p>
+      <p class="section-label">06 — Results</p>
       <div>
         <h2 class="section-h2">A unified platform for $220M/day. Shipped in code.</h2>
-        <p class="body-text">Hubble replaced the legacy Bitso Admin as the operational backbone for PayOps, Compliance, KYC, and Risk teams — giving operators a consistent, scalable platform purpose-built for the complexity of a regulated crypto fintech operating across multiple markets and currencies.</p>
+        <p class="body-text">Hubble replaced the legacy Bitso Admin as the operational backbone for PayOps, Compliance, KYC, Risk, and Customer Support teams — giving operators a consistent, scalable platform purpose-built for the complexity of a regulated crypto fintech operating across multiple markets and currencies.</p>
         <p class="body-text">The AI-first design process meant features went from concept to production faster than any traditional design-to-engineering handoff allowed. By working directly in code, prototyping in Cursor AI, and contributing PRs to GitHub, the design work became indistinguishable from engineering work — and Hubble shipped as a reflection of that tight integration.</p>
         <p class="body-text">For the team of 4 designers under my leadership, the work on Hubble served as both a product and a model — demonstrating what an AI-oriented, technically engaged design practice looks like in a high-stakes, high-scale production environment.</p>
       </div>
