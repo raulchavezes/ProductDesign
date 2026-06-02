@@ -59,13 +59,18 @@
 
     /* HERO */
     .hero {
-      padding: 80px 0 72px;
+      padding: 80px 0 0;
       border-bottom: 1px solid var(--rule);
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 80px;
-      align-items: end;
+      align-items: start;
     }
+    .hero-left { position: sticky; top: 80px; padding-bottom: 72px; }
+    .hero-right { padding-bottom: 72px; overflow: visible; }
+    .hero-screen-bleed { margin-top: 48px; margin-right: -64px; overflow: visible; }
+    .hero-screen-bleed img { width: 108%; max-width: none; display: block; border: 1px solid var(--rule); border-right: none; }
+    .hero-screen-bleed .screen-caption { padding-right: 0; }
     .hero-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 20px; }
     .hero-title {
       font-size: clamp(3.5rem, 8vw, 7rem);
@@ -99,6 +104,14 @@
     .section-h2 { font-size: clamp(1.75rem, 3vw, 2.5rem); font-weight: 500; line-height: 1.1; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 20px; }
     .body-text { font-size: 1.0625rem; line-height: 1.7; color: var(--ink-2); }
     .body-text + .body-text { margin-top: 16px; }
+
+    /* SCREENS */
+    .screen-full { margin-top: 40px; }
+    .screen-full img, .screen-full video { width: 100%; display: block; border: 1px solid var(--rule); background: var(--paper-3); }
+    .screen-caption { font-family: 'JetBrains Mono', monospace; font-size: 0.625rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-4); margin-top: 10px; }
+    .screen-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 24px; }
+    .screen-fig { display: flex; flex-direction: column; gap: 8px; }
+    .screen-fig img { width: 100%; display: block; border: 1px solid var(--rule); background: var(--paper-3); }
 
     /* IMPACT NUMBERS */
     .impact-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--rule); border: 1px solid var(--rule); margin-top: 48px; }
@@ -154,15 +167,21 @@
     /* RESPONSIVE */
     @media (max-width: 900px) {
       .page { padding: 0 32px 80px; }
-      .hero { grid-template-columns: 1fr; gap: 40px; }
+      .hero { grid-template-columns: 1fr; gap: 40px; padding-bottom: 0; }
+      .hero-left { position: static; padding-bottom: 0; }
+      .hero-right { padding-bottom: 48px; }
+      .hero-screen-bleed { margin-right: -32px; }
+      .hero-screen-bleed img { width: 100%; }
       .section-grid { grid-template-columns: 1fr; gap: 24px; }
       .section-label { position: static; }
       .impact-row { grid-template-columns: 1fr; }
       .artifact-grid { grid-template-columns: 1fr; }
       .constraint-row { grid-template-columns: 1fr; }
+      .screen-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 560px) {
       .page { padding: 0 20px 60px; }
+      .hero-screen-bleed { margin-right: -20px; }
     }
   </style>
 </head>
@@ -182,7 +201,7 @@
 
   <!-- HERO -->
   <section class="hero">
-    <div>
+    <div class="hero-left">
       <p class="hero-eyebrow">05 · Internal Tool · B2B · Nike · Wizeline</p>
       <h1 class="hero-title">City<em>Pulse</em>.</h1>
       <p class="hero-sub">Crowdsourcing platform connecting Nike's global field employees to HQ — launched in 14 key cities to cut the 18-month ideation-to-store cycle with insights from the ground.</p>
@@ -195,6 +214,7 @@
         <span class="tag">14 Cities</span>
       </div>
     </div>
+    <div class="hero-right">
     <div class="hero-meta">
       <div class="meta-block">
         <span class="meta-label">Status</span>
@@ -219,6 +239,11 @@
       <div class="meta-block">
         <span class="meta-label">Deliverables</span>
         <span class="meta-value-mono">Personas · Service blueprint · User story map<br>iOS Hi-fi prototypes · Usability testing report<br>Dev handoff</span>
+      </div>
+      </div>
+      <div class="hero-screen-bleed">
+        <img src="./img/citypulse/HeroWebImage.png" alt="City Pulse — web companion dashboard surfacing field-employee insights to Nike HQ"/>
+        <p class="screen-caption">City Pulse · Web companion · HQ insight dashboard</p>
       </div>
     </div>
   </section>
@@ -299,6 +324,17 @@
             </svg>
             <span class="artifact-title">iOS Hi-fi Prototypes</span>
             <span class="artifact-desc">From whiteboarding to high-fidelity iOS screens — closed questions, profile/interest, onboarding, themes and feedback loop flows.</span>
+          </div>
+        </div>
+
+        <div class="screen-grid">
+          <div class="screen-fig">
+            <img src="./img/citypulse/OnSiteWorkshop.png" alt="5-day on-site foundations workshop with Nike SMEs and stakeholders"/>
+            <p class="screen-caption">On-site · 5-day foundations workshop · Nike SMEs &amp; stakeholders</p>
+          </div>
+          <div class="screen-fig">
+            <img src="./img/citypulse/InterviewBehavioralMapping.png" alt="Behavioral mapping synthesized from 50+ field-employee interviews"/>
+            <p class="screen-caption">Research · Behavioral mapping · 50+ field-employee interviews</p>
           </div>
         </div>
       </div>
@@ -396,6 +432,66 @@
             </div>
           </div>
         </div>
+
+        <!-- Foundations: service blueprint -->
+        <div class="screen-full">
+          <img src="./img/citypulse/ServiceBluePrint.png" alt="Service blueprint mapping the field-employee-to-HQ insight journey"/>
+          <p class="screen-caption">Foundations · Service blueprint · Field employee → HQ insight journey</p>
+        </div>
+
+        <!-- Research: persona + OOUX content model -->
+        <div class="screen-grid">
+          <div class="screen-fig">
+            <img src="./img/citypulse/CityPulse_Persona.png" alt="City Pulse user persona synthesized from global field-employee interviews"/>
+            <p class="screen-caption">Research · User persona · Synthesized from interviews</p>
+          </div>
+          <div class="screen-fig">
+            <img src="./img/citypulse/ContentModel.png" alt="OOUX content model defining objects, attributes and relationships"/>
+            <p class="screen-caption">Architecture · OOUX content model · Objects &amp; relationships</p>
+          </div>
+        </div>
+
+        <!-- Systemico model + user story map -->
+        <div class="screen-grid">
+          <div class="screen-fig">
+            <img src="./img/citypulse/SystemicoModelStoryMapping.png" alt="Systemico model translating persona goals into epics and user stories"/>
+            <p class="screen-caption">Systemico model · Persona goals → epics → user stories</p>
+          </div>
+          <div class="screen-fig">
+            <img src="./img/citypulse/UserStoryMapDetial.png" alt="Detailed user story map sequencing the MVP scope"/>
+            <p class="screen-caption">Prioritization · User story map · MVP sequencing</p>
+          </div>
+        </div>
+
+        <!-- SLA definitions -->
+        <div class="screen-full">
+          <img src="./img/citypulse/SLADefinitions.png" alt="SLA definitions framing feedback-loop response expectations"/>
+          <p class="screen-caption">Definition · SLA &amp; feedback-loop expectations</p>
+        </div>
+
+        <!-- Wireframes -->
+        <div class="screen-grid">
+          <div class="screen-fig">
+            <img src="./img/citypulse/Wireframe_reveiw2.png" alt="Wireframe review — early lo-fi iOS exploration"/>
+            <p class="screen-caption">Lo-fi · Wireframe review · iOS exploration</p>
+          </div>
+          <div class="screen-fig">
+            <img src="./img/citypulse/Wireframe_reveiw3.png" alt="Wireframe review — refined lo-fi iOS flows"/>
+            <p class="screen-caption">Lo-fi · Wireframe review · Refined flows</p>
+          </div>
+        </div>
+
+        <!-- Mobile hi-fi explorations -->
+        <div class="screen-full">
+          <img src="./img/citypulse/MobileExplorations.png" alt="High-fidelity iOS screen explorations for City Pulse"/>
+          <p class="screen-caption">Hi-fi · iOS screen explorations · Onboarding · Themes · Feedback loop</p>
+        </div>
+
+        <!-- Usability testing plan -->
+        <div class="screen-full">
+          <img src="./img/citypulse/TestingPlan.png" alt="Usability testing plan with 7 task flows across global sessions"/>
+          <p class="screen-caption">Validation · Usability testing plan · 7 task flows · 30+ global sessions</p>
+        </div>
       </div>
     </div>
   </section>
@@ -421,6 +517,11 @@
             <div class="impact-number">20<span>mo</span></div>
             <div class="impact-desc">Full project duration —<br>discovery to 14-city launch</div>
           </div>
+        </div>
+
+        <div class="screen-full">
+          <img src="./img/citypulse/WebAppCityPulse.png" alt="City Pulse web app in production — HQ surfacing field insights across 14 cities"/>
+          <p class="screen-caption">Production · City Pulse web app · HQ insight dashboard · 14 cities</p>
         </div>
       </div>
     </div>
