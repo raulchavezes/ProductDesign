@@ -38,8 +38,10 @@
     .nav-back { font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); text-decoration: none; }
     .nav-back:hover { color: var(--ink); }
 
-    /* HERO */
-    .hero { padding: 80px 0 72px; border-bottom: 1px solid var(--rule); display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: end; }
+    /* HERO — sticky left / scrolling right */
+    .hero { padding: 80px 0 0; border-bottom: 1px solid var(--rule); display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+    .hero-left { position: sticky; top: 80px; padding-bottom: 72px; }
+    .hero-right { padding-bottom: 72px; overflow: visible; }
     .hero-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 20px; }
     .hero-title { font-size: clamp(5rem, 12vw, 10rem); font-weight: 600; line-height: 0.92; letter-spacing: -0.04em; color: var(--ink); margin-bottom: 24px; }
     .hero-title em { font-style: normal; background: linear-gradient(to bottom, transparent 55%, var(--handson) 55%); }
@@ -53,15 +55,15 @@
     .status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--focus); box-shadow: 0 0 0 3px color-mix(in oklab, #4DD86F 22%, transparent); animation: halo 3.2s ease-in-out infinite; }
     @keyframes halo { 0%,100% { box-shadow: 0 0 0 3px color-mix(in oklab,#4DD86F 22%,transparent); } 50% { box-shadow: 0 0 0 5px color-mix(in oklab,#4DD86F 10%,transparent); } }
 
+    /* HERO SCREEN BLEED — extends past right edge of viewport */
+    .hero-screen-bleed { margin-top: 48px; margin-right: -64px; overflow: visible; }
+    .hero-screen-bleed img { width: 108%; max-width: none; display: block; border: 1px solid var(--rule); border-right: none; }
+    .hero-screen-bleed .screen-caption { padding-right: 0; }
+
     /* TAGS */
     .tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
     .tag { font-family: 'JetBrains Mono', monospace; font-size: 0.625rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); border: 1px solid var(--rule); padding: 5px 10px; }
     .tag-ai { background: var(--ai-bg); border-color: var(--ai-border); color: var(--ai-text); }
-
-    /* HERO IMAGE STRIP */
-    .hero-image-strip { border-bottom: 1px solid var(--rule); }
-    .hero-image-strip img { width: 100%; display: block; }
-    .hero-image-strip .strip-caption { padding: 12px 64px; font-family: 'JetBrains Mono', monospace; font-size: 0.625rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-4); }
 
     /* SECTIONS */
     .section { padding: 72px 0; border-bottom: 1px solid var(--rule); }
@@ -126,12 +128,12 @@
     .screen-label.before { background: var(--paper-3); color: var(--ink-4); border: 1px solid var(--rule); border-bottom: none; }
     .screen-label.after { background: var(--ai-bg); color: var(--ai-text); border: 1px solid var(--ai-border); border-bottom: none; }
 
-    /* BEFORE / AFTER */
+    /* BEFORE / AFTER — with breathing room between columns */
     .ba-block { margin-top: 48px; }
     .ba-title { font-family: 'JetBrains Mono', monospace; font-size: 0.625rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-4); margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--rule); }
-    .ba-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--rule); }
-    .ba-col { background: var(--paper); display: flex; flex-direction: column; }
-    .ba-col img { width: 100%; display: block; }
+    .ba-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+    .ba-col { display: flex; flex-direction: column; }
+    .ba-col img { width: 100%; display: block; border: 1px solid var(--rule); }
     .ba-caption { font-family: 'JetBrains Mono', monospace; font-size: 0.625rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-4); margin-top: 10px; }
 
     /* ARTIFACT GRID */
@@ -148,17 +150,20 @@
 
     @media (max-width: 900px) {
       .page { padding: 0 32px 80px; }
-      .hero { grid-template-columns: 1fr; gap: 40px; }
+      .hero { grid-template-columns: 1fr; gap: 40px; padding-bottom: 0; }
+      .hero-left { position: static; padding-bottom: 0; }
+      .hero-right { padding-bottom: 48px; }
+      .hero-screen-bleed { margin-right: -32px; }
+      .hero-screen-bleed img { width: 100%; }
       .section-grid { grid-template-columns: 1fr; gap: 24px; }
       .section-label { position: static; }
       .impact-row { grid-template-columns: 1fr 1fr; }
       .artifact-grid, .screen-grid, .ba-grid { grid-template-columns: 1fr; }
-      .hero-image-strip .strip-caption { padding: 12px 32px; }
     }
     @media (max-width: 560px) {
       .page { padding: 0 20px 60px; }
       .impact-row { grid-template-columns: 1fr; }
-      .hero-image-strip .strip-caption { padding: 12px 20px; }
+      .hero-screen-bleed { margin-right: -20px; }
     }
   </style>
 </head>
@@ -174,9 +179,10 @@
     <a class="nav-back" href="./index.html#work">← Back to work</a>
   </nav>
 
-  <!-- HERO -->
+  <!-- HERO: sticky left / scrolling right -->
   <section class="hero">
-    <div>
+
+    <div class="hero-left">
       <p class="hero-eyebrow">01 · Internal Tool · Crypto · PayOps · Bitso</p>
       <h1 class="hero-title"><em>Hub</em>ble.</h1>
       <p class="hero-sub">AI-crafted operational platform managing 9 million users' daily crypto and fiat operations — $220M USD flowing through it every day. Led as Lead Designer heading 4 designers across 5 product squads.</p>
@@ -192,43 +198,43 @@
         <span class="tag tag-ai">⬡ GitHub PRs</span>
       </div>
     </div>
-    <div class="hero-meta">
-      <div class="meta-block">
-        <span class="meta-label">Status</span>
-        <span class="status-chip"><span class="status-dot"></span>Live in production</span>
+
+    <div class="hero-right">
+      <div class="hero-meta">
+        <div class="meta-block">
+          <span class="meta-label">Status</span>
+          <span class="status-chip"><span class="status-dot"></span>Live in production</span>
+        </div>
+        <div class="meta-block">
+          <span class="meta-label">Company</span>
+          <span class="meta-value">Bitso — Crypto Fintech</span>
+        </div>
+        <div class="meta-block">
+          <span class="meta-label">My Role</span>
+          <span class="meta-value">Lead Product Designer</span>
+        </div>
+        <div class="meta-block">
+          <span class="meta-label">Users & Stakeholders</span>
+          <span class="meta-value-mono">PayOps · KYC · KYB · Compliance<br>Risk · Customer Support</span>
+        </div>
+        <div class="meta-block">
+          <span class="meta-label">Scale</span>
+          <span class="meta-value-mono">9M users · $220M USD daily<br>Multi-currency: MXN, ARS, BRL, COP, USD, Crypto</span>
+        </div>
+        <div class="meta-block">
+          <span class="meta-label">AI Design Process</span>
+          <span class="meta-value-mono">Cursor AI · Claude Code · Figma<br>Prototypes → PRs → GitHub</span>
+        </div>
       </div>
-      <div class="meta-block">
-        <span class="meta-label">Company</span>
-        <span class="meta-value">Bitso — Crypto Fintech</span>
-      </div>
-      <div class="meta-block">
-        <span class="meta-label">My Role</span>
-        <span class="meta-value">Lead Product Designer</span>
-      </div>
-      <div class="meta-block">
-        <span class="meta-label">Users & Stakeholders</span>
-        <span class="meta-value-mono">PayOps · KYC · KYB · Compliance<br>Risk · Customer Support</span>
-      </div>
-      <div class="meta-block">
-        <span class="meta-label">Scale</span>
-        <span class="meta-value-mono">9M users · $220M USD daily<br>Multi-currency: MXN, ARS, BRL, COP, USD, Crypto</span>
-      </div>
-      <div class="meta-block">
-        <span class="meta-label">AI Design Process</span>
-        <span class="meta-value-mono">Cursor AI · Claude Code · Figma<br>Prototypes → PRs → GitHub</span>
+
+      <!-- Screenshot bleeds off the right viewport edge -->
+      <div class="hero-screen-bleed">
+        <img src="./img/hubble/hero-levels.jpg" alt="Hubble in production — KYC Levels management showing multi-currency limits and requirements matrix"/>
+        <p class="screen-caption">Hubble in production — KYC Levels · Multi-currency limits · USD · ARS · BRL · COP · MXN · Crypto</p>
       </div>
     </div>
+
   </section>
-
-</div>
-
-<!-- HERO IMAGE — full bleed -->
-<div class="hero-image-strip">
-  <img src="./img/hubble/hero-levels.jpg" alt="Hubble in production — KYC Levels management showing multi-currency limits and requirements matrix"/>
-  <p class="strip-caption">Hubble in production — KYC Levels · Multi-currency limits · USD · ARS · BRL · COP · MXN · Crypto</p>
-</div>
-
-<div class="page">
 
   <!-- SITUATION -->
   <section class="section">
@@ -436,26 +442,26 @@
       <div>
         <h2 class="section-h2">Continuous discovery — building with teams, not for them.</h2>
         <p class="body-text">Before and throughout the build, we ran a continuous discovery process — interviewing KYC analysts, PayOps operators, Customer Support agents, and Compliance stakeholders on an ongoing basis. Each new feature in Hubble was informed by direct conversations with the people using the platform daily: understanding their mental models, pain points with the legacy admin, and the workflows that needed to be preserved or reimagined.</p>
-        <p class="body-text">This wasn't a one-time discovery phase — it was embedded into the product cycle. As we shipped features, we went back to teams to validate, collect feedback, and feed learnings into the next iteration. The exploration artifacts below capture the early concept phase — before the final system was defined.</p>
+        <p class="body-text">This wasn't a one-time discovery phase — it was embedded into the product cycle. As we shipped features, we went back to teams to validate, collect feedback, and feed learnings into the next iteration. The exploration artifacts below capture the progression from low-fi interaction concepts through to mid-fi UI explorations.</p>
 
-        <!-- Concept explorations -->
-        <div class="screen-grid">
-          <div class="screen-fig">
-            <img src="./img/hubble/exp-dashboard.png" alt="Hubble concept exploration — Admin Portal dashboard with permissions overview"/>
-            <p class="screen-caption">Concept exploration · Admin Portal dashboard · Role &amp; permissions overview</p>
-          </div>
-          <div class="screen-fig">
-            <img src="./img/hubble/exp-roles.png" alt="Hubble concept exploration — Role management with Administrator, Manager, Supervisor, Analyst cards"/>
-            <p class="screen-caption">Concept exploration · Role management · Administrator · Manager · Supervisor · Analyst</p>
-          </div>
-        </div>
-
-        <!-- Concept prototype video -->
+        <!-- Low-fi: concept prototype video FIRST -->
         <div class="screen-full">
           <video autoplay muted loop playsinline>
             <source src="./img/hubble/concept-prototype.mp4" type="video/mp4"/>
           </video>
-          <p class="screen-caption">Concept prototype · Early interaction exploration · Admin Portal · Pre-Hubble definition</p>
+          <p class="screen-caption">Low-fi · Concept prototype · Early interaction exploration · Admin Portal · Pre-Hubble definition</p>
+        </div>
+
+        <!-- Mid-fi: concept exploration screens -->
+        <div class="screen-grid">
+          <div class="screen-fig">
+            <img src="./img/hubble/exp-dashboard.png" alt="Hubble concept exploration — Admin Portal dashboard with permissions overview"/>
+            <p class="screen-caption">Mid-fi · Concept exploration · Admin Portal dashboard · Role &amp; permissions overview</p>
+          </div>
+          <div class="screen-fig">
+            <img src="./img/hubble/exp-roles.png" alt="Hubble concept exploration — Role management with Administrator, Manager, Supervisor, Analyst cards"/>
+            <p class="screen-caption">Mid-fi · Concept exploration · Role management · Administrator · Manager · Supervisor · Analyst</p>
+          </div>
         </div>
 
       </div>
@@ -493,7 +499,7 @@
           <p class="ba-title">Before → After — Legacy Bitso Admin vs. Hubble</p>
 
           <!-- Levels -->
-          <div class="ba-grid" style="margin-bottom: 2px;">
+          <div class="ba-grid">
             <div class="ba-col">
               <p class="screen-label before">Before · Legacy Admin · Account Limit Overrides</p>
               <img src="./img/hubble/admin-levels.png" alt="Legacy Bitso Admin — Account Limit Overrides form"/>
@@ -506,7 +512,7 @@
           <p class="ba-caption">Levels &amp; limit management — from an isolated override form to a structured multi-currency levels system with inline actions</p>
 
           <!-- Multiuser / Authorized Users -->
-          <div class="ba-grid" style="margin-top: 40px; margin-bottom: 2px;">
+          <div class="ba-grid" style="margin-top: 48px;">
             <div class="ba-col">
               <p class="screen-label before">Before · Legacy Admin · User List with Action Modal</p>
               <img src="./img/hubble/admin-multiuser.png" alt="Legacy Bitso Admin — Dense users table with action overlay modal"/>
@@ -519,7 +525,7 @@
           <p class="ba-caption">User management — from a dense data-dump table with modal overlays to a clean, scannable list with clear status states</p>
 
           <!-- Authorized User Requests -->
-          <div class="ba-grid" style="margin-top: 40px; margin-bottom: 2px;">
+          <div class="ba-grid" style="margin-top: 48px;">
             <div class="ba-col">
               <p class="screen-label before">Before · Legacy Admin · Authorized User Requests</p>
               <img src="./img/hubble/admin-authorized.png" alt="Legacy Bitso Admin — Authorized User Requests dense table"/>
