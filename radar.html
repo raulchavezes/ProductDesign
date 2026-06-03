@@ -60,13 +60,18 @@
 
     /* HERO */
     .hero {
-      padding: 80px 0 72px;
+      padding: 80px 0 0;
       border-bottom: 1px solid var(--rule);
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 80px;
-      align-items: end;
+      align-items: start;
     }
+    .hero-left { position: sticky; top: 80px; padding-bottom: 72px; }
+    .hero-right { padding-bottom: 72px; overflow: visible; }
+    .hero-screen-bleed { margin-top: 48px; margin-right: -64px; overflow: visible; }
+    .hero-screen-bleed img { width: 108%; max-width: none; display: block; border: 1px solid var(--rule); border-right: none; }
+    .hero-screen-bleed .screen-caption { padding-right: 0; }
     .hero-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 20px; }
     .hero-title {
       font-size: clamp(4rem, 9vw, 7.5rem);
@@ -101,6 +106,14 @@
     .section-h2 { font-size: clamp(1.75rem, 3vw, 2.5rem); font-weight: 500; line-height: 1.1; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 20px; }
     .body-text { font-size: 1.0625rem; line-height: 1.7; color: var(--ink-2); }
     .body-text + .body-text { margin-top: 16px; }
+
+    /* SCREENS */
+    .screen-full { margin-top: 40px; }
+    .screen-full img, .screen-full video { width: 100%; display: block; border: 1px solid var(--rule); background: var(--paper-3); }
+    .screen-caption { font-family: 'JetBrains Mono', monospace; font-size: 0.625rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-4); margin-top: 10px; }
+    .screen-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 24px; }
+    .screen-fig { display: flex; flex-direction: column; gap: 8px; }
+    .screen-fig img { width: 100%; display: block; border: 1px solid var(--rule); background: var(--paper-3); }
 
     /* IMPACT NUMBERS */
     .impact-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--rule); border: 1px solid var(--rule); margin-top: 48px; }
@@ -144,14 +157,20 @@
     /* RESPONSIVE */
     @media (max-width: 900px) {
       .page { padding: 0 32px 80px; }
-      .hero { grid-template-columns: 1fr; gap: 40px; }
+      .hero { grid-template-columns: 1fr; gap: 40px; padding-bottom: 0; }
+      .hero-left { position: static; padding-bottom: 0; }
+      .hero-right { padding-bottom: 48px; }
+      .hero-screen-bleed { margin-right: -32px; }
+      .hero-screen-bleed img { width: 100%; }
       .section-grid { grid-template-columns: 1fr; gap: 24px; }
       .section-label { position: static; }
       .impact-row { grid-template-columns: 1fr; }
       .artifact-grid { grid-template-columns: 1fr; }
+      .screen-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 560px) {
       .page { padding: 0 20px 60px; }
+      .hero-screen-bleed { margin-right: -20px; }
     }
   </style>
 </head>
@@ -171,7 +190,7 @@
 
   <!-- HERO -->
   <section class="hero">
-    <div>
+    <div class="hero-left">
       <p class="hero-eyebrow">Dashboard · B2C · B2B · Web App</p>
       <h1 class="hero-title">Ra<em>dar</em>.</h1>
       <p class="hero-sub">Data center asset monitoring system processing 100M+ data points across Google's infrastructure — built to detect anomalies before they become outages.</p>
@@ -183,26 +202,32 @@
         <span class="tag">Production Launch</span>
       </div>
     </div>
-    <div class="hero-meta">
-      <div class="meta-block">
-        <span class="meta-label">Status</span>
-        <span class="status-chip"><span class="status-dot"></span>Live in production</span>
+    <div class="hero-right">
+      <div class="hero-meta">
+        <div class="meta-block">
+          <span class="meta-label">Status</span>
+          <span class="status-chip"><span class="status-dot"></span>Live in production</span>
+        </div>
+        <div class="meta-block">
+          <span class="meta-label">Client</span>
+          <span class="meta-value">Google</span>
+        </div>
+        <div class="meta-block">
+          <span class="meta-label">My Role</span>
+          <span class="meta-value">Lead Interaction Designer</span>
+        </div>
+        <div class="meta-block">
+          <span class="meta-label">Team</span>
+          <span class="meta-value-mono">Lead Interaction Designer · 1 Product Owner<br>1 Lead Developer · 6 Engineering contractors</span>
+        </div>
+        <div class="meta-block">
+          <span class="meta-label">Deliverables</span>
+          <span class="meta-value-mono">MVP flows · Production-ready screens<br>Auth design · Dev handoff</span>
+        </div>
       </div>
-      <div class="meta-block">
-        <span class="meta-label">Client</span>
-        <span class="meta-value">Google</span>
-      </div>
-      <div class="meta-block">
-        <span class="meta-label">My Role</span>
-        <span class="meta-value">Lead Interaction Designer</span>
-      </div>
-      <div class="meta-block">
-        <span class="meta-label">Team</span>
-        <span class="meta-value-mono">1 Lead Designer (me) · 1 Product Owner<br>1 Lead Developer · 6 Engineering & UX contractors</span>
-      </div>
-      <div class="meta-block">
-        <span class="meta-label">Deliverables</span>
-        <span class="meta-value-mono">MVP flows · Production-ready screens<br>Auth design · Dev handoff</span>
+      <div class="hero-screen-bleed">
+        <img src="./img/radar/HeroRadar.png" alt="Radar — detectors dashboard with alert totals, accuracy and asset health table"/>
+        <p class="screen-caption">Radar · Detectors dashboard · Alerts, accuracy &amp; asset health</p>
       </div>
     </div>
   </section>
@@ -275,6 +300,11 @@
             <span class="artifact-desc">Aligned technical requirements between business users, engineers, and the product owner.</span>
           </div>
         </div>
+
+        <div class="screen-full">
+          <img src="./img/radar/RadarSidePanel2.png" alt="Radar detector details — overview, parameters and history in a side panel"/>
+          <p class="screen-caption">Hi-fi · Detector details · Overview · Parameters · History</p>
+        </div>
       </div>
     </div>
   </section>
@@ -323,6 +353,24 @@
             </div>
           </div>
         </div>
+
+        <!-- Hi-fi flows: create detector + resolve alert -->
+        <div class="screen-grid">
+          <div class="screen-fig">
+            <img src="./img/radar/RadarSidePanel.png" alt="Add new detector — configuration with alerting system and thresholds"/>
+            <p class="screen-caption">Hi-fi · Add detector · Alerting config &amp; thresholds</p>
+          </div>
+          <div class="screen-fig">
+            <img src="./img/radar/RadarModal.png" alt="Alerts list with resolve confirmation modal and alert detail panel"/>
+            <p class="screen-caption">Hi-fi · Alerts · Resolve confirmation &amp; detail</p>
+          </div>
+        </div>
+
+        <!-- Error & loading states -->
+        <div class="screen-full">
+          <img src="./img/radar/RadarErrorState.png" alt="Radar detector parameters with error and loading states"/>
+          <p class="screen-caption">Hi-fi · Error &amp; loading states · Graceful failure handling</p>
+        </div>
       </div>
     </div>
   </section>
@@ -347,6 +395,18 @@
           <div class="impact-cell">
             <div class="impact-number">6</div>
             <div class="impact-desc">Engineering & UX contractors<br>managed through delivery</div>
+          </div>
+        </div>
+
+        <!-- Teams & fine-grained auth -->
+        <div class="screen-grid">
+          <div class="screen-fig">
+            <img src="./img/radar/RadarTeams.png" alt="Radar teams view — grouped teams with members and detector access"/>
+            <p class="screen-caption">Production · Teams · Grouped access &amp; ownership</p>
+          </div>
+          <div class="screen-fig">
+            <img src="./img/radar/RadarUsers.png" alt="Radar team detail with members and add-team panel — fine-grained auth"/>
+            <p class="screen-caption">Production · Team detail · Members &amp; fine-grained auth</p>
           </div>
         </div>
       </div>
