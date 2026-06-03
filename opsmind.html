@@ -60,13 +60,18 @@
 
     /* HERO */
     .hero {
-      padding: 80px 0 72px;
+      padding: 80px 0 0;
       border-bottom: 1px solid var(--rule);
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 80px;
-      align-items: end;
+      align-items: start;
     }
+    .hero-left { position: sticky; top: 80px; padding-bottom: 72px; }
+    .hero-right { padding-bottom: 72px; overflow: visible; }
+    .hero-screen-bleed { margin-top: 48px; margin-right: -64px; overflow: visible; }
+    .hero-screen-bleed img { width: 108%; max-width: none; display: block; border: 1px solid var(--rule); border-right: none; }
+    .hero-screen-bleed .screen-caption { padding-right: 0; }
     .hero-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 20px; }
     .hero-title {
       font-size: clamp(3rem, 7vw, 6rem);
@@ -102,6 +107,14 @@
     .body-text { font-size: 1.0625rem; line-height: 1.7; color: var(--ink-2); }
     .body-text + .body-text { margin-top: 16px; }
 
+    /* SCREENS */
+    .screen-full { margin-top: 40px; }
+    .screen-full img, .screen-full video { width: 100%; display: block; border: 1px solid var(--rule); background: var(--paper-3); }
+    .screen-caption { font-family: 'JetBrains Mono', monospace; font-size: 0.625rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-4); margin-top: 10px; }
+    .screen-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 24px; }
+    .screen-fig { display: flex; flex-direction: column; gap: 8px; }
+    .screen-fig img { width: 100%; display: block; border: 1px solid var(--rule); background: var(--paper-3); }
+
     /* IMPACT NUMBERS */
     .impact-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--rule); border: 1px solid var(--rule); margin-top: 48px; }
     .impact-cell { background: var(--paper); padding: 32px 28px; }
@@ -134,7 +147,7 @@
     .callout p { font-size: 1.125rem; line-height: 1.6; color: var(--ink); font-weight: 500; letter-spacing: -0.01em; }
 
     /* AI BADGE */
-    .ai-badge { display: inline-flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.06em; background: #E8EDFF; border: 1px solid #7C9CFF; color: #1a2a5e; padding: 4px 10px; margin-top: 12px; }
+    .ai-badge { display: inline-flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 0.625rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; background: #E8EDFF; border: 1px solid #7C9CFF; color: #1a2a5e; padding: 5px 10px; }
 
     /* CONSTRAINT ROW */
     .constraint-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 32px; }
@@ -150,15 +163,21 @@
     /* RESPONSIVE */
     @media (max-width: 900px) {
       .page { padding: 0 32px 80px; }
-      .hero { grid-template-columns: 1fr; gap: 40px; }
+      .hero { grid-template-columns: 1fr; gap: 40px; padding-bottom: 0; }
+      .hero-left { position: static; padding-bottom: 0; }
+      .hero-right { padding-bottom: 48px; }
+      .hero-screen-bleed { margin-right: -32px; }
+      .hero-screen-bleed img { width: 100%; }
       .section-grid { grid-template-columns: 1fr; gap: 24px; }
       .section-label { position: static; }
       .impact-row { grid-template-columns: 1fr; }
       .artifact-grid { grid-template-columns: 1fr; }
       .constraint-row { grid-template-columns: 1fr; }
+      .screen-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 560px) {
       .page { padding: 0 20px 60px; }
+      .hero-screen-bleed { margin-right: -20px; }
     }
   </style>
 </head>
@@ -178,7 +197,7 @@
 
   <!-- HERO -->
   <section class="hero">
-    <div>
+    <div class="hero-left">
       <p class="hero-eyebrow">AI · Internal Tool · B2B · Web App · 0→1</p>
       <h1 class="hero-title">Ops<em>Mind</em>.</h1>
       <p class="hero-sub">AI document management platform unifying DCOps search — launched early 2025, eliminating $12.5M/year in labor costs from poor content management.</p>
@@ -188,29 +207,35 @@
         <span class="tag">0→1 Product</span>
         <span class="tag">Stakeholder Workshops</span>
         <span class="tag">MVP Launch</span>
+        <span class="ai-badge">⬡ AI-powered platform</span>
       </div>
-      <span class="ai-badge">⬡ AI-powered platform</span>
     </div>
-    <div class="hero-meta">
-      <div class="meta-block">
-        <span class="meta-label">Status</span>
-        <span class="status-chip"><span class="status-dot"></span>Live — Launched early 2025</span>
+    <div class="hero-right">
+      <div class="hero-meta">
+        <div class="meta-block">
+          <span class="meta-label">Status</span>
+          <span class="status-chip"><span class="status-dot"></span>Live — Launched early 2025</span>
+        </div>
+        <div class="meta-block">
+          <span class="meta-label">Client</span>
+          <span class="meta-value">Google</span>
+        </div>
+        <div class="meta-block">
+          <span class="meta-label">My Role</span>
+          <span class="meta-value">Lead Interaction Designer</span>
+        </div>
+        <div class="meta-block">
+          <span class="meta-label">Team</span>
+          <span class="meta-value-mono">Lead Interaction Designer · Product Team<br>Engineering team · SMEs · Stakeholders</span>
+        </div>
+        <div class="meta-block">
+          <span class="meta-label">Deliverables</span>
+          <span class="meta-value-mono">Requirements · MVP flows<br>Production-ready screens · Dev handoff<br>Continuous discovery &amp; validation</span>
+        </div>
       </div>
-      <div class="meta-block">
-        <span class="meta-label">Client</span>
-        <span class="meta-value">Google · DCOps</span>
-      </div>
-      <div class="meta-block">
-        <span class="meta-label">My Role</span>
-        <span class="meta-value">Lead Interaction Designer</span>
-      </div>
-      <div class="meta-block">
-        <span class="meta-label">Team</span>
-        <span class="meta-value-mono">1 Designer (me, solo) · Product Team<br>Engineering team · SMEs · Stakeholders</span>
-      </div>
-      <div class="meta-block">
-        <span class="meta-label">Deliverables</span>
-        <span class="meta-value-mono">Requirements · MVP flows<br>Production-ready screens · Dev handoff</span>
+      <div class="hero-screen-bleed">
+        <img src="./img/opsmind/HeroOpsMind.png" alt="OpsMind — unified AI-powered search across DCOps equipment and documentation"/>
+        <p class="screen-caption">OpsMind · Unified search · Equipment &amp; documentation results</p>
       </div>
     </div>
   </section>
@@ -292,6 +317,11 @@
             <span class="artifact-desc">Designed the metadata tagging system enabling AI to extract, associate, and surface content accurately.</span>
           </div>
         </div>
+
+        <div class="screen-full">
+          <img src="./img/opsmind/DataTree.png" alt="Customized data tree — metadata filtering architecture with cascading filters and saved views"/>
+          <p class="screen-caption">IA · Customized data tree · Metadata filtering &amp; saved views architecture</p>
+        </div>
       </div>
     </div>
   </section>
@@ -340,6 +370,36 @@
             </div>
           </div>
         </div>
+
+        <!-- Lo-fi wireframes -->
+        <div class="screen-grid">
+          <div class="screen-fig">
+            <img src="./img/opsmind/Wireframe.png" alt="Lo-fi wireframe — global search with pinned documents and search results"/>
+            <p class="screen-caption">Lo-fi · Search &amp; pinned docs · Early structure</p>
+          </div>
+          <div class="screen-fig">
+            <img src="./img/opsmind/Wireframe2.png" alt="Lo-fi wireframe — data tree browsing with quick selections and workspaces"/>
+            <p class="screen-caption">Lo-fi · Data tree &amp; quick selections · Browse model</p>
+          </div>
+        </div>
+
+        <!-- Hi-fi unified search -->
+        <div class="screen-full">
+          <img src="./img/opsmind/SearchOpsMind.png" alt="Hi-fi unified search with layout-type filtering and metadata facets"/>
+          <p class="screen-caption">Hi-fi · Unified search · Layout-type filtering &amp; metadata facets</p>
+        </div>
+
+        <!-- Hi-fi document flows -->
+        <div class="screen-grid">
+          <div class="screen-fig">
+            <img src="./img/opsmind/OPsMind1.png" alt="Add new document modal capturing metadata, category and classification"/>
+            <p class="screen-caption">Hi-fi · Add document · Metadata capture</p>
+          </div>
+          <div class="screen-fig">
+            <img src="./img/opsmind/OPsMind5.png" alt="Documents search with asset detail panel and specifications"/>
+            <p class="screen-caption">Hi-fi · Documents search · Asset detail panel</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -365,6 +425,23 @@
             <div class="impact-number">2025</div>
             <div class="impact-desc">Launched early 2025<br>on schedule and in production</div>
           </div>
+        </div>
+
+        <!-- Production workspaces -->
+        <div class="screen-grid">
+          <div class="screen-fig">
+            <img src="./img/opsmind/OPsMind2.png" alt="OpsMind in production — pinned results with the workspaces panel open"/>
+            <p class="screen-caption">Production · Pinned results · Workspaces panel</p>
+          </div>
+          <div class="screen-fig">
+            <img src="./img/opsmind/OPsMind3.png" alt="OpsMind workspaces — grouped work orders, parts ordering and CWP collections"/>
+            <p class="screen-caption">Production · Workspaces · Grouped collections</p>
+          </div>
+        </div>
+
+        <div class="screen-full">
+          <img src="./img/opsmind/OPsMind4.png" alt="OpsMind edit workspace — sharing, access control and tagging"/>
+          <p class="screen-caption">Production · Edit workspace · Sharing &amp; access control</p>
         </div>
       </div>
     </div>
