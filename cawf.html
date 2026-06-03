@@ -43,7 +43,12 @@
     .nav-back:hover { color: var(--ink); }
 
     /* HERO */
-    .hero { padding: 80px 0 72px; border-bottom: 1px solid var(--rule); display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: end; }
+    .hero { padding: 80px 0 0; border-bottom: 1px solid var(--rule); display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+    .hero-left { position: sticky; top: 80px; padding-bottom: 72px; }
+    .hero-right { padding-bottom: 72px; overflow: visible; }
+    .hero-screen-bleed { margin-top: 48px; margin-right: -64px; overflow: visible; }
+    .hero-screen-bleed img { width: 108%; max-width: none; display: block; border: 1px solid var(--rule); border-right: none; }
+    .hero-screen-bleed .screen-caption { padding-right: 0; }
     .hero-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 20px; }
     .hero-title { font-size: clamp(4rem, 9vw, 8rem); font-weight: 600; line-height: 0.92; letter-spacing: -0.04em; color: var(--ink); margin-bottom: 24px; }
     .hero-title em { font-style: normal; background: linear-gradient(to bottom, transparent 55%, var(--handson) 55%); }
@@ -64,6 +69,14 @@
     .section-h2 { font-size: clamp(1.75rem, 3vw, 2.5rem); font-weight: 500; line-height: 1.1; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 20px; }
     .body-text { font-size: 1.0625rem; line-height: 1.7; color: var(--ink-2); }
     .body-text + .body-text { margin-top: 16px; }
+
+    /* SCREENS */
+    .screen-full { margin-top: 40px; }
+    .screen-full img, .screen-full video { width: 100%; display: block; border: 1px solid var(--rule); background: var(--paper-3); }
+    .screen-caption { font-family: 'JetBrains Mono', monospace; font-size: 0.625rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-4); margin-top: 10px; }
+    .screen-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 24px; }
+    .screen-fig { display: flex; flex-direction: column; gap: 8px; }
+    .screen-fig img { width: 100%; display: block; border: 1px solid var(--rule); background: var(--paper-3); }
 
     /* TAGS */
     .tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
@@ -118,15 +131,20 @@
 
     @media (max-width: 900px) {
       .page { padding: 0 32px 80px; }
-      .hero { grid-template-columns: 1fr; gap: 40px; }
+      .hero { grid-template-columns: 1fr; gap: 40px; padding-bottom: 0; }
+      .hero-left { position: static; padding-bottom: 0; }
+      .hero-right { padding-bottom: 48px; }
+      .hero-screen-bleed { margin-right: -32px; }
+      .hero-screen-bleed img { width: 100%; }
       .section-grid { grid-template-columns: 1fr; gap: 24px; }
       .section-label { position: static; }
       .impact-row, .issues-grid { grid-template-columns: 1fr 1fr; }
-      .artifact-grid, .two-col { grid-template-columns: 1fr; }
+      .artifact-grid, .two-col, .screen-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 560px) {
       .page { padding: 0 20px 60px; }
       .issues-grid { grid-template-columns: 1fr; }
+      .hero-screen-bleed { margin-right: -20px; }
     }
   </style>
 </head>
@@ -144,7 +162,7 @@
 
   <!-- HERO -->
   <section class="hero">
-    <div>
+    <div class="hero-left">
       <p class="hero-eyebrow">CX · Support · Consumer · Gen AI</p>
       <h1 class="hero-title"><em>CAWF</em>.</h1>
       <p class="hero-sub">Optimizing Gen AI conversational workflows across 35M monthly support sessions — a data-driven audit that uncovered up to $29M in annual support cost savings for Google.</p>
@@ -158,30 +176,36 @@
         <span class="tag">Google Play · gStore</span>
       </div>
     </div>
-    <div class="hero-meta">
-      <div class="meta-block">
-        <span class="meta-label">Status</span>
-        <span class="status-chip"><span class="status-dot"></span>Live in production</span>
+    <div class="hero-right">
+      <div class="hero-meta">
+        <div class="meta-block">
+          <span class="meta-label">Status</span>
+          <span class="status-chip"><span class="status-dot"></span>Live in production</span>
+        </div>
+        <div class="meta-block">
+          <span class="meta-label">Client</span>
+          <span class="meta-value">Google</span>
+        </div>
+        <div class="meta-block">
+          <span class="meta-label">My Role</span>
+          <span class="meta-value">Staff Product Designer</span>
+        </div>
+        <div class="meta-block">
+          <span class="meta-label">Team</span>
+          <span class="meta-value-mono">Lead Researcher · UX Researcher<br>Data Analyst · SEO Specialist<br>Content Specialist · PM</span>
+        </div>
+        <div class="meta-block">
+          <span class="meta-label">Scope</span>
+          <span class="meta-value-mono">Google Play · gStore<br>Post-purchase support journeys</span>
+        </div>
+        <div class="meta-block">
+          <span class="meta-label">Deliverables</span>
+          <span class="meta-value-mono">Metrics program · Journey maps<br>QA framework · Key suggestions deck<br>Experiment plan · Bug tickets<br>UI optimized screens</span>
+        </div>
       </div>
-      <div class="meta-block">
-        <span class="meta-label">Client</span>
-        <span class="meta-value">Google</span>
-      </div>
-      <div class="meta-block">
-        <span class="meta-label">My Role</span>
-        <span class="meta-value">Staff Product Designer</span>
-      </div>
-      <div class="meta-block">
-        <span class="meta-label">Team</span>
-        <span class="meta-value-mono">Lead Researcher · UX Researcher<br>Data Analyst · SEO Specialist<br>Content Specialist · PM</span>
-      </div>
-      <div class="meta-block">
-        <span class="meta-label">Scope</span>
-        <span class="meta-value-mono">Google Play · gStore<br>Post-purchase support journeys</span>
-      </div>
-      <div class="meta-block">
-        <span class="meta-label">Deliverables</span>
-        <span class="meta-value-mono">Metrics program · Journey maps<br>QA framework · Key suggestions deck<br>Experiment plan · Bug tickets</span>
+      <div class="hero-screen-bleed">
+        <img src="./img/cawf/HeroProductEcoSystem.png" alt="Product launch ecosystem — strategy, implementation and evaluation map for Google's cAWF support"/>
+        <p class="screen-caption">Product launch ecosystem · Strategy · Implementation · Evaluation</p>
       </div>
     </div>
   </section>
@@ -282,6 +306,11 @@
             <p class="issue-detail">cAWF copy not matching how customers phrase their queries</p>
           </div>
         </div>
+
+        <div class="screen-full">
+          <img src="./img/cawf/cAWFPRoblemStatement.png" alt="Problem statement areas — findability, factuality, resolution, customer choice and contact"/>
+          <p class="screen-caption">Synthesis · Problem statement areas · Seven prioritized themes</p>
+        </div>
       </div>
     </div>
   </section>
@@ -336,6 +365,11 @@
             <span class="artifact-title">SEO & Data Mining</span>
             <span class="artifact-desc">Analyzed thousands of data points from Google Pulse and Speakeasy — keyword analysis, search volume, and user query patterns.</span>
           </div>
+        </div>
+
+        <div class="screen-full">
+          <img src="./img/cawf/OpportunityMapping.png" alt="Opportunity mapping storyline — structuring the research narrative across iterations"/>
+          <p class="screen-caption">Framing · Opportunity mapping storyline · Structuring the research narrative</p>
         </div>
       </div>
     </div>
@@ -407,6 +441,30 @@
             </div>
           </div>
         </div>
+
+        <!-- UX audit board -->
+        <div class="screen-full">
+          <img src="./img/cawf/CAWFSUXAudit.png" alt="cAWF UX audit board — transcript-coded success and escalation flows annotated end to end"/>
+          <p class="screen-caption">Audit · Transcript-coded success vs. escalation flows · Failure-moment mapping</p>
+        </div>
+
+        <!-- Current cAWF decision flow -->
+        <div class="screen-full">
+          <img src="./img/cawf/CAWFsFlowchart.png" alt="Current cAWF decision flow mapped end to end across entry points and branches"/>
+          <p class="screen-caption">Current state · cAWF decision flow · Entry points &amp; branch logic mapped</p>
+        </div>
+
+        <!-- Metrics program + prioritization -->
+        <div class="screen-grid">
+          <div class="screen-fig">
+            <img src="./img/cawf/CAWFMetrics.png" alt="Success metrics program — hypotheses mapped to north star, L1 and L2 metrics"/>
+            <p class="screen-caption">Metrics program · Hypotheses → North Star · L1 · L2</p>
+          </div>
+          <div class="screen-fig">
+            <img src="./img/cawf/CAWFPrioritization.png" alt="Impact and effort prioritization with quick-win flags per hypothesis"/>
+            <p class="screen-caption">Prioritization · Impact × effort · Quick-win flags</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -432,6 +490,30 @@
             <div class="impact-number">2</div>
             <div class="impact-desc">Parallel scrum teams<br>delivering simultaneously</div>
           </div>
+        </div>
+
+        <!-- Opportunity sizing -->
+        <div class="screen-full">
+          <img src="./img/cawf/CAWFOpportunitySize.png" alt="Opportunity sizing — combined CSAT and dollar opportunity per cAWF user flow"/>
+          <p class="screen-caption">Quantification · Opportunity sizing · CSAT &amp; dollar impact per flow</p>
+        </div>
+
+        <!-- Quick wins -->
+        <div class="screen-grid">
+          <div class="screen-fig">
+            <img src="./img/cawf/cAWFsQuickwin1.png" alt="Quick win — intent chips on the Play support landing page aligned to top symptoms"/>
+            <p class="screen-caption">Quick win · Intent chips aligned to top symptoms</p>
+          </div>
+          <div class="screen-fig">
+            <img src="./img/cawf/cAWFsQuickwin3.png" alt="Quick win — clarity around app access after a refund to reduce escalation"/>
+            <p class="screen-caption">Quick win · Clarity on app access after refund</p>
+          </div>
+        </div>
+
+        <!-- Delivery roadmap -->
+        <div class="screen-full">
+          <img src="./img/cawf/CAWFsRoadmap.png" alt="Delivery Issues and Trade-ins cAWF research timeline across two parallel tracks"/>
+          <p class="screen-caption">Roadmap · Two parallel research tracks · Discovery → experiment plan</p>
         </div>
       </div>
     </div>
