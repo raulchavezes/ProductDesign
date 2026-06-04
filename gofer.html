@@ -36,7 +36,12 @@
     .nav-back:hover { color: var(--ink); }
 
     /* HERO */
-    .hero { padding: 80px 0 72px; border-bottom: 1px solid var(--rule); display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: end; }
+    .hero { padding: 80px 0 0; border-bottom: 1px solid var(--rule); display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+    .hero-left { position: sticky; top: 80px; padding-bottom: 72px; }
+    .hero-right { padding-bottom: 72px; overflow: visible; }
+    .hero-screen-bleed { margin-top: 48px; margin-right: -64px; overflow: visible; }
+    .hero-screen-bleed img { width: 108%; max-width: none; display: block; border: 1px solid var(--rule); border-right: none; }
+    .hero-screen-bleed .screen-caption { padding-right: 0; }
     .hero-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 20px; }
     .hero-title { font-size: clamp(5rem, 12vw, 10rem); font-weight: 600; line-height: 0.92; letter-spacing: -0.04em; color: var(--ink); margin-bottom: 24px; }
     .hero-title em { font-style: normal; background: linear-gradient(to bottom, transparent 55%, var(--handson) 55%); }
@@ -61,6 +66,23 @@
     .section-h2 { font-size: clamp(1.75rem, 3vw, 2.5rem); font-weight: 500; line-height: 1.1; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 20px; }
     .body-text { font-size: 1.0625rem; line-height: 1.7; color: var(--ink-2); }
     .body-text + .body-text { margin-top: 16px; }
+
+    /* SCREENS */
+    .screen-full { margin-top: 40px; }
+    .screen-full img, .screen-full video { width: 100%; display: block; border: 1px solid var(--rule); background: var(--paper-3); }
+    .screen-caption { font-family: 'JetBrains Mono', monospace; font-size: 0.625rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-4); margin-top: 10px; }
+    .screen-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 24px; }
+    .screen-fig { display: flex; flex-direction: column; gap: 8px; }
+    .screen-fig img { width: 100%; display: block; border: 1px solid var(--rule); background: var(--paper-3); }
+
+    /* LIGHTBOX */
+    .zoomable { cursor: pointer; }
+    .lightbox { position: fixed; inset: 0; z-index: 1000; background: rgba(20,20,19,0.94); display: none; overflow: auto; }
+    .lightbox.open { display: block; }
+    .lightbox img { display: block; margin: 56px auto; width: 94%; max-width: 2400px; height: auto; cursor: pointer; }
+    .lightbox-close { position: fixed; top: 20px; right: 24px; z-index: 1001; width: 40px; height: 40px; border: 1px solid rgba(255,255,255,0.3); background: rgba(20,20,19,0.6); color: #fff; font-size: 1.25rem; line-height: 1; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+    .lightbox-close:hover { background: rgba(255,255,255,0.15); }
+    .lightbox-hint { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 1001; font-family: 'JetBrains Mono', monospace; font-size: 0.625rem; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.55); }
 
     /* CALLOUT */
     .callout { border-left: 2px solid var(--handson); padding: 20px 28px; background: var(--paper-2); margin-top: 32px; }
@@ -146,17 +168,23 @@
 
     @media (max-width: 900px) {
       .page { padding: 0 32px 80px; }
-      .hero { grid-template-columns: 1fr; gap: 40px; }
+      .hero { grid-template-columns: 1fr; gap: 40px; padding-bottom: 0; }
+      .hero-left { position: static; padding-bottom: 0; }
+      .hero-right { padding-bottom: 48px; }
+      .hero-screen-bleed { margin-right: -32px; }
+      .hero-screen-bleed img { width: 100%; }
       .section-grid { grid-template-columns: 1fr; gap: 24px; }
       .section-label { position: static; }
       .research-numbers { grid-template-columns: 1fr 1fr; }
       .insights-grid, .comp-grid { grid-template-columns: 1fr; }
       .artifact-grid { grid-template-columns: 1fr; }
       .impact-row { grid-template-columns: 1fr; }
+      .screen-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 560px) {
       .page { padding: 0 20px 60px; }
       .tension-row { grid-template-columns: 80px 1fr 80px; }
+      .hero-screen-bleed { margin-right: -20px; }
     }
   </style>
 </head>
@@ -174,7 +202,7 @@
 
   <!-- HERO -->
   <section class="hero">
-    <div>
+    <div class="hero-left">
       <p class="hero-eyebrow">AI · Sales · B2B · B2C · UX Research</p>
       <h1 class="hero-title"><em>Gofer</em>.</h1>
       <p class="hero-sub">An 8-week, research-first engagement to define the MVP of Google's AI-powered sales enablement platform — 16 interviews, 10+ competitors benchmarked, and an in-person discovery sprint in New York.</p>
@@ -188,6 +216,7 @@
         <span class="tag">Sales Enablement</span>
       </div>
     </div>
+    <div class="hero-right">
     <div class="hero-meta">
       <div class="meta-block">
         <span class="meta-label">Status</span>
@@ -212,6 +241,11 @@
       <div class="meta-block">
         <span class="meta-label">Deliverables</span>
         <span class="meta-value-mono">Research report · MVP feature matrix<br>E2E sales journey map · Competitive analysis<br>Desirability scoring · Feature prioritization</span>
+      </div>
+      </div>
+      <div class="hero-screen-bleed">
+        <img class="zoomable" src="./img/gofer/GoferFeatures.png" alt="Gofer — the AI sales enablement feature space mapped across the seller workflow"/>
+        <p class="screen-caption">Gofer · Feature space · AI capabilities across the sales workflow · <span style="text-transform:none;">click to expand</span></p>
       </div>
     </div>
   </section>
@@ -259,6 +293,11 @@
             <span class="location-title">In-person discovery sprint — New York City</span>
             <span class="location-sub">On-site at Google's NY offices · Ethnographic interviews with enterprise sales teams</span>
           </div>
+        </div>
+
+        <div class="screen-full">
+          <img class="zoomable" src="./img/gofer/MarketSpace.png" alt="Finding a market foothold — competitor concentration mapped across the sales connection cycle"/>
+          <p class="screen-caption">Landscape · Finding a market foothold · Where the opportunity hides</p>
         </div>
       </div>
     </div>
@@ -320,6 +359,11 @@
             <span class="artifact-title">Competitive Analysis (6 Products)</span>
             <span class="artifact-desc">Deep-dive audit of 6 existing AI-powered sales products — features, weaknesses, user likes/dislikes, and market gaps Gofer can own.</span>
           </div>
+        </div>
+
+        <div class="screen-full">
+          <img class="zoomable" src="./img/gofer/ActivitiesGofer.png" alt="Research activities — primary interviews, journey mapping, desk research and competitive analysis"/>
+          <p class="screen-caption">Method · Research activities · Interviews · Journeys · Desk research · Competitive</p>
         </div>
       </div>
     </div>
@@ -383,6 +427,16 @@
             </div>
           </div>
         </div>
+
+        <!-- Competitive analysis -->
+        <div class="screen-full">
+          <img class="zoomable" src="./img/gofer/CompetitiveAnalysis.jpg" alt="Comparative matrix — 12 sales-tool competitors scored across feature focus areas"/>
+          <p class="screen-caption">Benchmark · Comparative matrix · Competitors × feature coverage</p>
+        </div>
+        <div class="screen-full">
+          <img class="zoomable" src="./img/gofer/CompetitiveOverlay.png" alt="Competitive overlay — how competitors concentrate across the sales connection cycle"/>
+          <p class="screen-caption">Benchmark · Competitive overlay · Concentration across the connection cycle</p>
+        </div>
       </div>
     </div>
   </section>
@@ -442,6 +496,24 @@
         <div class="callout">
           <p>"Research is about making sure I'm asking the right questions."</p>
           <cite>— Shelby, B2B Sales Rep (research participant)</cite>
+        </div>
+
+        <!-- Sales role framing -->
+        <div class="screen-full">
+          <img class="zoomable" src="./img/gofer/SalesJourney.png" alt="Sales role as network connectors — find, make, strengthen and activate connections"/>
+          <p class="screen-caption">Insight · Sellers as network connectors · Find → Make → Strengthen → Activate</p>
+        </div>
+
+        <!-- Persona + ideal vision -->
+        <div class="screen-full">
+          <img class="zoomable" src="./img/gofer/Thetoolspersona.png" alt="The tool's persona and ideal vision — a proactive partner that augments the seller"/>
+          <p class="screen-caption">Insight · The tool's persona · Augment the rep, don't replace the craft</p>
+        </div>
+
+        <!-- Feature preference by size -->
+        <div class="screen-full">
+          <img class="zoomable" src="./img/gofer/FeaturePreference.png" alt="Feature preference by business size — preference shifts between large, medium and small firms"/>
+          <p class="screen-caption">Insight · Feature preference by company size · Needs diverge by segment</p>
         </div>
       </div>
     </div>
@@ -534,6 +606,30 @@
             <p class="comp-desc">Flexible AI agents helping with prospecting, lead qualification, and closing — freeing reps for high-value activities.</p>
           </div>
         </div>
+
+        <!-- Feature scoring matrix -->
+        <div class="screen-full">
+          <img class="zoomable" src="./img/gofer/FeatureMatrix.png" alt="Feature preferences scoring matrix — 16 respondents ranking each capability"/>
+          <p class="screen-caption">Evidence · Feature preference scoring · 16 respondents × 13 capabilities</p>
+        </div>
+
+        <!-- Feature deep dives -->
+        <div class="screen-grid">
+          <div class="screen-fig">
+            <img class="zoomable" src="./img/gofer/FeatureDetail3.png" alt="Feature deep dive — call scripting capability definition and MVP rationale"/>
+            <p class="screen-caption">Deep dive · Call scripting · Capability definition</p>
+          </div>
+          <div class="screen-fig">
+            <img class="zoomable" src="./img/gofer/FeatureDetail7.png" alt="Feature deep dive — call sentiment and outcome analysis capability definition"/>
+            <p class="screen-caption">Deep dive · Call sentiment &amp; outcome analysis</p>
+          </div>
+        </div>
+
+        <!-- MVP flow proposal -->
+        <div class="screen-full">
+          <img class="zoomable" src="./img/gofer/MVPProposalGofer.png" alt="MVP flow proposal — Existing Customer Case Builder built on the Opportunity Finder"/>
+          <p class="screen-caption">Proposal · MVP flow · Existing Customer Case Builder</p>
+        </div>
       </div>
     </div>
   </section>
@@ -571,5 +667,37 @@
   </div>
 
 </div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Close">✕</button>
+  <img id="lightboxImg" src="" alt=""/>
+  <div class="lightbox-hint">Click image, ✕, or press Esc to close</div>
+</div>
+<script>
+  (function () {
+    var lb = document.getElementById('lightbox');
+    var lbImg = document.getElementById('lightboxImg');
+    var lbClose = document.getElementById('lightboxClose');
+    function open(src, alt) {
+      lbImg.src = src; lbImg.alt = alt || '';
+      lb.classList.add('open');
+      lb.scrollTop = 0;
+      document.body.style.overflow = 'hidden';
+    }
+    function close() {
+      lb.classList.remove('open');
+      lbImg.src = '';
+      document.body.style.overflow = '';
+    }
+    document.querySelectorAll('img.zoomable').forEach(function (img) {
+      img.addEventListener('click', function () { open(img.src, img.alt); });
+    });
+    lbClose.addEventListener('click', close);
+    lbImg.addEventListener('click', close);
+    lb.addEventListener('click', function (e) { if (e.target === lb) close(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && lb.classList.contains('open')) close(); });
+  })();
+</script>
 </body>
 </html>
