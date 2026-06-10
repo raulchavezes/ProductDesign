@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About — Raul Chavez</title>
+  <link rel="icon" type="image/x-icon" href="./img/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --paper: #FFFFFF;
+      --paper-2: #FAFAF9;
+      --paper-3: #F3F2EF;
+      --ink: #141413;
+      --ink-2: #3F3D3A;
+      --ink-3: #84827D;
+      --ink-4: #B5B3AE;
+      --rule: rgba(20,20,19,0.10);
+      --rule-strong: #141413;
+      --handson: #E5FF60;
+      --focus: #4DD86F;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Instrument Sans', system-ui, sans-serif;
+      font-size: 1rem;
+      line-height: 1.55;
+    }
+    .page {
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 64px 80px;
+    }
+
+    /* NAV */
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 22px 0;
+      border-bottom: 1px solid var(--rule);
+      position: sticky;
+      top: 0;
+      background: var(--paper);
+      z-index: 100;
+    }
+    .nav-lockup { display: flex; align-items: center; gap: 8px; text-decoration: none; }
+    .nav-mark { width: 22px; height: 22px; background: var(--ink); display: flex; align-items: center; justify-content: center; }
+    .nav-mark-inner { width: 8px; height: 8px; border-radius: 50%; background: var(--paper); }
+    .nav-wordmark { display: flex; flex-direction: column; line-height: 1.1; }
+    .nav-l1 { font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); }
+    .nav-l2 { font-size: 0.6875rem; color: var(--ink-3); }
+    .nav-back { font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); text-decoration: none; display: flex; align-items: center; gap: 6px; }
+    .nav-back:hover { color: var(--ink); }
+    .nav-back-arrow { font-size: 0.75rem; }
+
+    /* HERO */
+    .hero { padding: 80px 0 72px; border-bottom: 1px solid var(--rule); }
+    .hero-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 20px; }
+    .hero-display {
+      font-size: clamp(4rem, 9vw, 7.5rem);
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      line-height: 0.95;
+      color: var(--ink);
+      margin-bottom: 40px;
+    }
+    .mark-handson { background: var(--handson); padding: 0 4px; font-style: normal; }
+    .hero-intro { max-width: 640px; font-size: 1.125rem; line-height: 1.65; color: var(--ink-2); }
+
+    /* TIMELINE SECTION */
+    .timeline-section { padding: 80px 0 0; }
+    .timeline-label { font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 64px; }
+
+    /* HORIZONTAL TIMELINE TRACK */
+    .timeline-track {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 0;
+    }
+
+    /* Connecting line */
+    .timeline-track::before {
+      content: '';
+      position: absolute;
+      top: 10px;
+      left: calc(100% / 14);
+      right: calc(100% / 14);
+      height: 1px;
+      background: var(--rule-strong);
+      z-index: 0;
+    }
+
+    .timeline-item {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 0 20px 0 0;
+      position: relative;
+    }
+    .timeline-item:last-child { padding-right: 0; }
+
+    /* Dot */
+    .timeline-dot {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 1.5px solid var(--ink);
+      background: var(--paper);
+      flex-shrink: 0;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 1;
+    }
+    .timeline-dot.current {
+      background: var(--ink);
+      border-color: var(--ink);
+    }
+    .timeline-dot.current::after {
+      content: '';
+      position: absolute;
+      inset: 4px;
+      border-radius: 50%;
+      background: var(--focus);
+    }
+
+    .timeline-date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--ink);
+      margin-bottom: 12px;
+    }
+    .timeline-title {
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: var(--ink);
+      line-height: 1.35;
+      margin-bottom: 8px;
+    }
+    .timeline-title strong { font-weight: 600; }
+    .timeline-desc {
+      font-size: 0.8125rem;
+      color: var(--ink-3);
+      line-height: 1.5;
+      margin-bottom: 6px;
+    }
+    .timeline-note {
+      font-size: 0.75rem;
+      color: var(--ink-4);
+      line-height: 1.45;
+      font-style: italic;
+    }
+
+    /* VERTICAL DIVIDER between timeline sections */
+    .timeline-divider {
+      border: none;
+      border-top: 1px solid var(--rule);
+      margin: 64px 0;
+    }
+
+    /* FOOTER */
+    .footer {
+      border-top: 1px solid var(--rule);
+      padding: 32px 0 0;
+      margin-top: 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    .footer-critters { display: flex; gap: 6px; }
+    .critter { width: 10px; height: 10px; border-radius: 50%; }
+    .footer-micro { font-size: 0.6875rem; color: var(--ink-4); text-align: right; line-height: 1.5; }
+
+    /* RESPONSIVE */
+    @media (max-width: 1100px) {
+      .timeline-track {
+        grid-template-columns: repeat(4, 1fr);
+        row-gap: 48px;
+      }
+      .timeline-track::before { display: none; }
+    }
+    @media (max-width: 700px) {
+      .page { padding: 0 20px 60px; }
+      .timeline-track {
+        grid-template-columns: 1fr 1fr;
+        row-gap: 40px;
+      }
+      .timeline-track::before { display: none; }
+    }
+    @media (max-width: 440px) {
+      .timeline-track { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a class="nav-lockup" href="./index.html">
+      <div class="nav-mark"><div class="nav-mark-inner"></div></div>
+      <div class="nav-wordmark">
+        <span class="nav-l1">Product Design</span>
+      </div>
+    </a>
+    <a class="nav-back" href="./index.html">
+      <span class="nav-back-arrow">←</span> Back to work
+    </a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <p class="hero-eyebrow">About me</p>
+    <h1 class="hero-display">My <em class="mark-handson">journey</em><br>to UX design.</h1>
+    <p class="hero-intro">Product Design Lead with 20+ years shaping products across fintech, crypto, banking, retail, and consultancy. Strategic and research-first, I work hands-on from discovery through delivery, increasingly leveraging AI as a creative and technical collaborator across the design process.</p>
+  </section>
+
+  <!-- TIMELINE -->
+  <section class="timeline-section">
+    <p class="timeline-label">How I became an EXD designer</p>
+
+    <div class="timeline-track">
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <p class="timeline-date">2006 – 2011</p>
+        <p class="timeline-title"><strong>Bachelor of Arts in Industrial Design</strong> and product design.</p>
+        <p class="timeline-note">Family of industrial engineers</p>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <p class="timeline-date">2011 – 2015</p>
+        <p class="timeline-title"><strong>Business development</strong> in an international Liaison office.</p>
+        <p class="timeline-note">Moved abroad to Santiago de Chile for 8 years</p>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <p class="timeline-date">2015 – 2017</p>
+        <p class="timeline-title"><strong>Master's on Service Design</strong> and User Experience.</p>
+        <p class="timeline-note">Big focus on research and needfinding</p>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <p class="timeline-date">2017 – 2018</p>
+        <p class="timeline-title"><strong>Service Designer</strong> for remote operations and team.</p>
+        <p class="timeline-note">Focus on customer experience heavily</p>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <p class="timeline-date">2018 – 2022</p>
+        <p class="timeline-title">Consultancy as <strong>UX &amp; Product Designer</strong> up to UX Director.</p>
+        <p class="timeline-note">Experience in retail, consumer goods and fintech</p>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <p class="timeline-date">2022 – 2025</p>
+        <p class="timeline-title"><strong>Lead EXP Designer</strong> at Google <span style="font-weight:400;color:var(--ink-3);">thru EPAM</span>.</p>
+        <p class="timeline-desc">Lead consultant, researcher and Product Designer for key account.</p>
+        <p class="timeline-note">Lead of Hiring committee, mentor and co-founder UXR academy</p>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot current"></div>
+        <p class="timeline-date">2025 – Present</p>
+        <p class="timeline-title"><strong>Lead Product Designer</strong> at Bitso.</p>
+        <p class="timeline-desc">Strategic and technical design reference at a crypto fintech.</p>
+        <p class="timeline-note">Influencing cross-functional decisions and raising the bar for design quality</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-critters">
+      <div class="critter" style="background:#4DD86F;"></div>
+      <div class="critter" style="background:#7C9CFF;"></div>
+      <div class="critter" style="background:#F2A5C4;"></div>
+      <div class="critter" style="background:#F59F3A;"></div>
+    </div>
+    <div class="footer-micro">
+      Last updated June 2026<br>
+      &copy; 2026 Raul Chavez
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>
