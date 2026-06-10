@@ -71,7 +71,7 @@
       color: var(--ink);
       margin-bottom: 40px;
     }
-    .mark-handson { background: var(--handson); padding: 0 4px; font-style: normal; }
+    .mark-handson { font-style: normal; background: linear-gradient(to bottom, transparent 55%, var(--handson) 55%); }
     .hero-intro { max-width: 640px; font-size: 1.125rem; line-height: 1.65; color: var(--ink-2); }
 
     /* TIMELINE SECTION */
@@ -91,8 +91,8 @@
       content: '';
       position: absolute;
       top: 10px;
-      left: calc(100% / 14);
-      right: calc(100% / 14);
+      left: 10px;
+      right: 10px;
       height: 1px;
       background: var(--rule-strong);
       z-index: 0;
@@ -120,15 +120,8 @@
       z-index: 1;
     }
     .timeline-dot.current {
-      background: var(--ink);
+      background: var(--handson);
       border-color: var(--ink);
-    }
-    .timeline-dot.current::after {
-      content: '';
-      position: absolute;
-      inset: 4px;
-      border-radius: 50%;
-      background: var(--focus);
     }
 
     .timeline-date {
@@ -220,63 +213,62 @@
   <!-- HERO -->
   <section class="hero">
     <p class="hero-eyebrow">About me</p>
-    <h1 class="hero-display">My <em class="mark-handson">journey</em><br>to UX design.</h1>
+    <h1 class="hero-display">My <em class="mark-handson">journey</em><br>to Product.</h1>
     <p class="hero-intro">Product Design Lead with 20+ years shaping products across fintech, crypto, banking, retail, and consultancy. Strategic and research-first, I work hands-on from discovery through delivery, increasingly leveraging AI as a creative and technical collaborator across the design process.</p>
   </section>
 
   <!-- TIMELINE -->
   <section class="timeline-section">
-    <p class="timeline-label">How I became an EXD designer</p>
+    <p class="timeline-label">How I became a product lead</p>
 
     <div class="timeline-track">
 
       <div class="timeline-item">
         <div class="timeline-dot"></div>
         <p class="timeline-date">2006 – 2011</p>
-        <p class="timeline-title"><strong>Bachelor of Arts in Industrial Design</strong> and product design.</p>
+        <p class="timeline-title"><strong>Bachelor of Arts in Industrial Design</strong> and product design</p>
         <p class="timeline-note">Family of industrial engineers</p>
       </div>
 
       <div class="timeline-item">
         <div class="timeline-dot"></div>
         <p class="timeline-date">2011 – 2015</p>
-        <p class="timeline-title"><strong>Business development</strong> in an international Liaison office.</p>
+        <p class="timeline-title"><strong>Business designer</strong> in an international Liaison office</p>
         <p class="timeline-note">Moved abroad to Santiago de Chile for 8 years</p>
       </div>
 
       <div class="timeline-item">
         <div class="timeline-dot"></div>
         <p class="timeline-date">2015 – 2017</p>
-        <p class="timeline-title"><strong>Master's on Service Design</strong> and User Experience.</p>
+        <p class="timeline-title"><strong>Master's on Service Design</strong> and User Experience</p>
         <p class="timeline-note">Big focus on research and needfinding</p>
       </div>
 
       <div class="timeline-item">
         <div class="timeline-dot"></div>
         <p class="timeline-date">2017 – 2018</p>
-        <p class="timeline-title"><strong>Service Designer</strong> for remote operations and team.</p>
+        <p class="timeline-title"><strong>Service Designer</strong> for remote value-driven experiences and operations on hospitality sector</p>
         <p class="timeline-note">Focus on customer experience heavily</p>
       </div>
 
       <div class="timeline-item">
         <div class="timeline-dot"></div>
         <p class="timeline-date">2018 – 2022</p>
-        <p class="timeline-title">Consultancy as <strong>UX &amp; Product Designer</strong> up to UX Director.</p>
-        <p class="timeline-note">Experience in retail, consumer goods and fintech</p>
+        <p class="timeline-title"><strong>UX &amp; Product Design Leader</strong> on Consultancy</p>
+        <p class="timeline-note">Retail, consumer goods &amp; fintech · Nike, Mastercard, Novartis, Liverpool among others</p>
       </div>
 
       <div class="timeline-item">
         <div class="timeline-dot"></div>
         <p class="timeline-date">2022 – 2025</p>
-        <p class="timeline-title"><strong>Lead EXP Designer</strong> at Google <span style="font-weight:400;color:var(--ink-3);">thru EPAM</span>.</p>
-        <p class="timeline-desc">Lead consultant, researcher and Product Designer for key account.</p>
-        <p class="timeline-note">Lead of Hiring committee, mentor and co-founder UXR academy</p>
+        <p class="timeline-title"><strong>Lead Experience Consultant</strong> for Google <span style="font-weight:400;color:var(--ink-3);">thru EPAM</span></p>
+        <p class="timeline-desc">Lead strategist, consultant, researcher and product.</p>
       </div>
 
       <div class="timeline-item">
         <div class="timeline-dot current"></div>
         <p class="timeline-date">2025 – Present</p>
-        <p class="timeline-title"><strong>Lead Product Designer</strong> at Bitso.</p>
+        <p class="timeline-title"><strong>Lead Product</strong> at Bitso</p>
         <p class="timeline-desc">Strategic and technical design reference at a crypto fintech.</p>
         <p class="timeline-note">Influencing cross-functional decisions and raising the bar for design quality</p>
       </div>
